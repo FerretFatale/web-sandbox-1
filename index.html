@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Construction grounds for AI website creation and maintenance." />
+  <title>Web Sandbox</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav">
+      <div class="nav__logo">
+        <span class="nav__logo-icon">&#9670;</span>
+        <span class="nav__logo-text">WebSandbox</span>
+      </div>
+      <button class="nav__toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav__links" role="list">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero__content">
+        <h1 class="hero__title">Build smarter websites<br />with <span class="highlight">AI</span></h1>
+        <p class="hero__subtitle">A construction ground for AI-powered website creation and maintenance. Experiment, iterate, and deploy with confidence.</p>
+        <div class="hero__actions">
+          <a href="#features" class="btn btn--primary">Explore Features</a>
+          <a href="#about" class="btn btn--outline">Learn More</a>
+        </div>
+      </div>
+      <div class="hero__visual" aria-hidden="true">
+        <div class="cube">
+          <div class="cube__face cube__face--front"></div>
+          <div class="cube__face cube__face--back"></div>
+          <div class="cube__face cube__face--left"></div>
+          <div class="cube__face cube__face--right"></div>
+          <div class="cube__face cube__face--top"></div>
+          <div class="cube__face cube__face--bottom"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="features">
+      <div class="container">
+        <h2 class="section-title">Features</h2>
+        <p class="section-subtitle">Everything you need to create and maintain modern websites</p>
+        <div class="features__grid">
+          <article class="card">
+            <div class="card__icon">&#9881;</div>
+            <h3 class="card__title">AI-Assisted Creation</h3>
+            <p class="card__body">Generate layouts, content, and components using AI, reducing manual effort and accelerating development.</p>
+          </article>
+          <article class="card">
+            <div class="card__icon">&#10003;</div>
+            <h3 class="card__title">Smart Maintenance</h3>
+            <p class="card__body">Automated checks and AI-driven suggestions keep your site healthy, performant, and up-to-date.</p>
+          </article>
+          <article class="card">
+            <div class="card__icon">&#9670;</div>
+            <h3 class="card__title">Modular Structure</h3>
+            <p class="card__body">Clean, component-based architecture makes it easy to extend, reuse, and maintain any part of your site.</p>
+          </article>
+          <article class="card">
+            <div class="card__icon">&#8987;</div>
+            <h3 class="card__title">Rapid Iteration</h3>
+            <p class="card__body">Quickly prototype new ideas in a sandboxed environment before pushing changes to production.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="about">
+      <div class="container about__inner">
+        <div class="about__text">
+          <h2 class="section-title">About This Project</h2>
+          <p>WebSandbox is a construction ground designed for experimenting with AI-driven website creation and maintenance workflows. Whether you are prototyping ideas, testing integrations, or building out a full site, this environment provides a clean, well-structured starting point.</p>
+          <p>Built with accessibility, performance, and maintainability in mind, it follows modern web standards and is ready to be extended in any direction.</p>
+        </div>
+        <div class="about__stats" aria-label="Project stats">
+          <div class="stat">
+            <span class="stat__number">100%</span>
+            <span class="stat__label">Vanilla</span>
+          </div>
+          <div class="stat">
+            <span class="stat__number">A11y</span>
+            <span class="stat__label">Accessible</span>
+          </div>
+          <div class="stat">
+            <span class="stat__number">0</span>
+            <span class="stat__label">Dependencies</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="contact">
+      <div class="container">
+        <h2 class="section-title">Get in Touch</h2>
+        <p class="section-subtitle">Have questions or ideas? Let us know.</p>
+        <form class="contact-form" novalidate>
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" autocomplete="name" required placeholder="Your name" />
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" autocomplete="email" required placeholder="you@example.com" />
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="5" required placeholder="Your message…"></textarea>
+          </div>
+          <button type="submit" class="btn btn--primary">Send Message</button>
+          <p class="form-feedback" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; <span id="year"></span> WebSandbox. Built with &#9829; and AI.</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
