@@ -3,37 +3,34 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The Vault — Project Guide</title>
+  <title>The Vault &mdash; Project Guide</title>
   <style>
-    :root {
-      --bg:#f8f9fa;--surface:#fff;--border:#e1e4e8;
-      --text:#24292e;--muted:#6a737d;--accent:#0366d6;
-      --green:#22863a;--orange:#b08800;--dark:#1a1a2e;
-      --purple:#6f42c1;--light-accent:#f1f8ff;
-    }
+    :root{--bg:#f8f9fa;--surface:#fff;--border:#e1e4e8;--text:#24292e;--muted:#6a737d;--accent:#0366d6;--green:#22863a;--orange:#b08800;--dark:#1a1a2e;--purple:#6f42c1;--light-accent:#f1f8ff;}
     *{box-sizing:border-box;margin:0;padding:0;}
     body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;font-size:16px;line-height:1.7;}
     a{color:var(--accent);text-decoration:none;}
     a:hover{text-decoration:underline;}
-    h1{font-size:2.5rem;color:var(--dark);margin-bottom:0.5rem;font-weight:800;}
+    h1{font-size:2.7rem;color:var(--dark);margin-bottom:0.5rem;font-weight:800;}
     h2{font-size:1.6rem;color:var(--dark);margin:2.5rem 0 0.75rem;padding-top:2rem;border-top:2px solid var(--border);}
     h3{font-size:1.15rem;color:var(--dark);margin:1.25rem 0 0.5rem;font-weight:600;}
     p{margin-bottom:0.85rem;}
     ul,ol{margin:0.5rem 0 0.85rem 1.5rem;}
     li{margin-bottom:0.4rem;}
     strong{font-weight:700;}
+    em{font-style:italic;}
     table{width:100%;border-collapse:collapse;margin:0.75rem 0 1.25rem;font-size:0.93em;border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.08);}
     th{background:var(--dark);color:#fff;text-align:left;padding:10px 14px;font-weight:600;font-size:0.88em;}
     td{padding:9px 14px;border-bottom:1px solid var(--border);background:var(--surface);vertical-align:top;}
     tr:last-child td{border-bottom:none;}
     .layout{max-width:900px;margin:0 auto;padding:0 1.5rem;}
-    header{background:var(--dark);color:#fff;padding:4rem 0 3rem;}
+    header{background:linear-gradient(135deg,#1a1a2e 0%,#16213e 60%,#0f3460 100%);color:#fff;padding:4rem 0 3rem;}
     header .inner{max-width:900px;margin:0 auto;padding:0 1.5rem;}
-    header h1{color:#fff;}
-    header .subtitle{font-size:1.2rem;color:rgba(255,255,255,0.75);margin:0.5rem 0 0.75rem;max-width:640px;}
-    header .tagline{font-size:0.97rem;color:rgba(255,255,255,0.5);margin:0 0 1.5rem;max-width:680px;font-style:italic;}
-    header .badges{display:flex;gap:0.75rem;flex-wrap:wrap;margin-top:1rem;}
-    .badge{display:inline-block;padding:4px 12px;border-radius:20px;font-size:0.8em;font-weight:600;border:1px solid rgba(255,255,255,0.3);color:rgba(255,255,255,0.85);}
+    header h1{color:#fff;font-size:2.8rem;}
+    .origin-label{font-size:0.82rem;color:rgba(255,255,255,0.5);letter-spacing:0.07em;text-transform:uppercase;display:block;margin-bottom:1rem;}
+    header .subtitle{font-size:1.15rem;color:rgba(255,255,255,0.82);margin:0.5rem 0 0.75rem;max-width:680px;line-height:1.6;}
+    header .tagline{font-size:0.94rem;color:rgba(255,255,255,0.46);margin:0 0 1.5rem;max-width:700px;font-style:italic;}
+    header .badges{display:flex;gap:0.65rem;flex-wrap:wrap;margin-top:1.1rem;}
+    .badge{display:inline-block;padding:4px 12px;border-radius:20px;font-size:0.79em;font-weight:600;border:1px solid rgba(255,255,255,0.28);color:rgba(255,255,255,0.82);}
     .hero-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin:1.5rem 0;}
     .hero-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1.25rem;box-shadow:0 1px 4px rgba(0,0,0,0.06);}
     .hero-card .icon{font-size:2rem;margin-bottom:0.5rem;}
@@ -42,14 +39,46 @@
     .highlight{background:var(--light-accent);border-left:4px solid var(--accent);border-radius:0 6px 6px 0;padding:1rem 1.25rem;margin:1rem 0;}
     .highlight.purple{background:#f3f0ff;border-color:var(--purple);}
     .highlight.green{background:#e6f9ee;border-color:var(--green);}
-    .principles-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;margin:1rem 0;}
-    .principle{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1.25rem;}
-    .principle h3{font-size:0.95rem;color:var(--dark);margin:0.5rem 0 0.3rem;}
-    .principle p{font-size:0.88em;color:var(--muted);margin:0;}
-    .principle .num{font-size:1.5rem;font-weight:800;color:var(--accent);}
+    .highlight.dark{background:var(--dark);border-color:#c5b3f5;color:#fff;border-radius:8px;border-left:none;padding:1.25rem 1.5rem;margin:1.5rem 0;}
+    .highlight.dark strong{color:#c5b3f5;}
+    .growth-timeline{display:flex;flex-direction:column;gap:0.45rem;margin:1.25rem 0;}
+    .growth-step{display:flex;align-items:flex-start;gap:0.85rem;padding:0.6rem 0.9rem;background:var(--surface);border:1px solid var(--border);border-radius:6px;font-size:0.92em;}
+    .growth-step .gnum{font-weight:800;color:var(--accent);min-width:1.4rem;flex-shrink:0;}
+    .growth-step.gfinal{background:var(--dark);color:#fff;border-color:var(--dark);}
+    .growth-step.gfinal .gnum{color:#c5b3f5;}
+    .freedom-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;margin:1.25rem 0;}
+    .freedom-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1.25rem;box-shadow:0 1px 3px rgba(0,0,0,0.06);}
+    .freedom-card .fc-icon{font-size:1.7rem;margin-bottom:0.5rem;}
+    .freedom-card h3{font-size:0.97rem;margin:0 0 0.35rem;color:var(--dark);font-weight:700;}
+    .freedom-card p{font-size:0.88em;color:var(--muted);margin:0;}
+    .cascade-list{list-style:none;margin:1rem 0;padding:0;}
+    .cascade-list li{display:flex;align-items:flex-start;gap:0.75rem;padding:0.55rem 0.75rem;border-left:3px solid var(--border);margin-bottom:0.35rem;background:var(--surface);border-radius:0 6px 6px 0;font-size:0.93em;}
+    .cascade-list li.hi{border-left-color:var(--accent);background:var(--light-accent);}
+    .cascade-list .sn{font-weight:800;color:var(--accent);min-width:1.5rem;}
+    .feel-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin:1.25rem 0;}
+    .feel-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1.35rem;border-top:3px solid var(--accent);}
+    .feel-card .trigger{font-weight:700;color:var(--dark);margin-bottom:0.6rem;display:block;font-size:0.97em;}
+    .feel-card p{font-size:0.92em;color:var(--text);margin:0;line-height:1.65;}
+    .diagram-container{margin:1.5rem 0;padding:1.25rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;box-shadow:0 1px 4px rgba(0,0,0,0.06);overflow-x:auto;}
+    .diagram-container figcaption{font-size:0.82em;color:var(--muted);margin-top:0.75rem;text-align:center;font-style:italic;}
+    .router-diagram{display:flex;flex-direction:column;align-items:center;gap:0;}
+    .router-input{background:var(--dark);color:#fff;padding:0.6rem 2rem;border-radius:6px;font-weight:700;font-size:0.95rem;text-align:center;max-width:360px;}
+    .router-arrow{width:2px;height:24px;background:var(--muted);margin:0 auto;position:relative;}
+    .router-arrow::after{content:'';position:absolute;bottom:-6px;left:-5px;border-left:6px solid transparent;border-right:6px solid transparent;border-top:8px solid var(--muted);}
+    .router-hub{background:var(--accent);color:#fff;padding:0.7rem 2.5rem;border-radius:6px;font-weight:700;font-size:1rem;text-align:center;max-width:420px;}
+    .router-line{width:90%;max-width:820px;height:2px;background:var(--border);margin:18px auto 0;}
+    .router-destinations{display:flex;flex-wrap:wrap;gap:0.5rem;justify-content:center;width:100%;max-width:820px;padding:0.5rem 0 0.25rem;}
+    .router-dest{background:var(--light-accent);border:1px solid var(--accent);border-radius:6px;padding:0.35rem 0.7rem;font-size:0.82em;font-weight:600;color:var(--accent);}
     .use-case{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1.25rem;margin:0.75rem 0;}
     .use-case .trigger{font-style:italic;color:var(--muted);font-size:0.92em;margin-bottom:0.4rem;}
     .use-case p{font-size:0.92em;margin:0;}
+    .feature-steps{counter-reset:step;list-style:none;margin:0;padding:0;}
+    .feature-steps li{counter-increment:step;display:flex;align-items:flex-start;gap:0.75rem;padding:0.65rem 0.75rem;margin-bottom:0.4rem;background:var(--surface);border:1px solid var(--border);border-radius:6px;font-size:0.91em;}
+    .feature-steps li::before{content:counter(step);font-weight:800;color:#fff;background:var(--accent);min-width:1.6rem;height:1.6rem;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.8em;flex-shrink:0;}
+    .feature-steps li.gate{border-left:4px solid var(--orange);background:#fff8e1;}
+    .feature-steps li.gate::before{background:var(--orange);}
+    .feature-steps li.safe{border-left:4px solid var(--green);background:#e6f9ee;}
+    .feature-steps li.safe::before{background:var(--green);}
     .status-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin:1rem 0;}
     .status-card{border-radius:8px;padding:1.25rem;}
     .status-card.ready{background:#e6f9ee;border:1px solid #b2dfc3;}
@@ -58,37 +87,11 @@
     .status-card h3{font-size:0.95rem;margin-bottom:0.5rem;}
     .status-card ul{margin:0;}
     .status-card li{font-size:0.88em;}
-    footer{background:var(--dark);color:rgba(255,255,255,0.55);font-size:0.83em;padding:2rem 0;margin-top:4rem;text-align:center;}
-    footer a{color:rgba(255,255,255,0.75);}
-    main{padding:2rem 0 4rem;}
-    section{margin-bottom:0.5rem;}
-    /* cascade list */
-    .cascade-list{list-style:none;margin:1rem 0;padding:0;}
-    .cascade-list li{display:flex;align-items:flex-start;gap:0.75rem;padding:0.55rem 0.75rem;border-left:3px solid var(--border);margin-bottom:0.35rem;background:var(--surface);border-radius:0 6px 6px 0;font-size:0.93em;}
-    .cascade-list li.hi{border-left-color:var(--accent);background:var(--light-accent);}
-    .cascade-list .sn{font-weight:800;color:var(--accent);min-width:1.5rem;}
-    /* diagram containers */
-    .diagram-container{margin:1.5rem 0;padding:1.25rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;box-shadow:0 1px 4px rgba(0,0,0,0.06);overflow-x:auto;}
-    .diagram-container figcaption{font-size:0.82em;color:var(--muted);margin-top:0.75rem;text-align:center;font-style:italic;}
-    /* inbox router */
-    .router-diagram{display:flex;flex-direction:column;align-items:center;gap:0;}
-    .router-input{background:var(--dark);color:#fff;padding:0.6rem 2rem;border-radius:6px;font-weight:700;font-size:0.95rem;text-align:center;max-width:360px;}
-    .router-arrow{width:2px;height:24px;background:var(--muted);margin:0 auto;position:relative;}
-    .router-arrow::after{content:'';position:absolute;bottom:-6px;left:-5px;border-left:6px solid transparent;border-right:6px solid transparent;border-top:8px solid var(--muted);}
-    .router-hub{background:var(--accent);color:#fff;padding:0.7rem 2.5rem;border-radius:6px;font-weight:700;font-size:1rem;text-align:center;max-width:420px;}
-    .router-line{width:90%;max-width:820px;height:2px;background:var(--border);margin:18px auto 0;}
-    .router-destinations{display:flex;flex-wrap:wrap;gap:0.5rem;justify-content:center;width:100%;max-width:820px;padding:0.5rem 0 0.25rem;}
-    .router-dest{background:var(--light-accent);border:1px solid var(--accent);border-radius:6px;padding:0.35rem 0.7rem;font-size:0.82em;font-weight:600;color:var(--accent);position:relative;}
-    .router-dest::before{content:'\2191';display:block;text-align:center;color:var(--muted);font-size:0.85em;line-height:1;}
-    /* feature steps */
-    .feature-steps{counter-reset:step;list-style:none;margin:0;padding:0;}
-    .feature-steps li{counter-increment:step;display:flex;align-items:flex-start;gap:0.75rem;padding:0.65rem 0.75rem;margin-bottom:0.4rem;background:var(--surface);border:1px solid var(--border);border-radius:6px;font-size:0.91em;}
-    .feature-steps li::before{content:counter(step);font-weight:800;color:#fff;background:var(--accent);min-width:1.6rem;height:1.6rem;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.8em;flex-shrink:0;}
-    .feature-steps li.gate{border-left:4px solid var(--orange);background:#fff8e1;}
-    .feature-steps li.gate::before{background:var(--orange);}
-    .feature-steps li.safe{border-left:4px solid var(--green);background:#e6f9ee;}
-    .feature-steps li.safe::before{background:var(--green);}
-    /* private/public split */
+    .principles-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;margin:1rem 0;}
+    .principle{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1.25rem;}
+    .principle h3{font-size:0.95rem;color:var(--dark);margin:0.5rem 0 0.3rem;}
+    .principle p{font-size:0.88em;color:var(--muted);margin:0;}
+    .principle .num{font-size:1.5rem;font-weight:800;color:var(--accent);}
     .split-diagram{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border-radius:8px;overflow:hidden;}
     .split-side{padding:1.25rem;}
     .split-side.private{background:#fef6e4;}
@@ -96,24 +99,29 @@
     .split-side h4{font-size:0.9rem;font-weight:700;margin-bottom:0.75rem;padding-bottom:0.4rem;border-bottom:2px solid var(--border);}
     .split-side ul{list-style:none;margin:0;padding:0;}
     .split-side li{font-size:0.85em;padding:0.22rem 0;}
-    .split-side.private li::before{content:'\1F512  ';margin-right:0.3rem;}
-    .split-side.public-side li::before{content:'\1F310  ';margin-right:0.3rem;}
-    @media(max-width:700px){h1{font-size:1.8rem;}header{padding:2.5rem 0 2rem;}.split-diagram{grid-template-columns:1fr;}}
+    .split-side.private li::before{content:"&#128274; ";margin-right:0.2rem;}
+    .split-side.public-side li::before{content:"&#127760; ";margin-right:0.2rem;}
+    footer{background:var(--dark);color:rgba(255,255,255,0.55);font-size:0.83em;padding:2rem 0;margin-top:4rem;text-align:center;}
+    footer a{color:rgba(255,255,255,0.75);}
+    main{padding:2rem 0 4rem;}
+    section{margin-bottom:0.5rem;}
+    @media(max-width:700px){h1{font-size:1.8rem;}header{padding:2.5rem 0 2rem;}.split-diagram{grid-template-columns:1fr;}.feel-grid{grid-template-columns:1fr;}.freedom-grid{grid-template-columns:1fr;}}
   </style>
 </head>
 <body>
 
 <header>
   <div class="inner">
+    <span class="origin-label">&#x1F4E6; Started with a cardboard box of old paperwork. Grew into something much bigger.</span>
     <h1>The Vault</h1>
-    <p class="subtitle">A living command centre for your life, projects, and creative work.</p>
-    <p class="tagline">Raw idea &rarr; operating plan &nbsp;&middot;&nbsp; From inbox chaos to routed action &nbsp;&middot;&nbsp; Your projects stop floating around as loose thoughts</p>
+    <p class="subtitle">A personal AI operating system &mdash; 20 specialist assistants, every domain of a life, one coordinating brain. All running on your own machine. All under your control.</p>
+    <p class="tagline">From scattered life to coordinated action &nbsp;&middot;&nbsp; Raw idea &rarr; operating plan &nbsp;&middot;&nbsp; Nothing happens without your say</p>
     <div class="badges">
+      <span class="badge">&#x1F4E6; Built from real need</span>
       <span class="badge">Local-First</span>
       <span class="badge">Private by Design</span>
       <span class="badge">20 Specialist Assistants</span>
       <span class="badge">Approval-Gated Automation</span>
-      <span class="badge">Actively Developed</span>
     </div>
   </div>
 </header>
@@ -121,36 +129,94 @@
 <main>
 <div class="layout">
 
-<!-- hero cards -->
 <section id="what-is">
 <div class="hero-grid" style="margin-top:2rem;">
   <div class="hero-card">
-    <div class="icon">&#x1F9E0;</div>
-    <h3>A coordinated AI team</h3>
-    <p>20 specialist assistants, each with a defined domain and clear limits &mdash; not one generic chatbot.</p>
+    <div class="icon">&#x1F4E6;</div>
+    <h3>Built from real need</h3>
+    <p>Started as a paperwork-sorting project. Grew into a full life operating system as each new question demanded a new capability.</p>
   </div>
   <div class="hero-card">
-    <div class="icon">&#x1F512;</div>
-    <h3>Local-first privacy</h3>
-    <p>Personal data stays on your machine. Nothing leaves unless you explicitly trigger it.</p>
+    <div class="icon">&#x26A1;</div>
+    <h3>Everything connected</h3>
+    <p>20 specialist assistants that know about each other &mdash; financial decisions inform goals, health informs scheduling, routines adapt to context.</p>
   </div>
   <div class="hero-card">
     <div class="icon">&#x2705;</div>
-    <h3>Human approval gating</h3>
-    <p>The system plans and prepares. You decide and act. No unilateral posting, sending, or deleting.</p>
+    <h3>You stay in control</h3>
+    <p>The system plans, prepares, and proposes. You decide and act. No unilateral posting, sending, or deleting &mdash; ever.</p>
   </div>
   <div class="hero-card">
     <div class="icon">&#x1F331;</div>
     <h3>Grows new capabilities safely</h3>
-    <p>When a feature does not exist, The Vault builds it through a governed proposal &rarr; design &rarr; test &rarr; approval pathway.</p>
+    <p>Missing feature? Governed pathway: capability check &rarr; proposal &rarr; design &rarr; test &rarr; dry-run &rarr; your approval.</p>
   </div>
 </div>
 </section>
 
-<!-- ASPIRATION -->
+<section id="origin">
+<h2>It started with a box of old paperwork</h2>
+<p style="font-size:1.06rem;font-style:italic;margin-bottom:1rem;">Not a pitch. Not a product vision. A literal cardboard box: old bills, expired insurance policies, some receipts from years ago.</p>
+<p>The goal was simple: work out what still mattered.</p>
+<p>But sorting that one box asked twenty questions. Each touched a different part of life. Financial records asked about budget. Budget asked about goals. Goals asked about routines. Routines asked about health. Health asked about scheduling. Scheduling asked about priorities. Priorities asked about creative projects. Creative projects asked about business plans.</p>
+<p>There was no single tool that knew about all of it at once &mdash; and could help with all of them without losing context every time you switched.</p>
+<p>So one was built. And every new domain it understood made every other domain smarter.</p>
+
+<div class="growth-timeline">
+  <div class="growth-step"><span class="gnum">1</span><span><strong>Sorted documents</strong> &mdash; worked out what was worth keeping</span></div>
+  <div class="growth-step"><span class="gnum">2</span><span><strong>Tracked decisions</strong> &mdash; recorded why, so the same question did not have to be answered twice</span></div>
+  <div class="growth-step"><span class="gnum">3</span><span><strong>Connected domains</strong> &mdash; financial decisions linked to goals; health linked to scheduling</span></div>
+  <div class="growth-step"><span class="gnum">4</span><span><strong>Added specialists</strong> &mdash; each domain got a dedicated assistant with defined tools and clear limits</span></div>
+  <div class="growth-step"><span class="gnum">5</span><span><strong>Built governance</strong> &mdash; approval gates, safety layers, audit trails, Consensus_Engine reviews</span></div>
+  <div class="growth-step gfinal"><span class="gnum">&rarr;</span><span><strong>20 specialists. Every domain connected. Still growing.</strong></span></div>
+</div>
+
+<div class="highlight dark">
+  <strong>This is not a chatbot you talk to when you remember to.</strong><br>
+  It is infrastructure for a life &mdash; built to grow, remember, connect, and govern itself as new needs arrive.
+</div>
+</section>
+
+<section id="frees-you">
+<h2>What it actually frees you from</h2>
+<p>The problem is not that you lack tools. It is that your tools do not talk to each other &mdash; and the mental load of connecting them falls entirely on you.</p>
+<div class="freedom-grid">
+  <div class="freedom-card">
+    <div class="fc-icon">&#x1F9E0;</div>
+    <h3>Decision fatigue</h3>
+    <p>Tracks what you&rsquo;ve already decided. You stop relitigating the same questions every week.</p>
+  </div>
+  <div class="freedom-card">
+    <div class="fc-icon">&#x1F500;</div>
+    <h3>Scattered context</h3>
+    <p>Five apps. Three spreadsheets. A notes file from last year. The Vault is the connective tissue between all of it.</p>
+  </div>
+  <div class="freedom-card">
+    <div class="fc-icon">&#x1F4A1;</div>
+    <h3>Lost ideas</h3>
+    <p>Ideas captured at any hour get routed to the right place &mdash; not buried in a generic notes pile you&rsquo;ll stop checking.</p>
+  </div>
+  <div class="freedom-card">
+    <div class="fc-icon">&#x26A1;</div>
+    <h3>Unilateral AI action</h3>
+    <p>No surprise posts. No deleted files. No sent emails you didn&rsquo;t review. The system plans; you decide and act.</p>
+  </div>
+  <div class="freedom-card">
+    <div class="fc-icon">&#x1F4D6;</div>
+    <h3>Documentation debt</h3>
+    <p>When the system changes, the documentation updates. No separate documentation pass required.</p>
+  </div>
+  <div class="freedom-card">
+    <div class="fc-icon">&#x1F31E;</div>
+    <h3>Morning decision load</h3>
+    <p>A daily briefing surfaces what matters today &mdash; tasks, health state, priorities, schedule &mdash; before you&rsquo;ve had to think about it.</p>
+  </div>
+</div>
+</section>
+
 <section id="aspiration">
 <h2>Start with an aspiration</h2>
-<p>Here is what The Vault is actually for.</p>
+<p>Here is what The Vault is actually built for. Imagine you have this raw thought:</p>
 <div class="highlight purple">
   <strong>&ldquo;I want to build a more stable creative life.</strong> My ferret-themed business, streaming,
   content ideas, finances, routines, and health habits all live in separate piles.
@@ -181,14 +247,9 @@ through every relevant part of the system.</p>
 <div class="diagram-container" role="figure" aria-label="Inspiration to Execution flow diagram">
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 500" width="100%" style="max-width:660px;display:block;margin:0 auto;" aria-hidden="true">
   <defs>
-    <marker id="am" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
-      <polygon points="0 0, 8 3, 0 6" fill="#6a737d"/>
-    </marker>
-    <marker id="ab" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
-      <polygon points="0 0, 8 3, 0 6" fill="#0366d6"/>
-    </marker>
+    <marker id="am" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#6a737d"/></marker>
+    <marker id="ab" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#0366d6"/></marker>
   </defs>
-  <!-- Vault_Brain sidebar -->
   <rect x="0" y="118" width="128" height="320" rx="6" fill="#fafafa" stroke="#e1e4e8" stroke-width="1"/>
   <text x="64" y="138" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" font-weight="700" fill="#1a1a2e">Vault_Brain</text>
   <text x="64" y="153" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="10" fill="#6a737d">governs</text>
@@ -199,48 +260,40 @@ through every relevant part of the system.</p>
   <line x1="128" y1="254" x2="144" y2="254" stroke="#c5b3f5" stroke-width="1.5" stroke-dasharray="4,3"/>
   <line x1="128" y1="312" x2="144" y2="312" stroke="#c5b3f5" stroke-width="1.5" stroke-dasharray="4,3"/>
   <line x1="128" y1="370" x2="144" y2="370" stroke="#c5b3f5" stroke-width="1.5" stroke-dasharray="4,3"/>
-  <!-- Box 1: Raw idea -->
   <rect x="144" y="8" width="220" height="42" rx="6" fill="#f3f0ff" stroke="#6f42c1" stroke-width="2"/>
   <text x="254" y="24" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="700" fill="#6f42c1">Raw idea dump</text>
   <text x="254" y="40" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#6a737d">(messy, unfiltered, real)</text>
   <line x1="254" y1="50" x2="254" y2="66" stroke="#6a737d" stroke-width="2" marker-end="url(#am)"/>
-  <!-- Box 2 -->
   <rect x="144" y="68" width="220" height="40" rx="6" fill="#1a1a2e"/>
   <text x="254" y="93" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="600" fill="#fff">Inspiration &#8212; captures it</text>
   <line x1="254" y1="108" x2="254" y2="124" stroke="#6a737d" stroke-width="2" marker-end="url(#am)"/>
-  <!-- Box 3 -->
   <rect x="144" y="126" width="220" height="40" rx="6" fill="#1a1a2e"/>
   <text x="254" y="151" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="600" fill="#fff">Aspiration &#8212; give it structure</text>
   <line x1="254" y1="166" x2="254" y2="182" stroke="#6a737d" stroke-width="2" marker-end="url(#am)"/>
-  <!-- Box 4: Goals + branch -->
   <rect x="144" y="184" width="220" height="40" rx="6" fill="#0366d6"/>
   <text x="254" y="209" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="600" fill="#fff">Goals &#8594; milestones + criteria</text>
   <line x1="364" y1="204" x2="414" y2="204" stroke="#0366d6" stroke-width="1.5" marker-end="url(#ab)"/>
   <rect x="416" y="186" width="206" height="36" rx="5" fill="#f1f8ff" stroke="#0366d6" stroke-width="1.5"/>
   <text x="519" y="209" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#0366d6">CFO: budget check</text>
   <line x1="254" y1="224" x2="254" y2="240" stroke="#6a737d" stroke-width="2" marker-end="url(#am)"/>
-  <!-- Box 5: Routines + branch -->
   <rect x="144" y="242" width="220" height="40" rx="6" fill="#0366d6"/>
   <text x="254" y="267" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="600" fill="#fff">Routines &#8594; daily habits</text>
   <line x1="364" y1="262" x2="414" y2="262" stroke="#0366d6" stroke-width="1.5" marker-end="url(#ab)"/>
   <rect x="416" y="244" width="206" height="36" rx="5" fill="#f1f8ff" stroke="#0366d6" stroke-width="1.5"/>
   <text x="519" y="267" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#0366d6">Websearch: research gaps</text>
   <line x1="254" y1="282" x2="254" y2="298" stroke="#6a737d" stroke-width="2" marker-end="url(#am)"/>
-  <!-- Box 6: Tasks + branch -->
   <rect x="144" y="300" width="220" height="40" rx="6" fill="#0366d6"/>
   <text x="254" y="325" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="600" fill="#fff">Tasks &#8594; executable steps</text>
   <line x1="364" y1="320" x2="414" y2="320" stroke="#0366d6" stroke-width="1.5" marker-end="url(#ab)"/>
   <rect x="416" y="302" width="206" height="36" rx="5" fill="#f1f8ff" stroke="#0366d6" stroke-width="1.5"/>
   <text x="519" y="325" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#0366d6">Business_Ops: monetise</text>
   <line x1="254" y1="340" x2="254" y2="356" stroke="#6a737d" stroke-width="2" marker-end="url(#am)"/>
-  <!-- Box 7: Schedule + branch -->
   <rect x="144" y="358" width="220" height="40" rx="6" fill="#0366d6"/>
   <text x="254" y="383" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="600" fill="#fff">Schedule + Daily Briefing</text>
   <line x1="364" y1="378" x2="414" y2="378" stroke="#0366d6" stroke-width="1.5" marker-end="url(#ab)"/>
   <rect x="416" y="360" width="206" height="36" rx="5" fill="#f1f8ff" stroke="#0366d6" stroke-width="1.5"/>
   <text x="519" y="383" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#0366d6">Contextual_Thinking: adapt</text>
   <line x1="254" y1="398" x2="254" y2="414" stroke="#6a737d" stroke-width="2" marker-end="url(#am)"/>
-  <!-- Box 8: Review -->
   <rect x="144" y="416" width="220" height="40" rx="6" fill="#22863a"/>
   <text x="254" y="441" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="600" fill="#fff">Review + adapt &#8594; loop back</text>
   <text x="144" y="472" font-family="-apple-system,sans-serif" font-size="10" fill="#6a737d">&#8617; priorities evolve; loop repeats as the plan matures</text>
@@ -249,11 +302,32 @@ through every relevant part of the system.</p>
 </div>
 </section>
 
-<!-- INBOX ROUTER -->
+<section id="feels-like">
+<h2>What it feels like to use it</h2>
+<p>Here are real examples of The Vault in action.</p>
+<div class="feel-grid">
+  <div class="feel-card">
+    <span class="trigger">&#x2615; Before you&rsquo;ve had coffee&hellip;</span>
+    <p>The morning briefing is already waiting. Active tasks, blocked items, today&rsquo;s schedule, health state from yesterday. No prompting needed. The system assembled it because it knows the connections between your goals, routines, health, and calendar.</p>
+  </div>
+  <div class="feel-card">
+    <span class="trigger">&#x1F4A1; You had an idea at midnight&hellip;</span>
+    <p>You type it in. Inspiration captures it without filtering. By morning it has been routed &mdash; to Goals if it is an ambition, to Backlog if it is a task, to Research if it needs investigation first. It doesn&rsquo;t live in a generic notes file. It lives in the right place.</p>
+  </div>
+  <div class="feel-card">
+    <span class="trigger">&#x1F4E7; You got a messy email thread&hellip;</span>
+    <p>The email intelligence layer reads it without touching your mailbox. It extracts obligations, flags urgent items, and routes action items to the backlog &mdash; without sending anything, writing anything, or guessing what you want.</p>
+  </div>
+  <div class="feel-card">
+    <span class="trigger">&#x1F331; You need a feature that doesn&rsquo;t exist yet&hellip;</span>
+    <p>The Vault doesn&rsquo;t pretend it does. It checks honestly, reports what is needed, files a proposal, identifies credentials and safety requirements, builds the smallest safe version first, and gates every account action behind your explicit approval.</p>
+  </div>
+</div>
+</section>
+
 <section id="inbox-router">
 <h2>The Inbox Router</h2>
-<p>The Vault is not just storing notes. Every input &mdash; a raw idea, a request, a message, a new capability ask &mdash;
-gets routed to the right system automatically.</p>
+<p>The Vault is not just storing notes. Every input &mdash; a raw idea, a request, a message, a new capability ask &mdash; gets routed to the right system automatically.</p>
 <p><strong>From inbox chaos to routed action.</strong> You drop something in; the system works out where it belongs and what happens next.</p>
 <div class="diagram-container" role="figure" aria-label="The Inbox Router — how The Vault routes inputs to specialist systems">
   <div class="router-diagram">
@@ -280,14 +354,11 @@ gets routed to the right system automatically.</p>
 </div>
 </section>
 
-<!-- PERSONAS -->
 <section id="personas">
 <h2>How the pieces work together</h2>
-<p>The Vault runs <strong>20 specialist assistants</strong> &mdash; each defined by what it does. No assistant acts outside its
-domain. No assistant can post, send, or make irreversible changes without explicit human approval.</p>
+<p>The Vault runs <strong>20 specialist assistants</strong> &mdash; each defined by what it does. No assistant acts outside its domain. No assistant can post, send, or make irreversible changes without explicit human approval.</p>
 <div class="highlight">
-  <strong>The Vault is not a single AI.</strong> It is a coordinated team &mdash; each member with a defined domain,
-  working under a governance layer that enforces safety and tracks state across sessions.
+  <strong>The Vault is not a single AI.</strong> It is a coordinated team &mdash; each member with a defined domain, working under a governance layer that enforces safety and tracks state across sessions.
 </div>
 <table>
   <tr><th>Assistant</th><th>What it does</th></tr>
@@ -312,21 +383,19 @@ domain. No assistant can post, send, or make irreversible changes without explic
 </table>
 </section>
 
-<!-- MISSING FEATURE -->
 <section id="missing-feature">
 <h2>Example: building a missing feature</h2>
-<p>One of the most useful things The Vault can do is <strong>grow new capabilities safely</strong> &mdash; instead
-of pretending every feature exists, or refusing to engage.</p>
+<p>One of the most useful things The Vault can do is <strong>grow new capabilities safely</strong> &mdash; instead of pretending every feature exists, or refusing to engage.</p>
 <div class="use-case">
   <p class="trigger">&ldquo;I want The Vault to manage my Redbubble account.&rdquo;</p>
   <p>This feature does not currently exist. Here is what happens when you ask for it.</p>
 </div>
 <ol class="feature-steps">
   <li><strong>Capability check.</strong> The Vault searches its own registry, backlog, and documentation to see if Redbubble integration exists in any form.</li>
-  <li><strong>Honest report.</strong> It does not invent a feature that does not exist. It says: &ldquo;Not built. Here is what would be required.&rdquo;</li>
+  <li><strong>Honest report.</strong> It does not invent a feature. It says: &ldquo;Not built. Here is what would be required.&rdquo;</li>
   <li class="gate"><strong>Proposal created.</strong> Captures: what the feature should do, which personas are relevant, what credentials and platform access are required.</li>
-  <li class="gate"><strong>Credentials and safety questions identified.</strong> Which API does Redbubble expose? What platform policies apply? What safety gates are required for account actions?</li>
-  <li><strong>Backlog tasks, forms, and tests created.</strong> Tool design, form design, test design, implementation steps &mdash; all tracked in the backlog.</li>
+  <li class="gate"><strong>Credentials and safety questions identified.</strong> Which API does Redbubble expose? What platform policies apply? What safety gates are required?</li>
+  <li><strong>Backlog tasks, forms, and tests created.</strong> Tool design, form design, test design, implementation steps &mdash; all tracked.</li>
   <li><strong>Smallest safe version first.</strong> Read-only: retrieve product performance data and summarise it. Nothing writes to the account.</li>
   <li><strong>Dry-run mode.</strong> Any feature touching account state shows what it <em>would</em> do, waiting for approval before acting.</li>
   <li class="gate"><strong>Human approves each account action.</strong> Uploads, edits, and deletions need explicit human sign-off for that specific action.</li>
@@ -334,54 +403,41 @@ of pretending every feature exists, or refusing to engage.</p>
   <li class="safe"><strong>Feature grows when approved.</strong> Analytics reporting, product listings, print-on-demand queue &mdash; each expansion requiring its own approval.</li>
 </ol>
 <div class="highlight green">
-  <strong>The system never pretends a missing feature exists.</strong> It builds features through a governed pathway
-  &mdash; proposal, design, test, dry-run, approval &mdash; and documents every step.
+  <strong>The system never pretends a missing feature exists.</strong> It builds features through a governed pathway &mdash; proposal, design, test, dry-run, approval &mdash; and documents every step.
 </div>
 <h3>Diagram: Build a Missing Feature</h3>
 <div class="diagram-container" role="figure" aria-label="Build a Missing Feature — Redbubble example step flow">
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580 488" width="100%" style="max-width:580px;display:block;margin:0 auto;" aria-hidden="true">
   <defs>
-    <marker id="af" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
-      <polygon points="0 0, 8 3, 0 6" fill="#6a737d"/>
-    </marker>
+    <marker id="af" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#6a737d"/></marker>
   </defs>
-  <!-- Step 1 request -->
   <rect x="90" y="6" width="400" height="42" rx="6" fill="#f3f0ff" stroke="#6f42c1" stroke-width="2"/>
   <text x="290" y="22" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="700" fill="#6f42c1">&#x201C;Manage my Redbubble account&#x201D;</text>
   <text x="290" y="38" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#6a737d">Request for a missing feature</text>
   <line x1="290" y1="48" x2="290" y2="62" stroke="#6a737d" stroke-width="2" marker-end="url(#af)"/>
-  <!-- Step 2 -->
   <rect x="90" y="64" width="400" height="38" rx="6" fill="#1a1a2e"/>
   <text x="290" y="88" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="600" fill="#fff">Capability check &#8212; does this exist?</text>
   <line x1="290" y1="102" x2="290" y2="116" stroke="#6a737d" stroke-width="2" marker-end="url(#af)"/>
-  <!-- Step 3 -->
   <rect x="90" y="118" width="400" height="38" rx="6" fill="#1a1a2e"/>
   <text x="290" y="142" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="600" fill="#fff">Honest report: not built &#8212; here is what&#x2019;s needed</text>
   <line x1="290" y1="156" x2="290" y2="170" stroke="#6a737d" stroke-width="2" marker-end="url(#af)"/>
-  <!-- Step 4 gate -->
   <rect x="90" y="172" width="400" height="38" rx="6" fill="#fff8e1" stroke="#b08800" stroke-width="2"/>
   <text x="290" y="196" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="600" fill="#b08800">Proposal &#8594; credentials + safety questions</text>
   <line x1="290" y1="210" x2="290" y2="224" stroke="#6a737d" stroke-width="2" marker-end="url(#af)"/>
-  <!-- Step 5 -->
   <rect x="90" y="226" width="400" height="38" rx="6" fill="#1a1a2e"/>
   <text x="290" y="250" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="600" fill="#fff">Backlog tasks + forms + tests created</text>
   <line x1="290" y1="264" x2="290" y2="278" stroke="#6a737d" stroke-width="2" marker-end="url(#af)"/>
-  <!-- Step 6 -->
   <rect x="90" y="280" width="400" height="38" rx="6" fill="#0366d6"/>
   <text x="290" y="304" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="600" fill="#fff">Smallest safe version first (read-only)</text>
   <line x1="290" y1="318" x2="290" y2="332" stroke="#6a737d" stroke-width="2" marker-end="url(#af)"/>
-  <!-- Step 7 gate -->
   <rect x="90" y="334" width="400" height="38" rx="6" fill="#fff8e1" stroke="#b08800" stroke-width="2"/>
   <text x="290" y="358" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="600" fill="#b08800">Dry-run mode &#8594; human approval gate</text>
   <line x1="290" y1="372" x2="290" y2="386" stroke="#6a737d" stroke-width="2" marker-end="url(#af)"/>
-  <!-- Step 8 gate -->
   <rect x="90" y="388" width="400" height="38" rx="6" fill="#fff8e1" stroke="#b08800" stroke-width="2"/>
   <text x="290" y="412" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="600" fill="#b08800">Account actions: explicit approval each time</text>
   <line x1="290" y1="426" x2="290" y2="440" stroke="#6a737d" stroke-width="2" marker-end="url(#af)"/>
-  <!-- Step 9 safe -->
   <rect x="90" y="442" width="400" height="38" rx="6" fill="#22863a"/>
   <text x="290" y="466" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="600" fill="#fff">Documentation updated &#8594; feature grows safely</text>
-  <!-- legend -->
   <rect x="90" y="486" width="12" height="12" rx="2" fill="#fff8e1" stroke="#b08800" stroke-width="1.5"/>
   <text x="107" y="496" font-family="-apple-system,sans-serif" font-size="10" fill="#6a737d">Approval gate</text>
   <rect x="210" y="486" width="12" height="12" rx="2" fill="#22863a"/>
@@ -393,7 +449,6 @@ of pretending every feature exists, or refusing to engage.</p>
 </div>
 </section>
 
-<!-- BOUNDARY -->
 <section id="boundary">
 <h2>Private vs public boundary</h2>
 <p>The Vault keeps personal data strictly local. What gets published externally is limited, redacted, and explicitly approved.</p>
@@ -430,49 +485,36 @@ of pretending every feature exists, or refusing to engage.</p>
 </div>
 </section>
 
-<!-- CAPABILITIES -->
 <section id="capabilities">
 <h2>What The Vault can already help with</h2>
-<p>These are capabilities working in production today.</p>
+<p>These capabilities are working in production today.</p>
 
 <h3>Idea capture and aspiration planning</h3>
-<p>Raw ideas, ambitions, and project concepts get captured and turned into actionable plans via the
-Inspiration &rarr; Goals &rarr; Routines cascade. Health state and energy context are factored in via Contextual_Thinking.</p>
+<p>Raw ideas, ambitions, and project concepts get captured and turned into actionable plans via the Inspiration &rarr; Goals &rarr; Routines cascade. Health state and energy context are factored in via Contextual_Thinking.</p>
 
 <h3>Routines and scheduling</h3>
-<p>The Routines assistant designs habit structures around real-life constraints. A morning briefing system
-pulls Health state, goals progress, and priority tasks into a single daily summary &mdash; no prompting required.</p>
+<p>The Routines assistant designs habit structures around real-life constraints. A morning briefing system pulls Health state, goals progress, and priority tasks into a single daily summary &mdash; no prompting required.</p>
 
 <h3>Documentation and manual automation</h3>
-<p>The Vault maintains its own documentation automatically. When the system changes, a change-log tracks
-what needs updating. A daily review flags stale sections. This guide is part of that system.</p>
+<p>The Vault maintains its own documentation automatically. When the system changes, a change-log tracks what needs updating. A daily review flags stale sections. This guide is part of that system.</p>
 
 <h3>Email intelligence (read-only)</h3>
-<p>An email intelligence layer provides read-only analysis: threading, tagging, sentiment detection, and
-action-item extraction &mdash; without mutating any mailbox state. Account write actions require
-explicit credential setup and human approval per action.</p>
+<p>An email intelligence layer provides read-only analysis: threading, tagging, sentiment detection, and action-item extraction &mdash; without mutating any mailbox state. Account write actions require explicit credential setup and human approval per action.</p>
 
 <h3>Shopping and specials support</h3>
-<p>The shopping intelligence layer tracks ALDI AU weekly specials and cross-references budget and food
-plan needs to suggest purchasing options.</p>
+<p>The shopping intelligence layer tracks ALDI AU weekly specials and cross-references budget and food plan needs to suggest purchasing options.</p>
 
 <h3>Business and content planning</h3>
-<p>Business_Ops handles grant tracking, adversarial business plan review (finding weaknesses before they
-matter), and content strategy for creative projects. Every plan is presented for review before any
-external action.</p>
+<p>Business_Ops handles grant tracking, adversarial business plan review, and content strategy for creative projects. Every plan is presented for review before any external action.</p>
 
 <h3>Research and web intelligence</h3>
-<p>The Websearch assistant retrieves information from public web pages &mdash; intentionally scoped to
-public, static content only. It does not log into accounts, protecting privacy and platform terms of service.</p>
+<p>The Websearch assistant retrieves information from public web pages &mdash; intentionally scoped to public, static content only.</p>
 
 <h3>Persona-based support for 20 domains</h3>
-<p>You interact with the specialist most relevant to your current need. Vault_Brain coordinates the rest
-&mdash; routing, tracking, and ensuring nothing falls through the gaps.</p>
+<p>You interact with the specialist most relevant to your current need. Vault_Brain coordinates the rest &mdash; routing, tracking, and ensuring nothing falls through the gaps.</p>
 
 <h3>Safety and governance built in</h3>
-<p>The governance layer &mdash; Vault_Brain, Consensus_Engine, and the Security assistant &mdash; exists to
-prevent unsafe actions. All core safety gates are enforced in production. The system documents its own
-safety status.</p>
+<p>The governance layer &mdash; Vault_Brain, Consensus_Engine, and the Security assistant &mdash; exists to prevent unsafe actions. All core safety gates are enforced in production.</p>
 
 <h3>Working reliably today</h3>
 <div class="status-grid">
@@ -513,7 +555,6 @@ safety status.</p>
 </div>
 </section>
 
-<!-- STILL DEVELOPING -->
 <section id="developing">
 <h2>What is still developing</h2>
 <p>The Vault is honest about what is not done yet.</p>
@@ -527,44 +568,47 @@ safety status.</p>
 </ul>
 </section>
 
-<!-- WHY DIFFERENT -->
 <section id="why-different">
 <h2>Why this is different</h2>
 <div class="principles-grid">
   <div class="principle">
     <div class="num">&#x1F512;</div>
     <h3>Local-first</h3>
-    <p>Your personal data &mdash; health, finances, emails, creative work &mdash; stays on your machine.
-    Nothing is synced, sampled, or shared by default.</p>
+    <p>Your personal data &mdash; health, finances, emails, creative work &mdash; stays on your machine. Nothing is synced, sampled, or shared by default.</p>
   </div>
   <div class="principle">
     <div class="num">&#x2705;</div>
     <h3>Approval-gated automation</h3>
-    <p>Every irreversible action &mdash; posting, deploying, sending, deleting &mdash; needs explicit human
-    sign-off for that specific action. The system cannot act unilaterally.</p>
+    <p>Every irreversible action &mdash; posting, deploying, sending, deleting &mdash; needs explicit human sign-off for that specific action. The system cannot act unilaterally.</p>
   </div>
   <div class="principle">
     <div class="num">&#x1F9E0;</div>
     <h3>Memory plus governance</h3>
-    <p>Remembers your preferences, decisions, and context across sessions without a cloud database.
-    Audits its own behaviour with the Consensus_Engine.</p>
+    <p>Remembers your preferences, decisions, and context across sessions without a cloud database. Audits its own behaviour with the Consensus_Engine.</p>
   </div>
   <div class="principle">
     <div class="num">&#x1F331;</div>
     <h3>Grows new capabilities safely</h3>
-    <p>When a feature does not exist, the system builds it through a governed pathway &mdash; not by
-    improvising, hallucinating, or pretending.</p>
+    <p>When a feature does not exist, the system builds it through a governed pathway &mdash; not by improvising, hallucinating, or pretending.</p>
   </div>
   <div class="principle">
     <div class="num">&#x26A1;</div>
     <h3>Not just a chatbot</h3>
-    <p>An evolving operating system. It coordinates specialists, tracks its own state, maintains
-    documentation, and executes multi-step work under human oversight.</p>
+    <p>An evolving operating system. It coordinates specialists, tracks its own state, maintains documentation, and executes multi-step work under human oversight.</p>
   </div>
 </div>
 </section>
 
-<!-- WHO -->
+<section id="origin-close">
+<h2>Where it came from. Where it is going.</h2>
+<p>It started with one cardboard box of old documents that needed sorting.</p>
+<p>Every question that sorting raised became a new capability. Every new capability raised more questions. That is how a paperwork-cleanup project grows a safety governance layer, a coordination brain, 20 specialist assistants, and a governed process for extending itself.</p>
+<p>The system is not finished. It will not be &ldquo;finished&rdquo; in the way a product release is finished. But the foundations are solid: the coordination layer, the safety model, the memory architecture, the specialist design. They work. They are being tested. They are documented.</p>
+<div class="highlight purple">
+  <strong>What gets built next depends on what the next question asks.</strong> That is deliberate. A system that stops responding to real needs stops being useful.
+</div>
+</section>
+
 <section id="who-this-is-for">
 <h2>Who this is for</h2>
 <p>The Vault is a personal project. It is relevant to:</p>
@@ -576,12 +620,10 @@ safety status.</p>
 </ul>
 </section>
 
-<!-- CLOSING -->
 <section id="closing">
 <h2>The bottom line</h2>
-<p>The Vault turns scattered life, project, and business inputs into governed action.</p>
-<p><strong>Raw idea &rarr; structured aspiration &rarr; actionable plan &rarr; coordinated execution</strong>
-&mdash; with human approval at every gate that matters.</p>
+<p>One pile of paperwork. Years of building. A system that now coordinates 20 specialists across every domain of a life &mdash; and knows how to grow safely when the next domain arrives.</p>
+<p><strong>Raw idea &rarr; structured aspiration &rarr; actionable plan &rarr; coordinated execution</strong> &mdash; with human approval at every gate that matters.</p>
 <p>It is not finished. It is actively built. It is honest about what works today and what is still coming.</p>
 <p>That is the point.</p>
 <p style="margin-top:1.5rem;"><a href="../">&larr; Back to Manual Home</a> &nbsp;&middot;&nbsp; <a href="../developer/">Developer &amp; Operator Manual</a></p>
