@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Vault — Project Guide</title>
+  <style>
+    :root {
+      --bg: #f8f9fa; --surface: #fff; --border: #e1e4e8;
+      --text: #24292e; --muted: #6a737d; --accent: #0366d6;
+      --green: #22863a; --orange: #b08800; --dark: #1a1a2e;
+      --purple: #6f42c1; --light-accent: #f1f8ff;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 16px; line-height: 1.7; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    h1 { font-size: 2.5rem; color: var(--dark); margin-bottom: 0.5rem; font-weight: 800; }
+    h2 { font-size: 1.6rem; color: var(--dark); margin: 2.5rem 0 0.75rem; padding-top: 2rem; border-top: 2px solid var(--border); }
+    h3 { font-size: 1.15rem; color: var(--dark); margin: 1.25rem 0 0.5rem; font-weight: 600; }
+    p { margin-bottom: 0.85rem; }
+    ul, ol { margin: 0.5rem 0 0.85rem 1.5rem; }
+    li { margin-bottom: 0.4rem; }
+    strong { font-weight: 700; }
+    table { width: 100%; border-collapse: collapse; margin: 0.75rem 0 1.25rem; font-size: 0.93em; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+    th { background: var(--dark); color: #fff; text-align: left; padding: 10px 14px; font-weight: 600; font-size: 0.88em; letter-spacing: 0.3px; }
+    td { padding: 9px 14px; border-bottom: 1px solid var(--border); background: var(--surface); vertical-align: top; }
+    tr:last-child td { border-bottom: none; }
+    .layout { max-width: 900px; margin: 0 auto; padding: 0 1.5rem; }
+    header { background: var(--dark); color: #fff; padding: 4rem 0 3rem; }
+    header .inner { max-width: 900px; margin: 0 auto; padding: 0 1.5rem; }
+    header h1 { color: #fff; }
+    header .subtitle { font-size: 1.2rem; color: rgba(255,255,255,0.7); margin: 0.5rem 0 1.5rem; max-width: 600px; }
+    header .badges { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1rem; }
+    .badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.8em; font-weight: 600; border: 1px solid rgba(255,255,255,0.3); color: rgba(255,255,255,0.85); }
+    .hero-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+    .hero-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+    .hero-card .icon { font-size: 2rem; margin-bottom: 0.5rem; }
+    .hero-card h3 { margin: 0 0 0.3rem; font-size: 1rem; }
+    .hero-card p { font-size: 0.88em; color: var(--muted); margin: 0; }
+    .highlight { background: var(--light-accent); border-left: 4px solid var(--accent); border-radius: 0 6px 6px 0; padding: 1rem 1.25rem; margin: 1rem 0; }
+    .principles-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin: 1rem 0; }
+    .principle { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; }
+    .principle h3 { font-size: 0.95rem; color: var(--dark); margin: 0.5rem 0 0.3rem; }
+    .principle p { font-size: 0.88em; color: var(--muted); margin: 0; }
+    .principle .num { font-size: 1.5rem; font-weight: 800; color: var(--accent); }
+    .use-case { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; margin: 0.75rem 0; }
+    .use-case .trigger { font-style: italic; color: var(--muted); font-size: 0.92em; margin-bottom: 0.4rem; }
+    .use-case p { font-size: 0.92em; margin: 0; }
+    .status-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin: 1rem 0; }
+    .status-card { border-radius: 8px; padding: 1.25rem; }
+    .status-card.ready { background: #e6f9ee; border: 1px solid #b2dfc3; }
+    .status-card.partial { background: #fff8e1; border: 1px solid #ffe082; }
+    .status-card.planned { background: #f3f0ff; border: 1px solid #c5b3f5; }
+    .status-card h3 { font-size: 0.95rem; margin-bottom: 0.5rem; }
+    .status-card ul { margin: 0; }
+    .status-card li { font-size: 0.88em; }
+    footer { background: var(--dark); color: rgba(255,255,255,0.55); font-size: 0.83em; padding: 2rem 0; margin-top: 4rem; text-align: center; }
+    footer a { color: rgba(255,255,255,0.75); }
+    main { padding: 2rem 0 4rem; }
+    section { margin-bottom: 0.5rem; }
+    @media (max-width: 700px) { h1 { font-size: 1.8rem; } header { padding: 2.5rem 0 2rem; } }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="inner">
+    <h1>The Vault</h1>
+    <p class="subtitle">A personal AI operating system — privately owned, locally run, and built for real life.</p>
+    <div class="badges">
+      <span class="badge">Local-First</span>
+      <span class="badge">Private by Design</span>
+      <span class="badge">20 Specialist Assistants</span>
+      <span class="badge">Actively Developed</span>
+    </div>
+  </div>
+</header>
+
+<main>
+<div class="layout">
+
+<section id="what-is">
+<h2>What Is The Vault?</h2>
+<p>The Vault is a personal AI operating system. It coordinates a team of specialized AI assistants to help manage the practical, creative, and strategic dimensions of daily life and work — all running on your own machine, under your control.</p>
+<p>It is not a cloud subscription. It does not send your data somewhere by default. It runs locally, stores everything locally, and connects to external AI services only for specific tasks you explicitly trigger.</p>
+
+<div class="hero-grid">
+  <div class="hero-card">
+    <div class="icon">🧠</div>
+    <h3>Coordinated AI team</h3>
+    <p>20 specialist assistants, each with a defined domain and clear limits.</p>
+  </div>
+  <div class="hero-card">
+    <div class="icon">🔒</div>
+    <h3>Local-first privacy</h3>
+    <p>Personal data stays on your machine. You control what leaves.</p>
+  </div>
+  <div class="hero-card">
+    <div class="icon">✅</div>
+    <h3>Human approval gating</h3>
+    <p>The system plans and drafts. You decide and act.</p>
+  </div>
+  <div class="hero-card">
+    <div class="icon">📚</div>
+    <h3>Memory across sessions</h3>
+    <p>Remembers your preferences, goals, and prior decisions — without a cloud database.</p>
+  </div>
+</div>
+</section>
+
+<section id="problem">
+<h2>The Problem It Solves</h2>
+<p>Most AI tools are general-purpose assistants. They are useful for quick questions but poor at:</p>
+<ul>
+  <li>Remembering your context across different conversations and sessions</li>
+  <li>Understanding your specific goals, constraints, and preferences over time</li>
+  <li>Handling genuinely different domains — health, finances, creative work, communications — with appropriate depth in each</li>
+  <li>Doing meaningful work on your behalf without constant instruction and hand-holding</li>
+  <li>Keeping sensitive personal information private while still being useful</li>
+</ul>
+<p>The Vault is built to close this gap. It is a deeply personal, modular system that develops working knowledge of your life, adapts to your domains, and grows with you.</p>
+</section>
+
+<section id="local-first">
+<h2>Local-First and Private by Design</h2>
+<p>Every piece of personal data stays on your machine. There is no cloud database, no background sync, no telemetry, and no subscription model.</p>
+
+<div class="principles-grid">
+  <div class="principle">
+    <div class="num">1</div>
+    <h3>Sensitive data stays local</h3>
+    <p>Health data, financial records, and personal communications never leave your machine unless you deliberately trigger a task that requires it.</p>
+  </div>
+  <div class="principle">
+    <div class="num">2</div>
+    <h3>Explicit AI calls only</h3>
+    <p>When a task genuinely needs a large language model, The Vault uses configured API connections — and only for that specific task. Nothing is sent speculatively.</p>
+  </div>
+  <div class="principle">
+    <div class="num">3</div>
+    <h3>You remain in control</h3>
+    <p>Every significant action — posting, deploying, sending, or making irreversible changes — requires explicit human approval. The system cannot act unilaterally.</p>
+  </div>
+</div>
+</section>
+
+<section id="how-it-works">
+<h2>How the AI System Works</h2>
+
+<h3>The Brain Layer</h3>
+<p>The Vault has four coordinating "brains" that manage how AI thinking happens:</p>
+
+<table>
+  <tr><th>Brain</th><th>What it does</th></tr>
+  <tr><td><strong>Vault_Brain</strong></td><td>The system coordinator. Routes tasks to the right assistant, tracks what needs human attention, manages proposals, and enforces safety gates. It operates at maximum determinism — no improvisation. It coordinates, not performs.</td></tr>
+  <tr><td><strong>TaskMaster_Brain</strong></td><td>The mission planner. Breaks complex, multi-step tasks into ordered plans, assigns each step to the right specialist, and tracks progress so completed work is never re-done unnecessarily.</td></tr>
+  <tr><td><strong>Consensus_Engine</strong></td><td>The governance layer. Scores decisions, validates important transitions, and audits whether the system is following its own rules. Read-only — it observes and reports but never takes action itself.</td></tr>
+  <tr><td><strong>Contextual_Thinking</strong></td><td>Manages thinking quality. Shapes how AI assistants frame problems, keeps prompts within useful limits, and helps each assistant approach its domain with the right reasoning approach.</td></tr>
+</table>
+
+<h3>Specialized Assistants — The Persona System</h3>
+<p>Rather than a single general-purpose AI, The Vault operates a team of <strong>20 specialized assistants</strong> — each with a defined domain, a specific set of capabilities, and clear boundaries about what it should and should not do.</p>
+
+<div class="highlight">
+  <strong>No assistant acts outside its domain.</strong> No assistant can deploy, post, send, or make irreversible changes without explicit human approval.
+</div>
+
+<table>
+  <tr><th>Assistant</th><th>What it does</th></tr>
+  <tr><td><strong>Admin Assistant</strong></td><td>Broad coordination — handles most day-to-day domain workflows</td></tr>
+  <tr><td><strong>Medical</strong></td><td>Health tracking, food planning, wellbeing check-ins across a five-stage framework</td></tr>
+  <tr><td><strong>CFO</strong></td><td>Budget management, expense tracking, financial intelligence</td></tr>
+  <tr><td><strong>Business Ops</strong></td><td>Grant tracking, business planning, adversarial plan review</td></tr>
+  <tr><td><strong>Goals</strong></td><td>Turns ambitions into projects with milestones, roadmaps, and success criteria</td></tr>
+  <tr><td><strong>Routines</strong></td><td>Designs habit structures and routine scaffolding that fit real life</td></tr>
+  <tr><td><strong>Inspiration</strong></td><td>Creative prompts and idea generation</td></tr>
+  <tr><td><strong>Conversationalist</strong></td><td>Message drafting, voice and tone management, social communication</td></tr>
+  <tr><td><strong>Image Processor</strong></td><td>Visual design queue and image generation workflows</td></tr>
+  <tr><td><strong>Videographer</strong></td><td>Video strategy and stream content planning</td></tr>
+  <tr><td><strong>Shopping Assistant</strong></td><td>Price intelligence, weekly specials, budget-aware purchasing suggestions</td></tr>
+  <tr><td><strong>Websearch</strong></td><td>Research and information retrieval from public web pages</td></tr>
+  <tr><td><strong>Master Coder</strong></td><td>Code generation, debugging, and test writing</td></tr>
+  <tr><td><strong>Security</strong></td><td>Safety gate enforcement and approval workflows</td></tr>
+  <tr><td><strong>Memory assistants ×3</strong></td><td>Short-term, medium-term, and long-term knowledge retrieval</td></tr>
+</table>
+</section>
+
+<section id="capabilities">
+<h2>What The Vault Can Do</h2>
+
+<h3>Personal Planning and Daily Routines</h3>
+<p>The Goals assistant turns vague ambitions into structured plans — with milestones, dependencies, and success criteria that make progress trackable. The Routines assistant helps design habits that fit around real-life constraints. A morning briefing system pulls health state, reminders, and priority tasks into a single daily summary.</p>
+
+<h3>Health and Food Support</h3>
+<p>The Medical assistant manages a five-stage wellbeing framework covering physical tracking, mental check-ins, goal alignment, journaling, and daily prompts. It connects to a food planning system that can factor in nutrition goals, preferences, and dietary restrictions. All health data stays entirely local and is never shared.</p>
+
+<h3>Memory and Knowledge Across Time</h3>
+<p>The Vault maintains three types of memory:</p>
+<ul>
+  <li><strong>Active session memory</strong> — what was discussed and decided in the current interaction</li>
+  <li><strong>Living memory</strong> — preferences, decisions, and context that carry forward across sessions</li>
+  <li><strong>Long-term retrieval</strong> — summaries and knowledge notes generated over time for durable reference</li>
+</ul>
+<p>This means the system genuinely remembers your preferences and prior decisions without a cloud database.</p>
+
+<h3>Business Operations</h3>
+<p>The Business Ops assistant handles grant application tracking, adversarial business plan review (finding weaknesses before they matter), and content strategy for creative projects. It drafts and plans but requires human approval before taking action anywhere external.</p>
+
+<h3>Content and Social Communication</h3>
+<p>The Conversationalist assistant manages message drafting, communication tone, and contact context. A social profile system tracks relationships and communication history locally. Every draft is presented for human review before anything is sent. The system never posts or sends on its own.</p>
+
+<h3>Shopping and Price Intelligence</h3>
+<p>The shopping intelligence layer tracks ALDI AU weekly specials and can suggest budget-aware purchasing based on what is currently available, cross-referenced against food plan needs. Expansion to more supermarkets and price comparison is planned.</p>
+
+<h3>Documentation Automation</h3>
+<p>The Vault maintains its own documentation automatically. When the system changes, a change-log tracks what needs updating. A daily review process flags stale sections. This guide was generated by that system.</p>
+
+<h3>Visual and Video Workflows</h3>
+<p>The Image Processor assistant manages a design request queue for AI image generation, connected to image generation APIs. The Videographer assistant supports video strategy and stream content planning for the Ferret Fatale creative brand.</p>
+
+<h3>Web Research</h3>
+<p>The Websearch assistant retrieves information from public web pages. It is intentionally scoped to public, static content — it does not log into accounts or access anything behind authentication, protecting privacy and respecting terms of service.</p>
+
+<h3>Governance and Safety Built In</h3>
+<p>Safety is not an add-on. The Consensus_Engine and Security assistant exist specifically to prevent the system from taking unsafe actions. All three core security gates have been formally resolved and are enforced in production. The system documents its own safety status.</p>
+</section>
+
+<section id="maturity">
+<h2>Current Maturity</h2>
+<p>The Vault is an actively developed, personally operated system. It is honest about what works, what is in progress, and what is planned.</p>
+
+<div class="status-grid">
+  <div class="status-card ready">
+    <h3>✅ Working reliably today</h3>
+    <ul>
+      <li>Coordination and orchestration layer</li>
+      <li>20 active specialist assistants</li>
+      <li>Health and food planning</li>
+      <li>Financial tracking</li>
+      <li>Shopping intelligence (ALDI)</li>
+      <li>Memory and knowledge retrieval</li>
+      <li>Scheduling and morning briefings</li>
+      <li>Business operations and grant tracking</li>
+      <li>Documentation automation</li>
+      <li>Web research (public pages)</li>
+      <li>All safety gates enforced</li>
+    </ul>
+  </div>
+  <div class="status-card partial">
+    <h3>⚙️ Implemented, needs setup</h3>
+    <ul>
+      <li>Email integration — requires credential configuration</li>
+      <li>Discord read integration — requires bot setup</li>
+      <li>Social platform monitoring — requires per-platform credentials</li>
+      <li>Local AI model inference (Ollama) — requires installation</li>
+    </ul>
+  </div>
+  <div class="status-card planned">
+    <h3>🔮 Planned, not yet built</h3>
+    <ul>
+      <li>Full social media posting via platform APIs</li>
+      <li>Multi-supermarket price comparison</li>
+      <li>Video and stream production automation</li>
+      <li>Full offline operation via local models</li>
+    </ul>
+  </div>
+</div>
+</section>
+
+<section id="use-cases">
+<h2>Example Use Cases</h2>
+
+<div class="use-case">
+  <p class="trigger">"Run my morning briefing."</p>
+  <p>The system checks health state, pulls today's schedule, reviews goals progress, flags priority tasks, and delivers a single daily summary. No prompting needed — the routine runs on a batch trigger.</p>
+</div>
+
+<div class="use-case">
+  <p class="trigger">"I want to build a sustainable content business around Ferret Fatale."</p>
+  <p>The Goals assistant breaks this into projects, milestones, and success criteria. Business Ops handles the planning layer. CFO connects it to financial targets. The output is a structured roadmap you can actually work from.</p>
+</div>
+
+<div class="use-case">
+  <p class="trigger">"Plan this week's meals around what's on special."</p>
+  <p>The shopping assistant fetches current ALDI specials. The Medical assistant checks against dietary preferences and nutrition goals. A meal plan is generated without leaving the machine or querying a third-party service.</p>
+</div>
+
+<div class="use-case">
+  <p class="trigger">"Draft a response to this message — warm but professional tone."</p>
+  <p>The Conversationalist checks the relationship context, selects the appropriate communication voice, and drafts the response. You review it, make any edits, and send it yourself. The system never sends without your explicit action.</p>
+</div>
+
+<div class="use-case">
+  <p class="trigger">"What grants are available for small creative businesses in Australia right now?"</p>
+  <p>The Websearch assistant retrieves current public information. Business Ops cross-references the existing grant tracker. A structured summary is delivered with sources and relevance notes.</p>
+</div>
+</section>
+
+<section id="safety-privacy">
+<h2>Safety and Privacy Philosophy</h2>
+<p>Three principles govern everything The Vault does:</p>
+
+<div class="principles-grid">
+  <div class="principle">
+    <div class="num">1</div>
+    <h3>Human approval for irreversible actions</h3>
+    <p>The system plans, drafts, and prepares. It cannot deploy, post, send, or delete without a human explicitly saying yes for that specific action.</p>
+  </div>
+  <div class="principle">
+    <div class="num">2</div>
+    <h3>Sensitive data stays local</h3>
+    <p>Health data, financial records, personal communications — none of it reaches any external service unless you trigger a task that specifically requires it and you approve it.</p>
+  </div>
+  <div class="principle">
+    <div class="num">3</div>
+    <h3>Transparent about capabilities and limits</h3>
+    <p>The system maintains public documentation that honestly describes what it can do, what it cannot do, and what is still being built. There is no "just trust us."</p>
+  </div>
+</div>
+</section>
+
+<section id="future">
+<h2>Future Direction</h2>
+<p>The Vault is moving toward:</p>
+<ul>
+  <li><strong>Local AI inference</strong> — running capable small language models on-device for suitable tasks, reducing dependence on external API calls and increasing privacy</li>
+  <li><strong>Deeper platform integration</strong> — with explicit, approved, well-scoped connections to social platforms, email, calendar, and communication channels</li>
+  <li><strong>Expanded shopping intelligence</strong> — multi-supermarket price comparison and budget-aware meal planning at scale</li>
+  <li><strong>Broader automation</strong> — more of the daily routine running automatically with human oversight rather than human triggering</li>
+</ul>
+<p>The core design will remain unchanged: local-first, privacy-preserving, and human-approved for anything that matters.</p>
+</section>
+
+<section id="about">
+<h2>About This Project</h2>
+<p>The Vault is a personal project built and operated by Tawney, an independent creator and developer. It is not a commercial product and not affiliated with any company.</p>
+<p>If you are interested in collaborating, learning more, or following the project's development, you can reach out through the <strong>Ferret Fatale</strong> channels or GitHub (<a href="https://github.com/FerretFatale">github.com/FerretFatale</a>).</p>
+<p>This guide is published via the automated backend manual system and reflects the current state of the project.</p>
+<p style="margin-top:1.5rem;"><a href="../">← Back to Manual Home</a> &nbsp;·&nbsp; <a href="../developer/">Developer &amp; Operator Manual</a></p>
+</section>
+
+</div>
+</main>
+
+<footer>
+  <p>The Vault — Public Project Guide · Source: <code>docs/manual/source/public_project_guide.md</code> · Built: 2026-05-01</p>
+  <p style="margin-top:0.4rem;"><a href="https://github.com/FerretFatale">github.com/FerretFatale</a></p>
+</footer>
+
+</body>
+</html>

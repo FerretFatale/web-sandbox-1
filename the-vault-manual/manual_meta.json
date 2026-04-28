@@ -1,8 +1,63 @@
 {
-  "manual_version": "3.0",
+  "manual_version": "4.0",
   "last_generated": "2026-05-01",
   "generated_by": "Vault Systems Integrator",
   "source_commit": "bff1a0d+",
+  "variants": {
+    "developer": {
+      "version": "4.0",
+      "source_file": "docs/manual/source/developer_manual.md",
+      "html_output": "docs/manual/developer/index.html",
+      "last_updated": "2026-05-01",
+      "sections": {
+        "overview":          { "source_files": ["docs/copilot-context/system-context.md", "AGENTS.md"] },
+        "authority":         { "source_files": ["docs/copilot-context/authority-map.md", "docs/contribution-standards.md"] },
+        "quick-start":       { "source_files": ["AGENTS.md", "requirements.txt"] },
+        "vault-brain":       { "source_files": ["vault_brain.py", "Toolkit/omni_router.py"] },
+        "taskmaster":        { "source_files": ["TaskMaster_Brain.py"] },
+        "consensus":         { "source_files": ["Consensus_Engine/"] },
+        "contextual":        { "source_files": ["Contextual_Thinking/"] },
+        "personas":          { "source_files": ["persona_manifest.json", "docs/copilot-output/persona_audit.md"] },
+        "tool-registry":     { "source_files": ["custom_tools_registry.py", "Toolkit/registry_sync.py", "Skills_Index.json"] },
+        "human-input":       { "source_files": ["Human_Input.txt", "Human_Input_Forms/"] },
+        "backlog":           { "source_files": ["KAOS OS ACTIVE BACKLOG.txt", "KAOS OS BACKLOG ARCHIVE.txt"] },
+        "security-gates":    { "source_files": ["docs/copilot-output/risk_register.md", "vault_brain.py"] },
+        "manual-publishing": { "source_files": ["Toolkit/manual_publisher.py", "docs/manual/manual_publish_targets.json"] },
+        "memory":            { "source_files": ["scribe_memory_builder.py", "Toolkit/vault_memory.py"] },
+        "health":            { "source_files": ["Health/wellbeing_state.py", "Toolkit/morning_briefing.py"] },
+        "finances":          { "source_files": ["Finances/budget_manager.py", "Business/grant_tracker.py"] },
+        "shopping":          { "source_files": ["Toolkit/shopping_assistant.py"] },
+        "social":            { "source_files": ["social_module/", "Toolkit/social_response_queue.py"] },
+        "email":             { "source_files": ["Toolkit/maton_client.py"] },
+        "websearch-limits":  { "source_files": ["Websearch/"] },
+        "openclaw-ollama":   { "source_files": ["Human_Input_Forms/openclaw_sandbox_details.md"] },
+        "kaos-integration":  { "source_files": ["integration_auditor.py", "vault_integrator.py", "KAOS_CONTRACTS.json"] },
+        "testing":           { "source_files": ["Copilot_Tests/"] },
+        "troubleshooting":   { "source_files": ["docs/copilot-context/system-context.md"] },
+        "how-to-update":     { "source_files": ["docs/manual/source/developer_manual.md", "Toolkit/manual_updater.py"] }
+      }
+    },
+    "public": {
+      "version": "1.0",
+      "source_file": "docs/manual/source/public_project_guide.md",
+      "html_output": "docs/manual/public/index.html",
+      "last_updated": "2026-05-01",
+      "sections": {
+        "what-is":       { "source_files": ["persona_manifest.json", "docs/copilot-context/system-context.md"] },
+        "problem":       { "source_files": ["docs/copilot-context/system-context.md"] },
+        "local-first":   { "source_files": ["docs/copilot-context/system-context.md", "vault_brain.py"] },
+        "how-it-works":  { "source_files": ["persona_manifest.json", "vault_brain.py", "TaskMaster_Brain.py"] },
+        "capabilities":  { "source_files": ["persona_manifest.json", "docs/copilot-output/persona_audit.md"] },
+        "maturity":      { "source_files": ["docs/copilot-output/vault_state_summary.md", "Human_Input.txt"] },
+        "safety":        { "source_files": ["docs/copilot-output/risk_register.md", "vault_brain.py"] },
+        "future":        { "source_files": ["KAOS OS ACTIVE BACKLOG.txt"] }
+      }
+    },
+    "landing": {
+      "html_output": "docs/manual/index.html",
+      "last_updated": "2026-05-01"
+    }
+  },
   "sections": {
     "overview":          { "last_updated": "2026-05-01", "source_files": ["docs/copilot-context/system-context.md", "AGENTS.md"] },
     "authority":         { "last_updated": "2026-05-01", "source_files": ["docs/copilot-context/authority-map.md", "docs/contribution-standards.md"] },
@@ -38,6 +93,6 @@
     "manual-maintenance":{ "last_updated": "2026-05-01", "source_files": ["Toolkit/manual_updater.py", "docs/manual/manual_meta.json", "docs/manual/manual_change_log.jsonl"] },
     "troubleshooting":   { "last_updated": "2026-05-01", "source_files": ["docs/copilot-context/system-context.md"] },
     "runtime-churn":     { "last_updated": "2026-05-01", "source_files": ["docs/contribution-standards.md", "AGENTS.md"] },
-    "how-to-update":     { "last_updated": "2026-05-01", "source_files": ["docs/manual/manual_source.md", "Toolkit/manual_updater.py"] }
+    "how-to-update":     { "last_updated": "2026-05-01", "source_files": ["docs/manual/source/developer_manual.md", "Toolkit/manual_updater.py"] }
   }
 }

@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Vault — Developer &amp; Operator Manual</title>
+  <style>
+    :root {
+      --bg: #0d1117; --surface: #161b22; --border: #30363d;
+      --text: #c9d1d9; --muted: #8b949e; --accent: #58a6ff;
+      --green: #3fb950; --orange: #d29922; --red: #f85149;
+      --purple: #bc8cff; --yellow: #e3b341;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 15px; line-height: 1.6; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    h1 { font-size: 2rem; color: #fff; margin-bottom: 0.5rem; }
+    h2 { font-size: 1.5rem; color: var(--accent); margin: 2rem 0 0.75rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+    h3 { font-size: 1.15rem; color: var(--yellow); margin: 1.25rem 0 0.5rem; }
+    h4 { font-size: 1rem; color: var(--purple); margin: 1rem 0 0.3rem; }
+    p { margin-bottom: 0.75rem; }
+    ul, ol { margin: 0.5rem 0 0.75rem 1.5rem; }
+    li { margin-bottom: 0.25rem; }
+    code { background: #1c2128; padding: 2px 5px; border-radius: 4px; font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; font-size: 0.88em; color: #e6edf3; }
+    pre { background: #1c2128; border: 1px solid var(--border); border-radius: 6px; padding: 1rem; margin: 0.75rem 0; overflow-x: auto; }
+    pre code { background: none; padding: 0; font-size: 0.85em; }
+    table { width: 100%; border-collapse: collapse; margin: 0.75rem 0 1.25rem; font-size: 0.92em; }
+    th { background: #1c2128; color: var(--accent); text-align: left; padding: 8px 12px; border-bottom: 2px solid var(--border); font-weight: 600; }
+    td { padding: 7px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+    tr:hover td { background: #1c2128; }
+    .tag { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 0.8em; font-weight: 600; }
+    .green { background: #0d4a25; color: var(--green); }
+    .orange { background: #3d2a00; color: var(--orange); }
+    .red { background: #3d0f0a; color: var(--red); }
+    .purple { background: #2d1a4a; color: var(--purple); }
+    .blue { background: #0a2a4a; color: var(--accent); }
+    .banner { border-radius: 6px; padding: 0.75rem 1rem; margin: 1rem 0; font-size: 0.9em; }
+    .banner.stop { background: #3d0f0a; border-left: 4px solid var(--red); }
+    .banner.warn { background: #3d2a00; border-left: 4px solid var(--orange); }
+    .banner.info { background: #0a2a4a; border-left: 4px solid var(--accent); }
+    .banner.ok { background: #0d4a25; border-left: 4px solid var(--green); }
+    .layout { display: flex; min-height: 100vh; }
+    nav { width: 280px; min-width: 220px; background: var(--surface); border-right: 1px solid var(--border); padding: 1.5rem 0; position: sticky; top: 0; height: 100vh; overflow-y: auto; flex-shrink: 0; }
+    nav .logo { padding: 0 1.25rem 1rem; border-bottom: 1px solid var(--border); margin-bottom: 1rem; }
+    nav .logo strong { display: block; font-size: 1rem; color: #fff; }
+    nav .logo small { color: var(--muted); font-size: 0.75em; }
+    nav a { display: block; padding: 5px 1.25rem; color: var(--muted); font-size: 0.875rem; border-left: 3px solid transparent; }
+    nav a:hover, nav a.active { color: var(--text); background: #1c2128; border-left-color: var(--accent); text-decoration: none; }
+    nav .nav-group { margin-top: 0.75rem; padding: 0 1.25rem 0.25rem; font-size: 0.7em; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); }
+    main { flex: 1; padding: 2rem 3rem; max-width: 1100px; }
+    header { padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); margin-bottom: 1rem; }
+    .meta-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 0.75rem; margin: 1rem 0; }
+    .meta-card { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 0.75rem; }
+    .meta-card .val { font-size: 1.5rem; font-weight: 700; color: var(--accent); }
+    .meta-card .lbl { font-size: 0.78em; color: var(--muted); margin-top: 2px; }
+    .generated-note { color: var(--muted); font-size: 0.82em; margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+    section { margin-bottom: 2rem; }
+    .variant-badge { display: inline-block; background: #1c2128; border: 1px solid var(--border); border-radius: 4px; padding: 2px 8px; font-size: 0.78em; color: var(--orange); font-weight: 600; vertical-align: middle; margin-left: 0.5rem; }
+    @media (max-width: 900px) { nav { display: none; } main { padding: 1.5rem; } }
+  </style>
+</head>
+<body>
+<div class="layout">
+
+<nav>
+  <div class="logo">
+    <strong>The Vault</strong>
+    <small>Developer &amp; Operator Manual</small>
+  </div>
+  <a href="../" style="color:var(--muted); font-size:0.8em; padding: 4px 1.25rem; display:block;">← Back to Manual Home</a>
+  <span class="nav-group">Foundation</span>
+  <a href="#overview">Overview</a>
+  <a href="#authority">Authority Model</a>
+  <a href="#quick-start">Quick Start</a>
+  <a href="#folder-map">Repo / Folder Map</a>
+  <span class="nav-group">Brain Layer</span>
+  <a href="#vault-brain">Vault_Brain</a>
+  <a href="#taskmaster">TaskMaster_Brain</a>
+  <a href="#consensus">Consensus_Engine</a>
+  <a href="#contextual">Contextual_Thinking</a>
+  <span class="nav-group">Personas &amp; Tools</span>
+  <a href="#personas">Persona System</a>
+  <a href="#tool-registry">Tool Registry</a>
+  <span class="nav-group">Operations</span>
+  <a href="#human-input">Human Input System</a>
+  <a href="#backlog">Backlog System</a>
+  <a href="#governance">Governance Docs</a>
+  <a href="#security-gates">Security Gates</a>
+  <a href="#deployment">Deployment Workflow</a>
+  <a href="#manual-publishing">Manual Publishing</a>
+  <span class="nav-group">Capabilities</span>
+  <a href="#memory">Memory &amp; Retrieval</a>
+  <a href="#websearch">Websearch Limits</a>
+  <a href="#shopping">Shopping</a>
+  <a href="#social">Social / Discord</a>
+  <a href="#email">Email / Maton</a>
+  <a href="#health">Health / Food</a>
+  <a href="#finances">Finances / Business</a>
+  <a href="#openclaw-ollama">OpenClaw &amp; Ollama</a>
+  <a href="#kaos-integration">KAOS Integration</a>
+  <span class="nav-group">Dev Workflow</span>
+  <a href="#testing">Testing</a>
+  <a href="#runtime-churn">Runtime Churn</a>
+  <a href="#troubleshooting">Troubleshooting</a>
+  <a href="#how-to-update">How to Update</a>
+</nav>
+
+<main>
+<header>
+  <h1>The Vault <span class="variant-badge">Developer &amp; Operator</span></h1>
+  <p>Comprehensive technical manual for the owner, operators, and AI/Copilot instances working on the project.</p>
+  <div class="meta-grid">
+    <div class="meta-card"><div class="val">20</div><div class="lbl">Active Personas</div></div>
+    <div class="meta-card"><div class="val">v4</div><div class="lbl">Manual Version</div></div>
+    <div class="meta-card"><div class="val">800+</div><div class="lbl">Tests Passing</div></div>
+    <div class="meta-card"><div class="val">3</div><div class="lbl">SR Gates Resolved</div></div>
+  </div>
+  <div class="banner warn">⚠️ <strong>Internal document.</strong> This manual contains repository paths, command-line instructions, security gate details, and implementation notes. Not for external distribution. See the <a href="../public/">Public Project Guide</a> for the public-facing version.</div>
+</header>
+
+<section id="overview">
+<h2>A. Executive Overview</h2>
+<p><strong>The Vault</strong> is a local-first, personally owned AI operating system. It coordinates a 20-persona agent system, a multi-layer orchestration brain, a governed tool registry, and a rich set of domain-specific capabilities spanning memory, scheduling, health, finances, shopping, social communication, and creative work.</p>
+<p>The system runs locally in Python on Windows and calls large language models (LLMs) via <a href="https://openrouter.ai">OpenRouter</a> as the primary gateway. No data is sent to any cloud service except through explicitly configured API calls.</p>
+<h3>Design principles</h3>
+<ul>
+  <li><strong>The Vault is authoritative.</strong> KAOS is the sandbox — it is never the source of truth.</li>
+  <li><strong>Secrets stay in <code>.env</code>.</strong> Nothing sensitive is committed to git.</li>
+  <li><strong>Every write-capable or destructive action is gated behind human approval.</strong></li>
+  <li><strong>All agent-callable functions use the <code>api_</code> naming convention.</strong></li>
+  <li><strong>Security gates SR-001, SR-002, and SR-003 are all resolved and enforced in production.</strong></li>
+</ul>
+</section>
+
+<section id="authority">
+<h2>B. Authority Model</h2>
+<table>
+  <tr><th>Repository</th><th>Role</th><th>Path</th></tr>
+  <tr><td><strong>The Vault</strong></td><td>Production / Authoritative</td><td><code>C:\Users\LittleChickpea\OneDrive\Documents\The_Vault</code></td></tr>
+  <tr><td>KAOS</td><td>Sandbox / Mirror only</td><td><code>C:\Users\LittleChickpea\OneDrive\Documents\KAOS</code></td></tr>
+</table>
+<p><strong>Key rule:</strong> KAOS is never the source of truth. Mirror only policy-approved files from The_Vault → KAOS. Do not mirror secrets, <code>Human_Input.txt</code>, or runtime churn files.</p>
+<h3>Generated vs. source files</h3>
+<ul>
+  <li><code>custom_tools_registry.py</code> — <strong>Generated</strong>. Do not hand-edit. Regenerate via <code>Toolkit/registry_sync.py</code>.</li>
+  <li><code>persona_manifest.json</code> — <strong>Authoritative</strong>. Root-level copy is the runtime dispatch table. <code>Contextual_Thinking/Persona_Manifest.json</code> is stale.</li>
+  <li><code>Skills_Index.json</code> — <strong>Authoritative</strong>. Regenerate via <code>api_index_folder_skills()</code> when tools change.</li>
+  <li><code>.kaos_mission.json</code> — <strong>Runtime state</strong>. Never hand-edit during an active mission.</li>
+</ul>
+</section>
+
+<section id="quick-start">
+<h2>C. Quick Start — Operator Guide</h2>
+<h3>Prerequisites</h3>
+<ul>
+  <li>Python 3.11+ installed</li>
+  <li>Git configured with push access to <code>FerretFatale/KAOS</code></li>
+  <li>A valid <code>.env</code> file at the repo root with at minimum <code>OPENROUTER_API_KEY</code> set</li>
+</ul>
+<h3>Step 1 — Install dependencies</h3>
+<pre><code>cd C:\Users\LittleChickpea\OneDrive\Documents\The_Vault
+pip install -r requirements.txt</code></pre>
+<h3>Step 2 — Run the test suite</h3>
+<pre><code>python -m pytest Copilot_Tests/ -q --tb=short</code></pre>
+<p>Expected: 800+ tests passing, 0 failures.</p>
+<h3>Step 3 — Check system state</h3>
+<pre><code># Persona count
+python -c "import json; m=json.load(open('persona_manifest.json')); print(len(m), 'personas:', list(m.keys()))"</code></pre>
+<h3>Step 4 — Start the system</h3>
+<pre><code>python boot_kaos.py</code></pre>
+<h3>What Copilot agents must do at task start</h3>
+<ol>
+  <li>Read <code>AGENTS.md</code></li>
+  <li>Read <code>docs/copilot-context/system-context.md</code> and <code>authority-map.md</code></li>
+  <li>Run <code>git log --oneline -10</code> and <code>git status --short</code></li>
+  <li>Read <code>KAOS OS ACTIVE BACKLOG.txt</code> for unchecked <code>[ ]</code> tasks</li>
+  <li>Read <code>Human_Input.txt</code> for active blockers</li>
+  <li>Identify the single next unchecked task and verify it is not already done</li>
+  <li>Implement, test, stage, and commit only that task</li>
+</ol>
+<h3>Common mistakes to avoid</h3>
+<ul>
+  <li>Do not stage <code>Health/*.json</code>, <code>Recovery/*.json</code>, or other runtime churn files</li>
+  <li>Do not edit <code>.kaos_mission.json</code> by hand during an active mission</li>
+  <li>Do not add secrets or API keys to committed files — use <code>.env</code> only</li>
+  <li>Do not run <code>git add -A</code> without reviewing what will be staged</li>
+</ul>
+</section>
+
+<section id="folder-map">
+<h2>D. Repo / Folder Map</h2>
+<p>The Vault root contains the key orchestration files plus domain-specific folders. Key locations:</p>
+<ul>
+  <li><code>vault_brain.py</code> — System coordinator</li>
+  <li><code>TaskMaster_Brain.py</code> — Mission orchestrator</li>
+  <li><code>vault_config.py</code> — Canonical path constants</li>
+  <li><code>boot_kaos.py</code> — System boot entry point</li>
+  <li><code>persona_manifest.json</code> — Authoritative runtime dispatch table (20 personas)</li>
+  <li><code>custom_tools_registry.py</code> — Generated tool registry (do not hand-edit)</li>
+  <li><code>Skills_Index.json</code> — Human-readable tool index</li>
+</ul>
+<p>Key folders: <code>Toolkit/</code>, <code>Consensus_Engine/</code>, <code>Contextual_Thinking/</code>, <code>Copilot_Tests/</code>, <code>docs/manual/</code>, <code>docs/copilot-context/</code>, <code>docs/copilot-output/</code>, <code>Human_Input_Forms/</code>, <code>Health/</code>, <code>Schedule/</code>, <code>Finances/</code>, <code>Business/</code>, <code>social_module/</code></p>
+<p>Manual source subdirectory: <code>docs/manual/source/</code> — edit source files here first, then rebuild HTML in <code>docs/manual/developer/</code> and <code>docs/manual/public/</code>.</p>
+</section>
+
+<section id="vault-brain">
+<h2>E. Vault_Brain</h2>
+<p>Vault_Brain (<code>vault_brain.py</code>) is the system coordinator operating at temperature 0.0. It routes tasks to appropriate personas, tracks human action entries, manages proposals, and controls operating modes.</p>
+<h3>Key responsibilities</h3>
+<ul>
+  <li>Task routing to appropriate personas</li>
+  <li>Human-action entry management (<code>Human_Input.txt</code>)</li>
+  <li>Proposal queue management</li>
+  <li>Backlog phase coordination</li>
+  <li>Deploy guard enforcement (SR-002)</li>
+  <li>Context budget management (E2: context-purge wiring)</li>
+</ul>
+<p>Thinking quality improvements: E1 (success-criteria injection), E2 (context-purge wiring; memory notes truncated to 500 tokens).</p>
+</section>
+
+<section id="taskmaster">
+<h2>F. TaskMaster_Brain</h2>
+<p>TaskMaster_Brain (<code>TaskMaster_Brain.py</code>) is the mission orchestrator and LLM planner. It generates step-by-step execution plans, dispatches steps to personas, and enforces planning discipline.</p>
+<h3>Key rules</h3>
+<ul>
+  <li><strong>Rule 5 — PRESERVED STEPS:</strong> Steps marked <code>complete</code> must not be re-planned.</li>
+  <li><strong>Core skill disambiguation:</strong> Every persona has a <code>core_skill</code> field. Missing <code>core_skill</code> defaults to "Data Processing".</li>
+  <li>M4/T4 risk fields: Mission and task records carry risk metadata.</li>
+</ul>
+</section>
+
+<section id="consensus">
+<h2>G. Consensus_Engine</h2>
+<p>Consensus_Engine (<code>Consensus_Engine/</code>) is the governance auditor and decision scorer. It validates phase transitions, scores consensus outcomes, and audits decisions. It is <strong>read-only</strong> — no side effects.</p>
+<p><code>api_transition_phase</code> is explicitly excluded from Consensus_Engine by design — it belongs to Vault_Brain.</p>
+<p>Capabilities (34 tools): voting and consensus scoring, governance logging, phase read/validate operations, state read-only access and analytics.</p>
+</section>
+
+<section id="contextual">
+<h2>H. Contextual_Thinking</h2>
+<p>Contextual_Thinking (<code>Contextual_Thinking/</code>) is the thinking quality layer. It manages contextual rules, persona-level thinking preferences, and context-window budget strategies.</p>
+<p>Capabilities (12 tools): context selection, persona-aware prompt shaping, reasoning scaffolds.</p>
+</section>
+
+<section id="personas">
+<h2>I. Persona System</h2>
+<p>The system has <strong>20 active personas</strong>. <code>persona_manifest.json</code> at repo root is the <strong>sole authoritative runtime dispatch table</strong>.</p>
+<table>
+  <tr><th>Persona ID</th><th>Domain</th><th>Tools</th><th>Core purpose</th></tr>
+  <tr><td><code>Vault_Brain</code></td><td>System coordination</td><td>21</td><td>Temperature 0.0. Routing + gating only.</td></tr>
+  <tr><td><code>Consensus_Engine</code></td><td>Governance audit</td><td>34</td><td>Read-only decision scoring.</td></tr>
+  <tr><td><code>Admin_Assistant</code></td><td>General administration</td><td>81</td><td>Broadest tool grant; manages most domain workflows.</td></tr>
+  <tr><td><code>Conversationalist</code></td><td>Social conversation</td><td>53</td><td>Voice assignment, message queuing, tone management.</td></tr>
+  <tr><td><code>Medical</code></td><td>Health &amp; wellbeing</td><td>55</td><td>Wellbeing stages 1–5, food plan, health checks.</td></tr>
+  <tr><td><code>Image_Processor</code></td><td>Image generation</td><td>48</td><td>Design queue, Replicate API, image tooling.</td></tr>
+  <tr><td><code>Business_Ops</code></td><td>Business planning</td><td>39</td><td>Grant tracking, red-team, website workflows.</td></tr>
+  <tr><td><code>Contextual_Thinking</code></td><td>Thinking quality</td><td>12</td><td>Context budgets, reasoning scaffolds.</td></tr>
+  <tr><td><code>Vault_Architect</code></td><td>Architecture &amp; system design</td><td>17</td><td>KAOS integration, contracts, test matrix.</td></tr>
+  <tr><td><code>Websearch</code></td><td>Web search &amp; retrieval</td><td>12</td><td>Static HTTP fetch; JS-rendered blocked.</td></tr>
+  <tr><td><code>CFO</code></td><td>Financial intelligence</td><td>16</td><td>Budget, expenses, grant tracking, shopping.</td></tr>
+  <tr><td><code>Master_Coder</code></td><td>Code generation &amp; debugging</td><td>15</td><td>Refactoring, code analysis, test writing.</td></tr>
+  <tr><td><code>Security</code></td><td>Security &amp; approval gating</td><td>15</td><td>SR-001/002/003 enforcement, secrets audit.</td></tr>
+  <tr><td><code>External_Memory_Retrieval</code></td><td>External memory</td><td>16</td><td>Long-term memory retrieval.</td></tr>
+  <tr><td><code>Living_Memory</code></td><td>Active/living memory</td><td>16</td><td>Contextual memory during active sessions.</td></tr>
+  <tr><td><code>Internal_Memory_Retrieval</code></td><td>Internal memory</td><td>7</td><td>Lightweight in-session memory access.</td></tr>
+  <tr><td><code>Videographer</code></td><td>Video &amp; content creation</td><td>8</td><td>Stream tooling, Ferret Fatale content.</td></tr>
+  <tr><td><code>Goals</code></td><td>Goal framing &amp; decomposition</td><td>12</td><td>Ambitions → projects, milestones, roadmaps, success criteria.</td></tr>
+  <tr><td><code>Inspiration</code></td><td>Inspiration &amp; ideation</td><td>4</td><td>Creative prompts, idea generation.</td></tr>
+  <tr><td><code>Routines</code></td><td>Routine design</td><td>5</td><td>Habit scaffolding, routine structures.</td></tr>
+</table>
+</section>
+
+<section id="tool-registry">
+<h2>J. Tool Registry</h2>
+<table>
+  <tr><th>File</th><th>Role</th><th>Edit policy</th></tr>
+  <tr><td><code>custom_tools_registry.py</code></td><td>Generated registry</td><td><strong>Never hand-edit</strong> — regenerate via <code>Toolkit/registry_sync.py</code></td></tr>
+  <tr><td><code>persona_manifest.json</code></td><td>Per-persona tool grants</td><td>Edit carefully; runtime-critical</td></tr>
+  <tr><td><code>Skills_Index.json</code></td><td>Human-readable tool index</td><td>Regenerate via <code>api_index_folder_skills()</code></td></tr>
+</table>
+<p><strong>Important:</strong> <code>api_generate_vault_architect_task</code> is NOT registered in the runtime registry. Do NOT add it to any persona's <code>allowed_tools</code>.</p>
+</section>
+
+<section id="human-input">
+<h2>K. Human Input System</h2>
+<table>
+  <tr><th>File</th><th>Purpose</th></tr>
+  <tr><td><code>Human_Input.txt</code></td><td>Active blockers requiring human action</td></tr>
+  <tr><td><code>Human_Input_Completed_Log.txt</code></td><td>Short ledger of resolved items</td></tr>
+  <tr><td><code>Human_Input_Proposal_Queue.txt</code></td><td>Proposals/roadmap items awaiting YES/NO</td></tr>
+  <tr><td><code>Human_Input_Review_Notes.txt</code></td><td>Archive / reference / resolved notes</td></tr>
+  <tr><td><code>Human_Input_Forms/</code></td><td>Detailed forms for complex blockers</td></tr>
+</table>
+</section>
+
+<section id="backlog">
+<h2>L. Backlog System</h2>
+<table>
+  <tr><th>File</th><th>Role</th></tr>
+  <tr><td><code>KAOS OS ACTIVE BACKLOG.txt</code></td><td>Live backlog — controlling file</td></tr>
+  <tr><td><code>KAOS OS BACKLOG ARCHIVE.txt</code></td><td>Completed-task archive</td></tr>
+  <tr><td><code>KAOS OS ACTIVE SANDBOX BACKLOG.txt</code></td><td>Sandbox/proposal staging</td></tr>
+</table>
+<p>Status markers: <code>[ ]</code> not started · <code>[~]</code> blocked · <code>[x]</code> complete and verified</p>
+</section>
+
+<section id="governance">
+<h2>M. Governance Documents</h2>
+<table>
+  <tr><th>Document</th><th>Location</th><th>Purpose</th></tr>
+  <tr><td>Risk Register</td><td><code>docs/copilot-output/risk_register.md</code></td><td>Security findings, credential blockers, CFM items</td></tr>
+  <tr><td>State Summary</td><td><code>docs/copilot-output/vault_state_summary.md</code></td><td>Operator-facing summary of current system state</td></tr>
+  <tr><td>Systems Snapshot</td><td><code>docs/copilot-output/vault_systems_snapshot.md</code></td><td>Feature/status map</td></tr>
+  <tr><td>Persona Audit</td><td><code>docs/copilot-output/persona_audit.md</code></td><td>Full 20-persona audit</td></tr>
+  <tr><td>Persona Thread Map</td><td><code>docs/copilot-output/persona_thread_map.md</code></td><td>Chat-thread-to-persona mapping</td></tr>
+  <tr><td>Document Reference Index</td><td><code>docs/copilot-context/document-reference-index.md</code></td><td>Classification of every document</td></tr>
+</table>
+</section>
+
+<section id="security-gates">
+<h2>N. Security and Approval Gates</h2>
+<table>
+  <tr><th>Gate</th><th>Name</th><th>Status</th><th>Enforced by</th></tr>
+  <tr><td>SR-001</td><td>VAULT_ROOT path guard</td><td><span class="tag green">RESOLVED</span></td><td><code>vault_config.py</code></td></tr>
+  <tr><td>SR-002</td><td>Deploy guard — Vault_Brain only</td><td><span class="tag green">RESOLVED</span></td><td>Deploy tools only grantable by Vault_Brain</td></tr>
+  <tr><td>SR-003</td><td>Destructive-code dry_run gate</td><td><span class="tag green">RESOLVED</span></td><td>All destructive ops default <code>dry_run=True</code></td></tr>
+</table>
+<div class="banner stop">🔒 <strong>No-secrets rule:</strong> No secrets, API keys, or tokens may appear in committed files. All credentials belong in <code>.env</code> only.</div>
+</section>
+
+<section id="deployment">
+<h2>O. Deployment / Website Workflow</h2>
+<ul>
+  <li><strong>Allowed:</strong> <code>ferretfatale.github.io</code> (GitHub Pages — separate dedicated repo)</li>
+  <li><strong>Forbidden:</strong> GitHub Pages on The_Vault repo</li>
+  <li><strong>Forbidden:</strong> GitHub Pages on KAOS repo</li>
+</ul>
+<p>Deploy operations are gated at the Vault_Brain tier. No domain persona may trigger deployment without Vault_Brain authorization. Always publish to <code>web-sandbox-1</code> first, then promote.</p>
+</section>
+
+<section id="manual-publishing">
+<h2>P. Manual Backend Publishing Workflow</h2>
+<h3>Manual structure (v4 — split)</h3>
+<table>
+  <tr><th>File</th><th>Purpose</th></tr>
+  <tr><td><code>docs/manual/source/developer_manual.md</code></td><td>Canonical prose source for developer manual</td></tr>
+  <tr><td><code>docs/manual/source/public_project_guide.md</code></td><td>Canonical prose source for public guide</td></tr>
+  <tr><td><code>docs/manual/source/shared_project_facts.md</code></td><td>Shared facts referenced by both</td></tr>
+  <tr><td><code>docs/manual/developer/index.html</code></td><td>Built developer/operator HTML (this file)</td></tr>
+  <tr><td><code>docs/manual/public/index.html</code></td><td>Built public guide HTML</td></tr>
+  <tr><td><code>docs/manual/index.html</code></td><td>Landing page linking to both</td></tr>
+</table>
+<h3>Publisher CLI</h3>
+<pre><code># Pre-flight check
+python Toolkit/manual_publisher.py --prepare --target web-sandbox-1
+
+# Dry-run publish
+python Toolkit/manual_publisher.py --publish --target web-sandbox-1 --dry-run
+
+# Live copy + push
+python Toolkit/manual_publisher.py --publish --target web-sandbox-1 --approved
+
+# Publish variant only
+python Toolkit/manual_publisher.py --publish --target web-sandbox-1 --variant developer --approved
+
+# Verify hosted output
+python Toolkit/manual_publisher.py --verify --target web-sandbox-1</code></pre>
+<h3>Publish path</h3>
+<p>Files are published under <code>/the-vault-manual/</code> in the target repo. Subdirectories
+(<code>developer/</code>, <code>public/</code>) are preserved via <code>relative_to(_MANUAL_DIR)</code> copy logic.</p>
+<h3>Change ledger</h3>
+<p>Each manual rebuild appends a record to <code>docs/manual/manual_change_log.jsonl</code>. The ledger
+tracks version, source hash, sections changed, and timestamp. Use it to audit what changed between
+builds and why a new publish was needed.</p>
+<h3>Safety gates (always enforced)</h3>
+<ul>
+  <li><code>dry_run=True</code> is the default — no files copied unless explicitly set to <code>False</code></li>
+  <li><code>publish_approved=False</code> prevents any <code>git push</code></li>
+  <li>The_Vault and KAOS are refused as targets regardless of arguments</li>
+  <li>Dirty target repos are refused unless <code>allow_dirty_target=True</code></li>
+  <li>Forbidden files (<code>.env</code>, <code>Human_Input*.txt</code>, <code>Health/*.json</code>, etc.) are never copied</li>
+</ul>
+</section>
+
+<section id="memory">
+<h2>Q. Memory and Retrieval</h2>
+<table>
+  <tr><th>Component</th><th>File / Module</th><th>Purpose</th></tr>
+  <tr><td>Memory builder</td><td><code>scribe_memory_builder.py</code></td><td>Generates <code>My_Memories/</code> summaries</td></tr>
+  <tr><td>Vault memory</td><td><code>Toolkit/vault_memory.py</code></td><td>In-session memory access</td></tr>
+  <tr><td>External retrieval</td><td><code>External_Memory_Retrieval</code> persona</td><td>16 tools for long-term memory</td></tr>
+  <tr><td>Internal retrieval</td><td><code>Internal_Memory_Retrieval</code> persona</td><td>7 tools for in-session access</td></tr>
+  <tr><td>Living memory</td><td><code>Living_Memory</code> persona</td><td>16 tools for active-session memory</td></tr>
+  <tr><td>KAOS memories</td><td><code>KAOS/My_Memories/</code></td><td>Sandbox evidence only — never copy without review</td></tr>
+</table>
+</section>
+
+<section id="websearch">
+<h2>R. Websearch and Scraping Limits</h2>
+<ul>
+  <li><strong>Static HTTP fetch</strong> — <code>api_fetch_url_static()</code> — working</li>
+  <li><strong>ALDI specials scraping</strong> — <code>api_fetch_aldi_specials()</code> — working (static HTML, 6h cache)</li>
+  <li><strong>JS-rendered page fetch</strong> — requires Playwright installed (<code>pip install playwright &amp;&amp; playwright install chromium</code>)</li>
+  <li><strong>Account scraping</strong> — blocked on credentials and ToS review</li>
+</ul>
+</section>
+
+<section id="shopping">
+<h2>S. Shopping Assistant</h2>
+<p>Module: <code>Toolkit/shopping_assistant.py</code></p>
+<ul>
+  <li><code>api_fetch_aldi_specials()</code> — ALDI AU weekly specials via static HTML scraping</li>
+  <li>Cache: <code>Finances/aldi_specials_cache.json</code> (6h TTL — runtime only, never committed)</li>
+  <li>Tests: 18 offline fixture tests in <code>Copilot_Tests/test_aldi_scraper.py</code></li>
+</ul>
+</section>
+
+<section id="social">
+<h2>T. Social / Discord / Twitch / OCR</h2>
+<ul>
+  <li><code>social_module/social_profiles_builder.py</code> — Profile CRUD, contact data</li>
+  <li><code>Toolkit/social_response_queue.py</code> — Incoming message queue</li>
+  <li><code>Toolkit/voice_assignment.py</code> — Communication voice selector</li>
+</ul>
+<div class="banner stop">🚫 <strong>No outbound messages may be sent without human review of each draft.</strong></div>
+<p>Discord: Stage A read-only approved but not yet implemented. <code>DISCORD_BOT_TOKEN</code> required.</p>
+<p>Twitch: Integration scaffold only. Credentials and two-role model decision pending.</p>
+<p>OCR: <code>api_archive_ocr_session()</code> scaffold implemented. Requires Tesseract binary + Python OCR packages.</p>
+</section>
+
+<section id="email">
+<h2>U. Email / Maton</h2>
+<p><code>Toolkit/maton_client.py</code> — integration gateway for Gmail, Outlook, GitHub, Google Drive, and other services via the Maton platform.</p>
+<div class="banner warn">⚠️ <strong>All live Maton calls are currently blocked.</strong> Three keys are missing from <code>.env</code>: <code>MATON_API_KEY</code>, <code>MATON_GATEWAY_URL</code>, <code>MATON_CTRL_URL</code>.</div>
+<p>Email Stage A is <strong>READ-ONLY</strong>. No mark-as-read, move, archive, delete, or send is implemented.</p>
+</section>
+
+<section id="health">
+<h2>V. Health / Food / Personal Forms</h2>
+<p><code>Health/wellbeing_state.py</code> — 5-stage wellbeing framework, managed by the <code>Medical</code> persona (55 tools).</p>
+<p>Morning briefings: <code>Toolkit/morning_briefing.py</code> — daily summary.</p>
+<div class="banner stop">🔒 <strong>Health JSON files (<code>Health/*.json</code>) are runtime personal data. Do not commit them.</strong></div>
+</section>
+
+<section id="finances">
+<h2>W. Finances / Business</h2>
+<ul>
+  <li><code>Finances/budget_manager.py</code> — Income/expense tracking, budget categories</li>
+  <li><code>Business/grant_tracker.py</code> — Grant application tracking</li>
+  <li><code>Business/business_plan_redteam.py</code> — Red-team adversarial review (LLM-assisted)</li>
+  <li><code>Business/ferret_fatale/</code> — Content creator hub</li>
+</ul>
+</section>
+
+<section id="openclaw-ollama">
+<h2>X. OpenClaw &amp; Ollama</h2>
+<p><strong>Current status: DEFERRED.</strong> Ollama is not yet installed. No local model inference is operational.</p>
+<ul>
+  <li><code>Toolkit/local_model.py</code> — Wrapper for Ollama API calls (scaffold only)</li>
+  <li>See <code>Human_Input_Forms/openclaw_sandbox_details.md</code> for the sandbox evaluation plan</li>
+</ul>
+</section>
+
+<section id="kaos-integration">
+<h2>Y. KAOS Integration</h2>
+<ul>
+  <li><code>integration_auditor.py</code> — Validates KAOS candidates against production contracts</li>
+  <li><code>vault_integrator.py</code> — Promotion engine: staged copy, test, apply, rollback</li>
+  <li><code>KAOS_CONTRACTS.json</code> — Contract rules for valid KAOS → Vault promotion</li>
+  <li><code>KAOS_TEST_MATRIX.json</code> — Test matrix for integration validation</li>
+</ul>
+</section>
+
+<section id="testing">
+<h2>Z. Testing and Validation</h2>
+<table>
+  <tr><th>Test file</th><th>Coverage</th></tr>
+  <tr><td><code>test_runtime_authority_paths.py</code></td><td>Authority paths, routing, model cascade, KAOS integration</td></tr>
+  <tr><td><code>test_backlog_lint.py</code></td><td>Backlog format validation (13 tests)</td></tr>
+  <tr><td><code>test_aldi_scraper.py</code></td><td>18 offline fixture tests for ALDI static scraper</td></tr>
+  <tr><td><code>test_brain_thinking_contracts.py</code></td><td>44 thinking quality contracts</td></tr>
+  <tr><td><code>test_manual_updater.py</code></td><td>Manual meta parsing, change ledger, staleness detection</td></tr>
+  <tr><td><code>test_manual_publisher.py</code></td><td>Publisher safety gates, dry-run, no-secrets</td></tr>
+  <tr><td><code>test_manual_split.py</code></td><td>Manual split structure: source files, HTML variants, public guide exclusions</td></tr>
+  <tr><td><code>test_deploy_guard.py</code></td><td>Deploy Guard: 33 tests — Business_Ops denial, Vault_Brain ownership, dry-run gate, deploy_approved gate, KAOS forbidden target, credentials safety. SR-002 enforcement.</td></tr>
+</table>
+<p>The <strong>Deploy Guard</strong> suite (<code>test_deploy_guard.py</code>) is a dedicated gate preventing unauthorised deployment to Vercel/Netlify. It enforces that only <code>Vault_Brain</code> owns deploy tools and that <code>Business_Ops</code> is permanently excluded.</p>
+<pre><code>python -m pytest Copilot_Tests/ -q --tb=short</code></pre>
+</section>
+
+<section id="runtime-churn">
+<h2>AA. Runtime Churn — Files Never to Stage</h2>
+<table>
+  <tr><th>File / Pattern</th><th>Why never staged</th></tr>
+  <tr><td><code>Health/*.json</code></td><td>Personal data</td></tr>
+  <tr><td><code>Recovery/*.json</code></td><td>Personal data</td></tr>
+  <tr><td><code>Toolkit/.backlog_pass_log.json</code></td><td>Runtime ephemera</td></tr>
+  <tr><td><code>Toolkit/.hf_preferences.json</code></td><td>Runtime ephemera</td></tr>
+  <tr><td><code>Images/Morning_Briefings/*.json</code></td><td>Session outputs</td></tr>
+  <tr><td><code>Schedule/reminders.json</code></td><td>Changes constantly</td></tr>
+  <tr><td><code>Finances/aldi_specials_cache.json</code></td><td>Ephemeral cache</td></tr>
+  <tr><td><code>.kaos_mission.json</code></td><td>Live session state</td></tr>
+</table>
+</section>
+
+<section id="troubleshooting">
+<h2>BB. Troubleshooting and Recovery</h2>
+<h3>Manual appears stale</h3>
+<pre><code>python Toolkit/manual_updater.py --staleness-report</code></pre>
+<h3>Persona count mismatch</h3>
+<pre><code>python -c "import json; m=json.load(open('persona_manifest.json')); print(len(m), list(m.keys()))"</code></pre>
+<h3>Test failures after a Copilot pass</h3>
+<pre><code>python -m pytest Copilot_Tests/ -q --tb=short</code></pre>
+<h3>Failed Copilot run recovery</h3>
+<ol>
+  <li>Run <code>git status --short</code></li>
+  <li>Check <code>git diff HEAD</code> for partial changes</li>
+  <li>Do NOT stage runtime churn files</li>
+  <li>Check <code>Human_Input.txt</code> for newly appended blockers</li>
+  <li>Use <code>git restore --staged &lt;file&gt;</code> to unstage accidents</li>
+</ol>
+</section>
+
+<section id="how-to-update">
+<h2>CC. How to Update This Manual</h2>
+<h3>Manual structure</h3>
+<table>
+  <tr><th>File</th><th>Role</th></tr>
+  <tr><td><code>docs/manual/source/developer_manual.md</code></td><td>Edit this first for developer manual changes</td></tr>
+  <tr><td><code>docs/manual/source/public_project_guide.md</code></td><td>Edit this first for public guide changes</td></tr>
+  <tr><td><code>docs/manual/developer/index.html</code></td><td>Built HTML (this file) — keep in sync with source</td></tr>
+  <tr><td><code>docs/manual/public/index.html</code></td><td>Built public HTML — keep in sync with source</td></tr>
+  <tr><td><code>docs/manual/index.html</code></td><td>Landing page linking to both</td></tr>
+</table>
+<h3>Quick update steps</h3>
+<ol>
+  <li>Run: <code>python Toolkit/manual_updater.py --staleness-report</code></li>
+  <li>Edit relevant source file in <code>docs/manual/source/</code></li>
+  <li>Edit matching <code>&lt;section&gt;</code> in this HTML file</li>
+  <li>Run tests: <code>python -m pytest Copilot_Tests/test_manual_updater.py Copilot_Tests/test_manual_split.py -q</code></li>
+  <li>Commit: <code>git commit -m "docs(manual): update developer &lt;section&gt;"</code></li>
+</ol>
+</section>
+
+<div class="generated-note">
+  Developer &amp; Operator Manual · Source: <code>docs/manual/source/developer_manual.md</code> · Built: 2026-05-01 ·
+  <a href="../public/">View Public Project Guide</a> · <a href="../">Back to Manual Home</a>
+</div>
+
+</main>
+</div>
+</body>
+</html>
