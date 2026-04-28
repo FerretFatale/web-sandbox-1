@@ -6,60 +6,99 @@
   <title>The Vault — Project Guide</title>
   <style>
     :root {
-      --bg: #f8f9fa; --surface: #fff; --border: #e1e4e8;
-      --text: #24292e; --muted: #6a737d; --accent: #0366d6;
-      --green: #22863a; --orange: #b08800; --dark: #1a1a2e;
-      --purple: #6f42c1; --light-accent: #f1f8ff;
+      --bg:#f8f9fa;--surface:#fff;--border:#e1e4e8;
+      --text:#24292e;--muted:#6a737d;--accent:#0366d6;
+      --green:#22863a;--orange:#b08800;--dark:#1a1a2e;
+      --purple:#6f42c1;--light-accent:#f1f8ff;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 16px; line-height: 1.7; }
-    a { color: var(--accent); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    h1 { font-size: 2.5rem; color: var(--dark); margin-bottom: 0.5rem; font-weight: 800; }
-    h2 { font-size: 1.6rem; color: var(--dark); margin: 2.5rem 0 0.75rem; padding-top: 2rem; border-top: 2px solid var(--border); }
-    h3 { font-size: 1.15rem; color: var(--dark); margin: 1.25rem 0 0.5rem; font-weight: 600; }
-    p { margin-bottom: 0.85rem; }
-    ul, ol { margin: 0.5rem 0 0.85rem 1.5rem; }
-    li { margin-bottom: 0.4rem; }
-    strong { font-weight: 700; }
-    table { width: 100%; border-collapse: collapse; margin: 0.75rem 0 1.25rem; font-size: 0.93em; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
-    th { background: var(--dark); color: #fff; text-align: left; padding: 10px 14px; font-weight: 600; font-size: 0.88em; letter-spacing: 0.3px; }
-    td { padding: 9px 14px; border-bottom: 1px solid var(--border); background: var(--surface); vertical-align: top; }
-    tr:last-child td { border-bottom: none; }
-    .layout { max-width: 900px; margin: 0 auto; padding: 0 1.5rem; }
-    header { background: var(--dark); color: #fff; padding: 4rem 0 3rem; }
-    header .inner { max-width: 900px; margin: 0 auto; padding: 0 1.5rem; }
-    header h1 { color: #fff; }
-    header .subtitle { font-size: 1.2rem; color: rgba(255,255,255,0.7); margin: 0.5rem 0 1.5rem; max-width: 600px; }
-    header .badges { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1rem; }
-    .badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.8em; font-weight: 600; border: 1px solid rgba(255,255,255,0.3); color: rgba(255,255,255,0.85); }
-    .hero-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
-    .hero-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
-    .hero-card .icon { font-size: 2rem; margin-bottom: 0.5rem; }
-    .hero-card h3 { margin: 0 0 0.3rem; font-size: 1rem; }
-    .hero-card p { font-size: 0.88em; color: var(--muted); margin: 0; }
-    .highlight { background: var(--light-accent); border-left: 4px solid var(--accent); border-radius: 0 6px 6px 0; padding: 1rem 1.25rem; margin: 1rem 0; }
-    .principles-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin: 1rem 0; }
-    .principle { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; }
-    .principle h3 { font-size: 0.95rem; color: var(--dark); margin: 0.5rem 0 0.3rem; }
-    .principle p { font-size: 0.88em; color: var(--muted); margin: 0; }
-    .principle .num { font-size: 1.5rem; font-weight: 800; color: var(--accent); }
-    .use-case { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; margin: 0.75rem 0; }
-    .use-case .trigger { font-style: italic; color: var(--muted); font-size: 0.92em; margin-bottom: 0.4rem; }
-    .use-case p { font-size: 0.92em; margin: 0; }
-    .status-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin: 1rem 0; }
-    .status-card { border-radius: 8px; padding: 1.25rem; }
-    .status-card.ready { background: #e6f9ee; border: 1px solid #b2dfc3; }
-    .status-card.partial { background: #fff8e1; border: 1px solid #ffe082; }
-    .status-card.planned { background: #f3f0ff; border: 1px solid #c5b3f5; }
-    .status-card h3 { font-size: 0.95rem; margin-bottom: 0.5rem; }
-    .status-card ul { margin: 0; }
-    .status-card li { font-size: 0.88em; }
-    footer { background: var(--dark); color: rgba(255,255,255,0.55); font-size: 0.83em; padding: 2rem 0; margin-top: 4rem; text-align: center; }
-    footer a { color: rgba(255,255,255,0.75); }
-    main { padding: 2rem 0 4rem; }
-    section { margin-bottom: 0.5rem; }
-    @media (max-width: 700px) { h1 { font-size: 1.8rem; } header { padding: 2.5rem 0 2rem; } }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;font-size:16px;line-height:1.7;}
+    a{color:var(--accent);text-decoration:none;}
+    a:hover{text-decoration:underline;}
+    h1{font-size:2.5rem;color:var(--dark);margin-bottom:0.5rem;font-weight:800;}
+    h2{font-size:1.6rem;color:var(--dark);margin:2.5rem 0 0.75rem;padding-top:2rem;border-top:2px solid var(--border);}
+    h3{font-size:1.15rem;color:var(--dark);margin:1.25rem 0 0.5rem;font-weight:600;}
+    p{margin-bottom:0.85rem;}
+    ul,ol{margin:0.5rem 0 0.85rem 1.5rem;}
+    li{margin-bottom:0.4rem;}
+    strong{font-weight:700;}
+    table{width:100%;border-collapse:collapse;margin:0.75rem 0 1.25rem;font-size:0.93em;border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.08);}
+    th{background:var(--dark);color:#fff;text-align:left;padding:10px 14px;font-weight:600;font-size:0.88em;}
+    td{padding:9px 14px;border-bottom:1px solid var(--border);background:var(--surface);vertical-align:top;}
+    tr:last-child td{border-bottom:none;}
+    .layout{max-width:900px;margin:0 auto;padding:0 1.5rem;}
+    header{background:var(--dark);color:#fff;padding:4rem 0 3rem;}
+    header .inner{max-width:900px;margin:0 auto;padding:0 1.5rem;}
+    header h1{color:#fff;}
+    header .subtitle{font-size:1.2rem;color:rgba(255,255,255,0.75);margin:0.5rem 0 0.75rem;max-width:640px;}
+    header .tagline{font-size:0.97rem;color:rgba(255,255,255,0.5);margin:0 0 1.5rem;max-width:680px;font-style:italic;}
+    header .badges{display:flex;gap:0.75rem;flex-wrap:wrap;margin-top:1rem;}
+    .badge{display:inline-block;padding:4px 12px;border-radius:20px;font-size:0.8em;font-weight:600;border:1px solid rgba(255,255,255,0.3);color:rgba(255,255,255,0.85);}
+    .hero-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin:1.5rem 0;}
+    .hero-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1.25rem;box-shadow:0 1px 4px rgba(0,0,0,0.06);}
+    .hero-card .icon{font-size:2rem;margin-bottom:0.5rem;}
+    .hero-card h3{margin:0 0 0.3rem;font-size:1rem;}
+    .hero-card p{font-size:0.88em;color:var(--muted);margin:0;}
+    .highlight{background:var(--light-accent);border-left:4px solid var(--accent);border-radius:0 6px 6px 0;padding:1rem 1.25rem;margin:1rem 0;}
+    .highlight.purple{background:#f3f0ff;border-color:var(--purple);}
+    .highlight.green{background:#e6f9ee;border-color:var(--green);}
+    .principles-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;margin:1rem 0;}
+    .principle{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1.25rem;}
+    .principle h3{font-size:0.95rem;color:var(--dark);margin:0.5rem 0 0.3rem;}
+    .principle p{font-size:0.88em;color:var(--muted);margin:0;}
+    .principle .num{font-size:1.5rem;font-weight:800;color:var(--accent);}
+    .use-case{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1.25rem;margin:0.75rem 0;}
+    .use-case .trigger{font-style:italic;color:var(--muted);font-size:0.92em;margin-bottom:0.4rem;}
+    .use-case p{font-size:0.92em;margin:0;}
+    .status-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin:1rem 0;}
+    .status-card{border-radius:8px;padding:1.25rem;}
+    .status-card.ready{background:#e6f9ee;border:1px solid #b2dfc3;}
+    .status-card.partial{background:#fff8e1;border:1px solid #ffe082;}
+    .status-card.planned{background:#f3f0ff;border:1px solid #c5b3f5;}
+    .status-card h3{font-size:0.95rem;margin-bottom:0.5rem;}
+    .status-card ul{margin:0;}
+    .status-card li{font-size:0.88em;}
+    footer{background:var(--dark);color:rgba(255,255,255,0.55);font-size:0.83em;padding:2rem 0;margin-top:4rem;text-align:center;}
+    footer a{color:rgba(255,255,255,0.75);}
+    main{padding:2rem 0 4rem;}
+    section{margin-bottom:0.5rem;}
+    /* cascade list */
+    .cascade-list{list-style:none;margin:1rem 0;padding:0;}
+    .cascade-list li{display:flex;align-items:flex-start;gap:0.75rem;padding:0.55rem 0.75rem;border-left:3px solid var(--border);margin-bottom:0.35rem;background:var(--surface);border-radius:0 6px 6px 0;font-size:0.93em;}
+    .cascade-list li.hi{border-left-color:var(--accent);background:var(--light-accent);}
+    .cascade-list .sn{font-weight:800;color:var(--accent);min-width:1.5rem;}
+    /* diagram containers */
+    .diagram-container{margin:1.5rem 0;padding:1.25rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;box-shadow:0 1px 4px rgba(0,0,0,0.06);overflow-x:auto;}
+    .diagram-container figcaption{font-size:0.82em;color:var(--muted);margin-top:0.75rem;text-align:center;font-style:italic;}
+    /* inbox router */
+    .router-diagram{display:flex;flex-direction:column;align-items:center;gap:0;}
+    .router-input{background:var(--dark);color:#fff;padding:0.6rem 2rem;border-radius:6px;font-weight:700;font-size:0.95rem;text-align:center;max-width:360px;}
+    .router-arrow{width:2px;height:24px;background:var(--muted);margin:0 auto;position:relative;}
+    .router-arrow::after{content:'';position:absolute;bottom:-6px;left:-5px;border-left:6px solid transparent;border-right:6px solid transparent;border-top:8px solid var(--muted);}
+    .router-hub{background:var(--accent);color:#fff;padding:0.7rem 2.5rem;border-radius:6px;font-weight:700;font-size:1rem;text-align:center;max-width:420px;}
+    .router-line{width:90%;max-width:820px;height:2px;background:var(--border);margin:18px auto 0;}
+    .router-destinations{display:flex;flex-wrap:wrap;gap:0.5rem;justify-content:center;width:100%;max-width:820px;padding:0.5rem 0 0.25rem;}
+    .router-dest{background:var(--light-accent);border:1px solid var(--accent);border-radius:6px;padding:0.35rem 0.7rem;font-size:0.82em;font-weight:600;color:var(--accent);position:relative;}
+    .router-dest::before{content:'\2191';display:block;text-align:center;color:var(--muted);font-size:0.85em;line-height:1;}
+    /* feature steps */
+    .feature-steps{counter-reset:step;list-style:none;margin:0;padding:0;}
+    .feature-steps li{counter-increment:step;display:flex;align-items:flex-start;gap:0.75rem;padding:0.65rem 0.75rem;margin-bottom:0.4rem;background:var(--surface);border:1px solid var(--border);border-radius:6px;font-size:0.91em;}
+    .feature-steps li::before{content:counter(step);font-weight:800;color:#fff;background:var(--accent);min-width:1.6rem;height:1.6rem;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.8em;flex-shrink:0;}
+    .feature-steps li.gate{border-left:4px solid var(--orange);background:#fff8e1;}
+    .feature-steps li.gate::before{background:var(--orange);}
+    .feature-steps li.safe{border-left:4px solid var(--green);background:#e6f9ee;}
+    .feature-steps li.safe::before{background:var(--green);}
+    /* private/public split */
+    .split-diagram{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border-radius:8px;overflow:hidden;}
+    .split-side{padding:1.25rem;}
+    .split-side.private{background:#fef6e4;}
+    .split-side.public-side{background:#e6f9ee;}
+    .split-side h4{font-size:0.9rem;font-weight:700;margin-bottom:0.75rem;padding-bottom:0.4rem;border-bottom:2px solid var(--border);}
+    .split-side ul{list-style:none;margin:0;padding:0;}
+    .split-side li{font-size:0.85em;padding:0.22rem 0;}
+    .split-side.private li::before{content:'\1F512  ';margin-right:0.3rem;}
+    .split-side.public-side li::before{content:'\1F310  ';margin-right:0.3rem;}
+    @media(max-width:700px){h1{font-size:1.8rem;}header{padding:2.5rem 0 2rem;}.split-diagram{grid-template-columns:1fr;}}
   </style>
 </head>
 <body>
@@ -67,11 +106,13 @@
 <header>
   <div class="inner">
     <h1>The Vault</h1>
-    <p class="subtitle">A personal AI operating system — privately owned, locally run, and built for real life.</p>
+    <p class="subtitle">A living command centre for your life, projects, and creative work.</p>
+    <p class="tagline">Raw idea &rarr; operating plan &nbsp;&middot;&nbsp; From inbox chaos to routed action &nbsp;&middot;&nbsp; Your projects stop floating around as loose thoughts</p>
     <div class="badges">
       <span class="badge">Local-First</span>
       <span class="badge">Private by Design</span>
       <span class="badge">20 Specialist Assistants</span>
+      <span class="badge">Approval-Gated Automation</span>
       <span class="badge">Actively Developed</span>
     </div>
   </div>
@@ -80,186 +121,390 @@
 <main>
 <div class="layout">
 
+<!-- hero cards -->
 <section id="what-is">
-<h2>What Is The Vault?</h2>
-<p>The Vault is a personal AI operating system. It coordinates a team of specialized AI assistants to help manage the practical, creative, and strategic dimensions of daily life and work — all running on your own machine, under your control.</p>
-<p>It is not a cloud subscription. It does not send your data somewhere by default. It runs locally, stores everything locally, and connects to external AI services only for specific tasks you explicitly trigger.</p>
-
-<div class="hero-grid">
+<div class="hero-grid" style="margin-top:2rem;">
   <div class="hero-card">
-    <div class="icon">🧠</div>
-    <h3>Coordinated AI team</h3>
-    <p>20 specialist assistants, each with a defined domain and clear limits.</p>
+    <div class="icon">&#x1F9E0;</div>
+    <h3>A coordinated AI team</h3>
+    <p>20 specialist assistants, each with a defined domain and clear limits &mdash; not one generic chatbot.</p>
   </div>
   <div class="hero-card">
-    <div class="icon">🔒</div>
+    <div class="icon">&#x1F512;</div>
     <h3>Local-first privacy</h3>
-    <p>Personal data stays on your machine. You control what leaves.</p>
+    <p>Personal data stays on your machine. Nothing leaves unless you explicitly trigger it.</p>
   </div>
   <div class="hero-card">
-    <div class="icon">✅</div>
+    <div class="icon">&#x2705;</div>
     <h3>Human approval gating</h3>
-    <p>The system plans and drafts. You decide and act.</p>
+    <p>The system plans and prepares. You decide and act. No unilateral posting, sending, or deleting.</p>
   </div>
   <div class="hero-card">
-    <div class="icon">📚</div>
-    <h3>Memory across sessions</h3>
-    <p>Remembers your preferences, goals, and prior decisions — without a cloud database.</p>
+    <div class="icon">&#x1F331;</div>
+    <h3>Grows new capabilities safely</h3>
+    <p>When a feature does not exist, The Vault builds it through a governed proposal &rarr; design &rarr; test &rarr; approval pathway.</p>
   </div>
 </div>
 </section>
 
-<section id="problem">
-<h2>The Problem It Solves</h2>
-<p>Most AI tools are general-purpose assistants. They are useful for quick questions but poor at:</p>
-<ul>
-  <li>Remembering your context across different conversations and sessions</li>
-  <li>Understanding your specific goals, constraints, and preferences over time</li>
-  <li>Handling genuinely different domains — health, finances, creative work, communications — with appropriate depth in each</li>
-  <li>Doing meaningful work on your behalf without constant instruction and hand-holding</li>
-  <li>Keeping sensitive personal information private while still being useful</li>
-</ul>
-<p>The Vault is built to close this gap. It is a deeply personal, modular system that develops working knowledge of your life, adapts to your domains, and grows with you.</p>
-</section>
+<!-- ASPIRATION -->
+<section id="aspiration">
+<h2>Start with an aspiration</h2>
+<p>Here is what The Vault is actually for.</p>
+<div class="highlight purple">
+  <strong>&ldquo;I want to build a more stable creative life.</strong> My ferret-themed business, streaming,
+  content ideas, finances, routines, and health habits all live in separate piles.
+  I want one system that helps me turn messy ideas into actual steps.&rdquo;
+</div>
+<p>That is a raw aspiration. Vague, real, important. Most tools flatten it into a to-do list or ignore it.
+The Vault runs it through an <strong>Inspiration &rarr; Aspiration pathway</strong> that cascades the idea
+through every relevant part of the system.</p>
 
-<section id="local-first">
-<h2>Local-First and Private by Design</h2>
-<p>Every piece of personal data stays on your machine. There is no cloud database, no background sync, no telemetry, and no subscription model.</p>
+<h3>How one idea cascades through The Vault</h3>
+<ol class="cascade-list">
+  <li class="hi"><span class="sn">1</span><span><strong>Inspiration</strong> captures the messy idea exactly as stated &mdash; no filtering, no flattening.</span></li>
+  <li class="hi"><span class="sn">2</span><span><strong>Aspiration</strong> gives it structure: what is the real ambition? What domains does it touch?</span></li>
+  <li class="hi"><span class="sn">3</span><span><strong>Goals</strong> turns the aspiration into structured objectives with milestones and success criteria.</span></li>
+  <li><span class="sn">4</span><span><strong>Routines</strong> identifies which habits support the ambition and designs structures that fit real life.</span></li>
+  <li><span class="sn">5</span><span><strong>Admin_Assistant / Schedule</strong> surfaces concrete dates, reminders, and time blocks.</span></li>
+  <li><span class="sn">6</span><span><strong>CFO</strong> checks the budget picture &mdash; what does this aspiration cost to pursue?</span></li>
+  <li><span class="sn">7</span><span><strong>Business_Ops</strong> shapes any monetisation or business actions that come out of it.</span></li>
+  <li><span class="sn">8</span><span><strong>Websearch</strong> researches gaps: what does similar work look like? What already exists?</span></li>
+  <li><span class="sn">9</span><span><strong>Contextual_Thinking</strong> adapts priorities to your current energy and context.</span></li>
+  <li><span class="sn">10</span><span><strong>TaskMaster_Brain</strong> turns the approved plan into ordered, executable steps.</span></li>
+  <li><span class="sn">11</span><span><strong>Vault_Brain</strong> coordinates governance and safety throughout the process.</span></li>
+  <li><span class="sn">12</span><span><strong>Documentation</strong> &mdash; the backlog and manuals update to capture new work and decisions.</span></li>
+</ol>
+<p>One messy idea. Twelve system responses. A raw idea &rarr; operating plan.</p>
 
-<div class="principles-grid">
-  <div class="principle">
-    <div class="num">1</div>
-    <h3>Sensitive data stays local</h3>
-    <p>Health data, financial records, and personal communications never leave your machine unless you deliberately trigger a task that requires it.</p>
-  </div>
-  <div class="principle">
-    <div class="num">2</div>
-    <h3>Explicit AI calls only</h3>
-    <p>When a task genuinely needs a large language model, The Vault uses configured API connections — and only for that specific task. Nothing is sent speculatively.</p>
-  </div>
-  <div class="principle">
-    <div class="num">3</div>
-    <h3>You remain in control</h3>
-    <p>Every significant action — posting, deploying, sending, or making irreversible changes — requires explicit human approval. The system cannot act unilaterally.</p>
-  </div>
+<h3>Diagram: Inspiration to Execution</h3>
+<div class="diagram-container" role="figure" aria-label="Inspiration to Execution flow diagram">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 500" width="100%" style="max-width:660px;display:block;margin:0 auto;" aria-hidden="true">
+  <defs>
+    <marker id="am" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#6a737d"/>
+    </marker>
+    <marker id="ab" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#0366d6"/>
+    </marker>
+  </defs>
+  <!-- Vault_Brain sidebar -->
+  <rect x="0" y="118" width="128" height="320" rx="6" fill="#fafafa" stroke="#e1e4e8" stroke-width="1"/>
+  <text x="64" y="138" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" font-weight="700" fill="#1a1a2e">Vault_Brain</text>
+  <text x="64" y="153" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="10" fill="#6a737d">governs</text>
+  <text x="64" y="165" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="10" fill="#6a737d">throughout</text>
+  <text x="64" y="420" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="10" fill="#6a737d">safety at</text>
+  <text x="64" y="432" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="10" fill="#6a737d">every step</text>
+  <line x1="128" y1="196" x2="144" y2="196" stroke="#c5b3f5" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <line x1="128" y1="254" x2="144" y2="254" stroke="#c5b3f5" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <line x1="128" y1="312" x2="144" y2="312" stroke="#c5b3f5" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <line x1="128" y1="370" x2="144" y2="370" stroke="#c5b3f5" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <!-- Box 1: Raw idea -->
+  <rect x="144" y="8" width="220" height="42" rx="6" fill="#f3f0ff" stroke="#6f42c1" stroke-width="2"/>
+  <text x="254" y="24" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="700" fill="#6f42c1">Raw idea dump</text>
+  <text x="254" y="40" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#6a737d">(messy, unfiltered, real)</text>
+  <line x1="254" y1="50" x2="254" y2="66" stroke="#6a737d" stroke-width="2" marker-end="url(#am)"/>
+  <!-- Box 2 -->
+  <rect x="144" y="68" width="220" height="40" rx="6" fill="#1a1a2e"/>
+  <text x="254" y="93" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="600" fill="#fff">Inspiration &#8212; captures it</text>
+  <line x1="254" y1="108" x2="254" y2="124" stroke="#6a737d" stroke-width="2" marker-end="url(#am)"/>
+  <!-- Box 3 -->
+  <rect x="144" y="126" width="220" height="40" rx="6" fill="#1a1a2e"/>
+  <text x="254" y="151" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="600" fill="#fff">Aspiration &#8212; give it structure</text>
+  <line x1="254" y1="166" x2="254" y2="182" stroke="#6a737d" stroke-width="2" marker-end="url(#am)"/>
+  <!-- Box 4: Goals + branch -->
+  <rect x="144" y="184" width="220" height="40" rx="6" fill="#0366d6"/>
+  <text x="254" y="209" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="600" fill="#fff">Goals &#8594; milestones + criteria</text>
+  <line x1="364" y1="204" x2="414" y2="204" stroke="#0366d6" stroke-width="1.5" marker-end="url(#ab)"/>
+  <rect x="416" y="186" width="206" height="36" rx="5" fill="#f1f8ff" stroke="#0366d6" stroke-width="1.5"/>
+  <text x="519" y="209" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#0366d6">CFO: budget check</text>
+  <line x1="254" y1="224" x2="254" y2="240" stroke="#6a737d" stroke-width="2" marker-end="url(#am)"/>
+  <!-- Box 5: Routines + branch -->
+  <rect x="144" y="242" width="220" height="40" rx="6" fill="#0366d6"/>
+  <text x="254" y="267" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="600" fill="#fff">Routines &#8594; daily habits</text>
+  <line x1="364" y1="262" x2="414" y2="262" stroke="#0366d6" stroke-width="1.5" marker-end="url(#ab)"/>
+  <rect x="416" y="244" width="206" height="36" rx="5" fill="#f1f8ff" stroke="#0366d6" stroke-width="1.5"/>
+  <text x="519" y="267" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#0366d6">Websearch: research gaps</text>
+  <line x1="254" y1="282" x2="254" y2="298" stroke="#6a737d" stroke-width="2" marker-end="url(#am)"/>
+  <!-- Box 6: Tasks + branch -->
+  <rect x="144" y="300" width="220" height="40" rx="6" fill="#0366d6"/>
+  <text x="254" y="325" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="600" fill="#fff">Tasks &#8594; executable steps</text>
+  <line x1="364" y1="320" x2="414" y2="320" stroke="#0366d6" stroke-width="1.5" marker-end="url(#ab)"/>
+  <rect x="416" y="302" width="206" height="36" rx="5" fill="#f1f8ff" stroke="#0366d6" stroke-width="1.5"/>
+  <text x="519" y="325" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#0366d6">Business_Ops: monetise</text>
+  <line x1="254" y1="340" x2="254" y2="356" stroke="#6a737d" stroke-width="2" marker-end="url(#am)"/>
+  <!-- Box 7: Schedule + branch -->
+  <rect x="144" y="358" width="220" height="40" rx="6" fill="#0366d6"/>
+  <text x="254" y="383" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="600" fill="#fff">Schedule + Daily Briefing</text>
+  <line x1="364" y1="378" x2="414" y2="378" stroke="#0366d6" stroke-width="1.5" marker-end="url(#ab)"/>
+  <rect x="416" y="360" width="206" height="36" rx="5" fill="#f1f8ff" stroke="#0366d6" stroke-width="1.5"/>
+  <text x="519" y="383" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#0366d6">Contextual_Thinking: adapt</text>
+  <line x1="254" y1="398" x2="254" y2="414" stroke="#6a737d" stroke-width="2" marker-end="url(#am)"/>
+  <!-- Box 8: Review -->
+  <rect x="144" y="416" width="220" height="40" rx="6" fill="#22863a"/>
+  <text x="254" y="441" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="600" fill="#fff">Review + adapt &#8594; loop back</text>
+  <text x="144" y="472" font-family="-apple-system,sans-serif" font-size="10" fill="#6a737d">&#8617; priorities evolve; loop repeats as the plan matures</text>
+</svg>
+<figcaption>Inspiration &rarr; Aspiration &rarr; Goals &rarr; Routines &rarr; Tasks &rarr; Schedule &rarr; Review, with CFO / Websearch / Business_Ops / Contextual_Thinking branches. Vault_Brain governs throughout.</figcaption>
 </div>
 </section>
 
-<section id="how-it-works">
-<h2>How the AI System Works</h2>
+<!-- INBOX ROUTER -->
+<section id="inbox-router">
+<h2>The Inbox Router</h2>
+<p>The Vault is not just storing notes. Every input &mdash; a raw idea, a request, a message, a new capability ask &mdash;
+gets routed to the right system automatically.</p>
+<p><strong>From inbox chaos to routed action.</strong> You drop something in; the system works out where it belongs and what happens next.</p>
+<div class="diagram-container" role="figure" aria-label="The Inbox Router — how The Vault routes inputs to specialist systems">
+  <div class="router-diagram">
+    <div class="router-input">&#x1F4E5; Inbox &mdash; Raw Input<br><small style="font-weight:400;opacity:0.7">idea / request / message / task / question</small></div>
+    <div class="router-arrow"></div>
+    <div class="router-hub">&#x26A1; Vault Routes It To&hellip;</div>
+    <div class="router-line"></div>
+    <div class="router-destinations">
+      <div class="router-dest">Aspirations</div>
+      <div class="router-dest">Goals</div>
+      <div class="router-dest">Routines</div>
+      <div class="router-dest">Schedule</div>
+      <div class="router-dest">Backlog</div>
+      <div class="router-dest">Research</div>
+      <div class="router-dest">Business Ops</div>
+      <div class="router-dest">Daily Briefing</div>
+      <div class="router-dest">Memory</div>
+      <div class="router-dest">Human Input / Approvals</div>
+      <div class="router-dest">Safety Review</div>
+      <div class="router-dest">Manual / Docs</div>
+    </div>
+  </div>
+  <figcaption>Every input is routed. Nothing sits in a pile. The Vault works out which system handles it next &mdash; and tracks what still needs human attention.</figcaption>
+</div>
+</section>
 
-<h3>The Brain Layer</h3>
-<p>The Vault has four coordinating "brains" that manage how AI thinking happens:</p>
-
-<table>
-  <tr><th>Brain</th><th>What it does</th></tr>
-  <tr><td><strong>Vault_Brain</strong></td><td>The system coordinator. Routes tasks to the right assistant, tracks what needs human attention, manages proposals, and enforces safety gates. It operates at maximum determinism — no improvisation. It coordinates, not performs.</td></tr>
-  <tr><td><strong>TaskMaster_Brain</strong></td><td>The mission planner. Breaks complex, multi-step tasks into ordered plans, assigns each step to the right specialist, and tracks progress so completed work is never re-done unnecessarily.</td></tr>
-  <tr><td><strong>Consensus_Engine</strong></td><td>The governance layer. Scores decisions, validates important transitions, and audits whether the system is following its own rules. Read-only — it observes and reports but never takes action itself.</td></tr>
-  <tr><td><strong>Contextual_Thinking</strong></td><td>Manages thinking quality. Shapes how AI assistants frame problems, keeps prompts within useful limits, and helps each assistant approach its domain with the right reasoning approach.</td></tr>
-</table>
-
-<h3>Specialized Assistants — The Persona System</h3>
-<p>Rather than a single general-purpose AI, The Vault operates a team of <strong>20 specialized assistants</strong> — each with a defined domain, a specific set of capabilities, and clear boundaries about what it should and should not do.</p>
-
+<!-- PERSONAS -->
+<section id="personas">
+<h2>How the pieces work together</h2>
+<p>The Vault runs <strong>20 specialist assistants</strong> &mdash; each defined by what it does. No assistant acts outside its
+domain. No assistant can post, send, or make irreversible changes without explicit human approval.</p>
 <div class="highlight">
-  <strong>No assistant acts outside its domain.</strong> No assistant can deploy, post, send, or make irreversible changes without explicit human approval.
+  <strong>The Vault is not a single AI.</strong> It is a coordinated team &mdash; each member with a defined domain,
+  working under a governance layer that enforces safety and tracks state across sessions.
 </div>
-
 <table>
   <tr><th>Assistant</th><th>What it does</th></tr>
-  <tr><td><strong>Admin Assistant</strong></td><td>Broad coordination — handles most day-to-day domain workflows</td></tr>
-  <tr><td><strong>Medical</strong></td><td>Health tracking, food planning, wellbeing check-ins across a five-stage framework</td></tr>
-  <tr><td><strong>CFO</strong></td><td>Budget management, expense tracking, financial intelligence</td></tr>
-  <tr><td><strong>Business Ops</strong></td><td>Grant tracking, business planning, adversarial plan review</td></tr>
-  <tr><td><strong>Goals</strong></td><td>Turns ambitions into projects with milestones, roadmaps, and success criteria</td></tr>
-  <tr><td><strong>Routines</strong></td><td>Designs habit structures and routine scaffolding that fit real life</td></tr>
-  <tr><td><strong>Inspiration</strong></td><td>Creative prompts and idea generation</td></tr>
-  <tr><td><strong>Conversationalist</strong></td><td>Message drafting, voice and tone management, social communication</td></tr>
-  <tr><td><strong>Image Processor</strong></td><td>Visual design queue and image generation workflows</td></tr>
-  <tr><td><strong>Videographer</strong></td><td>Video strategy and stream content planning</td></tr>
-  <tr><td><strong>Shopping Assistant</strong></td><td>Price intelligence, weekly specials, budget-aware purchasing suggestions</td></tr>
-  <tr><td><strong>Websearch</strong></td><td>Research and information retrieval from public web pages</td></tr>
-  <tr><td><strong>Master Coder</strong></td><td>Code generation, debugging, and test writing</td></tr>
-  <tr><td><strong>Security</strong></td><td>Safety gate enforcement and approval workflows</td></tr>
-  <tr><td><strong>Memory assistants ×3</strong></td><td>Short-term, medium-term, and long-term knowledge retrieval</td></tr>
+  <tr><td><strong>Inspiration</strong></td><td>Captures raw creative ideas and messy ambitions without filtering or flattening.</td></tr>
+  <tr><td><strong>Goals</strong></td><td>Turns clarified ambitions into projects with milestones, roadmaps, and success criteria.</td></tr>
+  <tr><td><strong>Routines</strong></td><td>Designs habit structures and repeatable patterns that fit around real-life constraints.</td></tr>
+  <tr><td><strong>Admin_Assistant</strong></td><td>Surfaces dates, reminders, task priority, and day-to-day workflow coordination.</td></tr>
+  <tr><td><strong>CFO</strong></td><td>Budget management, expense tracking, and financial intelligence.</td></tr>
+  <tr><td><strong>Business_Ops</strong></td><td>Business planning, grant tracking, adversarial plan review, and content strategy.</td></tr>
+  <tr><td><strong>Websearch</strong></td><td>Retrieves information from public web pages. Intentionally scoped to public content only.</td></tr>
+  <tr><td><strong>Conversationalist</strong></td><td>Message drafting, voice and tone management, and social communication support.</td></tr>
+  <tr><td><strong>Medical</strong></td><td>Health tracking, food planning, and a five-stage wellbeing check-in framework.</td></tr>
+  <tr><td><strong>Shopping_Assistant</strong></td><td>Price intelligence, weekly specials, and budget-aware purchasing suggestions.</td></tr>
+  <tr><td><strong>Image_Processor</strong></td><td>Visual design queue and AI image generation workflows.</td></tr>
+  <tr><td><strong>Videographer</strong></td><td>Video strategy and stream content planning for creative projects.</td></tr>
+  <tr><td><strong>Master_Coder</strong></td><td>Code generation, debugging, test writing, and integration work.</td></tr>
+  <tr><td><strong>Security</strong></td><td>Safety gate enforcement and approval workflow management.</td></tr>
+  <tr><td><strong>Vault_Brain</strong></td><td>The system coordinator. Routes tasks, manages proposals, enforces safety gates. Coordinates &mdash; does not perform.</td></tr>
+  <tr><td><strong>TaskMaster_Brain</strong></td><td>The mission planner. Breaks complex tasks into ordered steps and tracks progress.</td></tr>
+  <tr><td><strong>Consensus_Engine</strong></td><td>The governance layer. Reviews decisions, validates transitions, audits behaviour. Read-only.</td></tr>
+  <tr><td><strong>Contextual_Thinking</strong></td><td>Adapts how AI assistants frame and approach problems based on your current context and energy.</td></tr>
 </table>
 </section>
 
-<section id="capabilities">
-<h2>What The Vault Can Do</h2>
-
-<h3>Personal Planning and Daily Routines</h3>
-<p>The Goals assistant turns vague ambitions into structured plans — with milestones, dependencies, and success criteria that make progress trackable. The Routines assistant helps design habits that fit around real-life constraints. A morning briefing system pulls health state, reminders, and priority tasks into a single daily summary.</p>
-
-<h3>Health and Food Support</h3>
-<p>The Medical assistant manages a five-stage wellbeing framework covering physical tracking, mental check-ins, goal alignment, journaling, and daily prompts. It connects to a food planning system that can factor in nutrition goals, preferences, and dietary restrictions. All health data stays entirely local and is never shared.</p>
-
-<h3>Memory and Knowledge Across Time</h3>
-<p>The Vault maintains three types of memory:</p>
-<ul>
-  <li><strong>Active session memory</strong> — what was discussed and decided in the current interaction</li>
-  <li><strong>Living memory</strong> — preferences, decisions, and context that carry forward across sessions</li>
-  <li><strong>Long-term retrieval</strong> — summaries and knowledge notes generated over time for durable reference</li>
-</ul>
-<p>This means the system genuinely remembers your preferences and prior decisions without a cloud database.</p>
-
-<h3>Business Operations</h3>
-<p>The Business Ops assistant handles grant application tracking, adversarial business plan review (finding weaknesses before they matter), and content strategy for creative projects. It drafts and plans but requires human approval before taking action anywhere external.</p>
-
-<h3>Content and Social Communication</h3>
-<p>The Conversationalist assistant manages message drafting, communication tone, and contact context. A social profile system tracks relationships and communication history locally. Every draft is presented for human review before anything is sent. The system never posts or sends on its own.</p>
-
-<h3>Shopping and Price Intelligence</h3>
-<p>The shopping intelligence layer tracks ALDI AU weekly specials and can suggest budget-aware purchasing based on what is currently available, cross-referenced against food plan needs. Expansion to more supermarkets and price comparison is planned.</p>
-
-<h3>Documentation Automation</h3>
-<p>The Vault maintains its own documentation automatically. When the system changes, a change-log tracks what needs updating. A daily review process flags stale sections. This guide was generated by that system.</p>
-
-<h3>Visual and Video Workflows</h3>
-<p>The Image Processor assistant manages a design request queue for AI image generation, connected to image generation APIs. The Videographer assistant supports video strategy and stream content planning for the Ferret Fatale creative brand.</p>
-
-<h3>Web Research</h3>
-<p>The Websearch assistant retrieves information from public web pages. It is intentionally scoped to public, static content — it does not log into accounts or access anything behind authentication, protecting privacy and respecting terms of service.</p>
-
-<h3>Governance and Safety Built In</h3>
-<p>Safety is not an add-on. The Consensus_Engine and Security assistant exist specifically to prevent the system from taking unsafe actions. All three core security gates have been formally resolved and are enforced in production. The system documents its own safety status.</p>
+<!-- MISSING FEATURE -->
+<section id="missing-feature">
+<h2>Example: building a missing feature</h2>
+<p>One of the most useful things The Vault can do is <strong>grow new capabilities safely</strong> &mdash; instead
+of pretending every feature exists, or refusing to engage.</p>
+<div class="use-case">
+  <p class="trigger">&ldquo;I want The Vault to manage my Redbubble account.&rdquo;</p>
+  <p>This feature does not currently exist. Here is what happens when you ask for it.</p>
+</div>
+<ol class="feature-steps">
+  <li><strong>Capability check.</strong> The Vault searches its own registry, backlog, and documentation to see if Redbubble integration exists in any form.</li>
+  <li><strong>Honest report.</strong> It does not invent a feature that does not exist. It says: &ldquo;Not built. Here is what would be required.&rdquo;</li>
+  <li class="gate"><strong>Proposal created.</strong> Captures: what the feature should do, which personas are relevant, what credentials and platform access are required.</li>
+  <li class="gate"><strong>Credentials and safety questions identified.</strong> Which API does Redbubble expose? What platform policies apply? What safety gates are required for account actions?</li>
+  <li><strong>Backlog tasks, forms, and tests created.</strong> Tool design, form design, test design, implementation steps &mdash; all tracked in the backlog.</li>
+  <li><strong>Smallest safe version first.</strong> Read-only: retrieve product performance data and summarise it. Nothing writes to the account.</li>
+  <li><strong>Dry-run mode.</strong> Any feature touching account state shows what it <em>would</em> do, waiting for approval before acting.</li>
+  <li class="gate"><strong>Human approves each account action.</strong> Uploads, edits, and deletions need explicit human sign-off for that specific action.</li>
+  <li class="safe"><strong>Documentation updated automatically.</strong> The manual, backlog, and knowledge base update to capture the new feature.</li>
+  <li class="safe"><strong>Feature grows when approved.</strong> Analytics reporting, product listings, print-on-demand queue &mdash; each expansion requiring its own approval.</li>
+</ol>
+<div class="highlight green">
+  <strong>The system never pretends a missing feature exists.</strong> It builds features through a governed pathway
+  &mdash; proposal, design, test, dry-run, approval &mdash; and documents every step.
+</div>
+<h3>Diagram: Build a Missing Feature</h3>
+<div class="diagram-container" role="figure" aria-label="Build a Missing Feature — Redbubble example step flow">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580 488" width="100%" style="max-width:580px;display:block;margin:0 auto;" aria-hidden="true">
+  <defs>
+    <marker id="af" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#6a737d"/>
+    </marker>
+  </defs>
+  <!-- Step 1 request -->
+  <rect x="90" y="6" width="400" height="42" rx="6" fill="#f3f0ff" stroke="#6f42c1" stroke-width="2"/>
+  <text x="290" y="22" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="700" fill="#6f42c1">&#x201C;Manage my Redbubble account&#x201D;</text>
+  <text x="290" y="38" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#6a737d">Request for a missing feature</text>
+  <line x1="290" y1="48" x2="290" y2="62" stroke="#6a737d" stroke-width="2" marker-end="url(#af)"/>
+  <!-- Step 2 -->
+  <rect x="90" y="64" width="400" height="38" rx="6" fill="#1a1a2e"/>
+  <text x="290" y="88" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="600" fill="#fff">Capability check &#8212; does this exist?</text>
+  <line x1="290" y1="102" x2="290" y2="116" stroke="#6a737d" stroke-width="2" marker-end="url(#af)"/>
+  <!-- Step 3 -->
+  <rect x="90" y="118" width="400" height="38" rx="6" fill="#1a1a2e"/>
+  <text x="290" y="142" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="600" fill="#fff">Honest report: not built &#8212; here is what&#x2019;s needed</text>
+  <line x1="290" y1="156" x2="290" y2="170" stroke="#6a737d" stroke-width="2" marker-end="url(#af)"/>
+  <!-- Step 4 gate -->
+  <rect x="90" y="172" width="400" height="38" rx="6" fill="#fff8e1" stroke="#b08800" stroke-width="2"/>
+  <text x="290" y="196" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="600" fill="#b08800">Proposal &#8594; credentials + safety questions</text>
+  <line x1="290" y1="210" x2="290" y2="224" stroke="#6a737d" stroke-width="2" marker-end="url(#af)"/>
+  <!-- Step 5 -->
+  <rect x="90" y="226" width="400" height="38" rx="6" fill="#1a1a2e"/>
+  <text x="290" y="250" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="600" fill="#fff">Backlog tasks + forms + tests created</text>
+  <line x1="290" y1="264" x2="290" y2="278" stroke="#6a737d" stroke-width="2" marker-end="url(#af)"/>
+  <!-- Step 6 -->
+  <rect x="90" y="280" width="400" height="38" rx="6" fill="#0366d6"/>
+  <text x="290" y="304" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="600" fill="#fff">Smallest safe version first (read-only)</text>
+  <line x1="290" y1="318" x2="290" y2="332" stroke="#6a737d" stroke-width="2" marker-end="url(#af)"/>
+  <!-- Step 7 gate -->
+  <rect x="90" y="334" width="400" height="38" rx="6" fill="#fff8e1" stroke="#b08800" stroke-width="2"/>
+  <text x="290" y="358" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="600" fill="#b08800">Dry-run mode &#8594; human approval gate</text>
+  <line x1="290" y1="372" x2="290" y2="386" stroke="#6a737d" stroke-width="2" marker-end="url(#af)"/>
+  <!-- Step 8 gate -->
+  <rect x="90" y="388" width="400" height="38" rx="6" fill="#fff8e1" stroke="#b08800" stroke-width="2"/>
+  <text x="290" y="412" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="600" fill="#b08800">Account actions: explicit approval each time</text>
+  <line x1="290" y1="426" x2="290" y2="440" stroke="#6a737d" stroke-width="2" marker-end="url(#af)"/>
+  <!-- Step 9 safe -->
+  <rect x="90" y="442" width="400" height="38" rx="6" fill="#22863a"/>
+  <text x="290" y="466" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" font-weight="600" fill="#fff">Documentation updated &#8594; feature grows safely</text>
+  <!-- legend -->
+  <rect x="90" y="486" width="12" height="12" rx="2" fill="#fff8e1" stroke="#b08800" stroke-width="1.5"/>
+  <text x="107" y="496" font-family="-apple-system,sans-serif" font-size="10" fill="#6a737d">Approval gate</text>
+  <rect x="210" y="486" width="12" height="12" rx="2" fill="#22863a"/>
+  <text x="227" y="496" font-family="-apple-system,sans-serif" font-size="10" fill="#6a737d">Safe outcome</text>
+  <rect x="320" y="486" width="12" height="12" rx="2" fill="#0366d6"/>
+  <text x="337" y="496" font-family="-apple-system,sans-serif" font-size="10" fill="#6a737d">Implementation</text>
+</svg>
+<figcaption>Request &rarr; capability check &rarr; honest gap report &rarr; proposal &rarr; credentials/safety &rarr; backlog &rarr; safe implementation &rarr; dry-run &rarr; approval gates &rarr; documentation. Every stage governed.</figcaption>
+</div>
 </section>
 
-<section id="maturity">
-<h2>Current Maturity</h2>
-<p>The Vault is an actively developed, personally operated system. It is honest about what works, what is in progress, and what is planned.</p>
+<!-- BOUNDARY -->
+<section id="boundary">
+<h2>Private vs public boundary</h2>
+<p>The Vault keeps personal data strictly local. What gets published externally is limited, redacted, and explicitly approved.</p>
+<div class="diagram-container" role="figure" aria-label="Private vs Public boundary — what stays local and what is published">
+  <div class="split-diagram">
+    <div class="split-side private">
+      <h4>&#x1F512; Private &mdash; stays local</h4>
+      <ul>
+        <li>Health data and wellbeing logs</li>
+        <li>Daily briefings and morning notes</li>
+        <li>Financial records and budget state</li>
+        <li>Email intelligence (raw threads)</li>
+        <li>Personal memory and preferences</li>
+        <li>Credentials and local environment config</li>
+        <li>Human input forms and blockers</li>
+        <li>Recovery and session logs</li>
+        <li>Raw social data and drafts</li>
+      </ul>
+    </div>
+    <div class="split-side public-side">
+      <h4>&#x1F310; Public &mdash; published externally</h4>
+      <ul>
+        <li>This public project guide</li>
+        <li>Redacted developer manual</li>
+        <li>Architecture overview</li>
+        <li>Approved capability summaries</li>
+        <li>GitHub repository (code only)</li>
+        <li>Preview sandbox pages</li>
+        <li>Public documentation updates</li>
+      </ul>
+    </div>
+  </div>
+  <figcaption>Personal data, credentials, health logs, and private runtime state never leave the local machine. Only explicitly approved, redacted documentation is published.</figcaption>
+</div>
+</section>
 
+<!-- CAPABILITIES -->
+<section id="capabilities">
+<h2>What The Vault can already help with</h2>
+<p>These are capabilities working in production today.</p>
+
+<h3>Idea capture and aspiration planning</h3>
+<p>Raw ideas, ambitions, and project concepts get captured and turned into actionable plans via the
+Inspiration &rarr; Goals &rarr; Routines cascade. Health state and energy context are factored in via Contextual_Thinking.</p>
+
+<h3>Routines and scheduling</h3>
+<p>The Routines assistant designs habit structures around real-life constraints. A morning briefing system
+pulls Health state, goals progress, and priority tasks into a single daily summary &mdash; no prompting required.</p>
+
+<h3>Documentation and manual automation</h3>
+<p>The Vault maintains its own documentation automatically. When the system changes, a change-log tracks
+what needs updating. A daily review flags stale sections. This guide is part of that system.</p>
+
+<h3>Email intelligence (read-only)</h3>
+<p>An email intelligence layer provides read-only analysis: threading, tagging, sentiment detection, and
+action-item extraction &mdash; without mutating any mailbox state. Account write actions require
+explicit credential setup and human approval per action.</p>
+
+<h3>Shopping and specials support</h3>
+<p>The shopping intelligence layer tracks ALDI AU weekly specials and cross-references budget and food
+plan needs to suggest purchasing options.</p>
+
+<h3>Business and content planning</h3>
+<p>Business_Ops handles grant tracking, adversarial business plan review (finding weaknesses before they
+matter), and content strategy for creative projects. Every plan is presented for review before any
+external action.</p>
+
+<h3>Research and web intelligence</h3>
+<p>The Websearch assistant retrieves information from public web pages &mdash; intentionally scoped to
+public, static content only. It does not log into accounts, protecting privacy and platform terms of service.</p>
+
+<h3>Persona-based support for 20 domains</h3>
+<p>You interact with the specialist most relevant to your current need. Vault_Brain coordinates the rest
+&mdash; routing, tracking, and ensuring nothing falls through the gaps.</p>
+
+<h3>Safety and governance built in</h3>
+<p>The governance layer &mdash; Vault_Brain, Consensus_Engine, and the Security assistant &mdash; exists to
+prevent unsafe actions. All core safety gates are enforced in production. The system documents its own
+safety status.</p>
+
+<h3>Working reliably today</h3>
 <div class="status-grid">
   <div class="status-card ready">
-    <h3>✅ Working reliably today</h3>
+    <h3>&#x2705; Working reliably</h3>
     <ul>
-      <li>Coordination and orchestration layer</li>
+      <li>Coordination and orchestration</li>
       <li>20 active specialist assistants</li>
       <li>Health and food planning</li>
       <li>Financial tracking</li>
       <li>Shopping intelligence (ALDI)</li>
       <li>Memory and knowledge retrieval</li>
-      <li>Scheduling and morning briefings</li>
-      <li>Business operations and grant tracking</li>
+      <li>Scheduling and daily briefings</li>
+      <li>Business operations and grants</li>
       <li>Documentation automation</li>
       <li>Web research (public pages)</li>
-      <li>All safety gates enforced</li>
+      <li>Safety gates enforced</li>
     </ul>
   </div>
   <div class="status-card partial">
-    <h3>⚙️ Implemented, needs setup</h3>
+    <h3>&#x2699;&#xFE0F; Implemented, needs setup</h3>
     <ul>
-      <li>Email integration — requires credential configuration</li>
-      <li>Discord read integration — requires bot setup</li>
-      <li>Social platform monitoring — requires per-platform credentials</li>
-      <li>Local AI model inference (Ollama) — requires installation</li>
+      <li>Email intelligence &mdash; credential setup needed</li>
+      <li>Discord read integration &mdash; bot setup needed</li>
+      <li>Social monitoring &mdash; per-platform credentials</li>
+      <li>Local AI inference (Ollama) &mdash; install needed</li>
     </ul>
   </div>
   <div class="status-card planned">
-    <h3>🔮 Planned, not yet built</h3>
+    <h3>&#x1F52E; Planned, not yet built</h3>
     <ul>
-      <li>Full social media posting via platform APIs</li>
+      <li>Full social media posting via APIs</li>
       <li>Multi-supermarket price comparison</li>
       <li>Video and stream production automation</li>
       <li>Full offline operation via local models</li>
@@ -268,83 +513,85 @@
 </div>
 </section>
 
-<section id="use-cases">
-<h2>Example Use Cases</h2>
-
-<div class="use-case">
-  <p class="trigger">"Run my morning briefing."</p>
-  <p>The system checks health state, pulls today's schedule, reviews goals progress, flags priority tasks, and delivers a single daily summary. No prompting needed — the routine runs on a batch trigger.</p>
-</div>
-
-<div class="use-case">
-  <p class="trigger">"I want to build a sustainable content business around Ferret Fatale."</p>
-  <p>The Goals assistant breaks this into projects, milestones, and success criteria. Business Ops handles the planning layer. CFO connects it to financial targets. The output is a structured roadmap you can actually work from.</p>
-</div>
-
-<div class="use-case">
-  <p class="trigger">"Plan this week's meals around what's on special."</p>
-  <p>The shopping assistant fetches current ALDI specials. The Medical assistant checks against dietary preferences and nutrition goals. A meal plan is generated without leaving the machine or querying a third-party service.</p>
-</div>
-
-<div class="use-case">
-  <p class="trigger">"Draft a response to this message — warm but professional tone."</p>
-  <p>The Conversationalist checks the relationship context, selects the appropriate communication voice, and drafts the response. You review it, make any edits, and send it yourself. The system never sends without your explicit action.</p>
-</div>
-
-<div class="use-case">
-  <p class="trigger">"What grants are available for small creative businesses in Australia right now?"</p>
-  <p>The Websearch assistant retrieves current public information. Business Ops cross-references the existing grant tracker. A structured summary is delivered with sources and relevance notes.</p>
-</div>
+<!-- STILL DEVELOPING -->
+<section id="developing">
+<h2>What is still developing</h2>
+<p>The Vault is honest about what is not done yet.</p>
+<ul>
+  <li><strong>GUI / web interface</strong> &mdash; planned, not yet built</li>
+  <li><strong>Full email account actions</strong> &mdash; read-only analysis is live; write actions need credential confirmation and explicit approval</li>
+  <li><strong>Local AI model inference</strong> &mdash; Ollama and similar local-model support is deferred to a future stage</li>
+  <li><strong>Social platform posting</strong> &mdash; read and analysis stages are being built; account actions need per-platform approval</li>
+  <li><strong>Account management features (e.g. Redbubble)</strong> &mdash; not yet built; follow the governed feature-building pathway above</li>
+  <li><strong>Final public site promotion</strong> &mdash; preview deploys to a sandbox URL; production URL promotion is approval-gated</li>
+</ul>
 </section>
 
-<section id="safety-privacy">
-<h2>Safety and Privacy Philosophy</h2>
-<p>Three principles govern everything The Vault does:</p>
-
+<!-- WHY DIFFERENT -->
+<section id="why-different">
+<h2>Why this is different</h2>
 <div class="principles-grid">
   <div class="principle">
-    <div class="num">1</div>
-    <h3>Human approval for irreversible actions</h3>
-    <p>The system plans, drafts, and prepares. It cannot deploy, post, send, or delete without a human explicitly saying yes for that specific action.</p>
+    <div class="num">&#x1F512;</div>
+    <h3>Local-first</h3>
+    <p>Your personal data &mdash; health, finances, emails, creative work &mdash; stays on your machine.
+    Nothing is synced, sampled, or shared by default.</p>
   </div>
   <div class="principle">
-    <div class="num">2</div>
-    <h3>Sensitive data stays local</h3>
-    <p>Health data, financial records, personal communications — none of it reaches any external service unless you trigger a task that specifically requires it and you approve it.</p>
+    <div class="num">&#x2705;</div>
+    <h3>Approval-gated automation</h3>
+    <p>Every irreversible action &mdash; posting, deploying, sending, deleting &mdash; needs explicit human
+    sign-off for that specific action. The system cannot act unilaterally.</p>
   </div>
   <div class="principle">
-    <div class="num">3</div>
-    <h3>Transparent about capabilities and limits</h3>
-    <p>The system maintains public documentation that honestly describes what it can do, what it cannot do, and what is still being built. There is no "just trust us."</p>
+    <div class="num">&#x1F9E0;</div>
+    <h3>Memory plus governance</h3>
+    <p>Remembers your preferences, decisions, and context across sessions without a cloud database.
+    Audits its own behaviour with the Consensus_Engine.</p>
+  </div>
+  <div class="principle">
+    <div class="num">&#x1F331;</div>
+    <h3>Grows new capabilities safely</h3>
+    <p>When a feature does not exist, the system builds it through a governed pathway &mdash; not by
+    improvising, hallucinating, or pretending.</p>
+  </div>
+  <div class="principle">
+    <div class="num">&#x26A1;</div>
+    <h3>Not just a chatbot</h3>
+    <p>An evolving operating system. It coordinates specialists, tracks its own state, maintains
+    documentation, and executes multi-step work under human oversight.</p>
   </div>
 </div>
 </section>
 
-<section id="future">
-<h2>Future Direction</h2>
-<p>The Vault is moving toward:</p>
+<!-- WHO -->
+<section id="who-this-is-for">
+<h2>Who this is for</h2>
+<p>The Vault is a personal project. It is relevant to:</p>
 <ul>
-  <li><strong>Local AI inference</strong> — running capable small language models on-device for suitable tasks, reducing dependence on external API calls and increasing privacy</li>
-  <li><strong>Deeper platform integration</strong> — with explicit, approved, well-scoped connections to social platforms, email, calendar, and communication channels</li>
-  <li><strong>Expanded shopping intelligence</strong> — multi-supermarket price comparison and budget-aware meal planning at scale</li>
-  <li><strong>Broader automation</strong> — more of the daily routine running automatically with human oversight rather than human triggering</li>
+  <li><strong>Collaborators and contributors</strong> who want to understand the architecture, the safety model, or specific subsystems before contributing</li>
+  <li><strong>Developers</strong> evaluating local-first AI operating system patterns for their own projects</li>
+  <li><strong>Curious observers</strong> following the development of personally-governed AI systems</li>
+  <li><strong>Anyone</strong> interested in what it looks like to take AI tooling seriously as personal infrastructure &mdash; not just a chatbot you talk to, but a system you own, govern, and grow</li>
 </ul>
-<p>The core design will remain unchanged: local-first, privacy-preserving, and human-approved for anything that matters.</p>
 </section>
 
-<section id="about">
-<h2>About This Project</h2>
-<p>The Vault is a personal project built and operated by Tawney, an independent creator and developer. It is not a commercial product and not affiliated with any company.</p>
-<p>If you are interested in collaborating, learning more, or following the project's development, you can reach out through the <strong>Ferret Fatale</strong> channels or GitHub (<a href="https://github.com/FerretFatale">github.com/FerretFatale</a>).</p>
-<p>This guide is published via the automated backend manual system and reflects the current state of the project.</p>
-<p style="margin-top:1.5rem;"><a href="../">← Back to Manual Home</a> &nbsp;·&nbsp; <a href="../developer/">Developer &amp; Operator Manual</a></p>
+<!-- CLOSING -->
+<section id="closing">
+<h2>The bottom line</h2>
+<p>The Vault turns scattered life, project, and business inputs into governed action.</p>
+<p><strong>Raw idea &rarr; structured aspiration &rarr; actionable plan &rarr; coordinated execution</strong>
+&mdash; with human approval at every gate that matters.</p>
+<p>It is not finished. It is actively built. It is honest about what works today and what is still coming.</p>
+<p>That is the point.</p>
+<p style="margin-top:1.5rem;"><a href="../">&larr; Back to Manual Home</a> &nbsp;&middot;&nbsp; <a href="../developer/">Developer &amp; Operator Manual</a></p>
 </section>
 
 </div>
 </main>
 
 <footer>
-  <p>The Vault — Public Project Guide · Source: <code>docs/manual/source/public_project_guide.md</code> · Built: 2026-05-01</p>
+  <p>The Vault &mdash; Public Project Guide &nbsp;&middot;&nbsp; Source: <code>docs/manual/source/public_project_guide.md</code> &nbsp;&middot;&nbsp; Built: 2026-05-15</p>
   <p style="margin-top:0.4rem;"><a href="https://github.com/FerretFatale">github.com/FerretFatale</a></p>
 </footer>
 
