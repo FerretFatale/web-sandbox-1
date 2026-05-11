@@ -52,7 +52,7 @@
         "personas": {
           "source_files": [
             "persona_manifest.json",
-            "docs/copilot-output/persona_audit.md"
+            "docs/copilot-output/audits/persona_audit.md"
           ]
         },
         "tool-registry": {
@@ -76,7 +76,7 @@
         },
         "security-gates": {
           "source_files": [
-            "docs/copilot-output/risk_register.md",
+            "docs/copilot-output/reference/risk_register.md",
             "vault_brain.py"
           ]
         },
@@ -189,7 +189,7 @@
         },
         "capabilities": {
           "source_files": [
-            "docs/copilot-output/vault_state_summary.md"
+            "docs/copilot-output/reference/vault_state_summary.md"
           ]
         },
         "developing": {
@@ -270,8 +270,8 @@
       "last_updated": "2026-05-01",
       "source_files": [
         "persona_manifest.json",
-        "docs/copilot-output/persona_audit.md",
-        "docs/copilot-output/persona_thread_map.md"
+        "docs/copilot-output/audits/persona_audit.md",
+        "docs/copilot-output/reference/persona_thread_map.md"
       ]
     },
     "tool-registry": {
@@ -306,7 +306,7 @@
     "security-gates": {
       "last_updated": "2026-05-01",
       "source_files": [
-        "docs/copilot-output/risk_register.md",
+        "docs/copilot-output/reference/risk_register.md",
         "vault_brain.py"
       ]
     },
@@ -314,7 +314,7 @@
       "last_updated": "2026-05-01",
       "source_files": [
         "vault_brain.py",
-        "docs/copilot-output/risk_register.md"
+        "docs/copilot-output/reference/risk_register.md"
       ]
     },
     "manual-publishing": {
@@ -428,10 +428,10 @@
     "governance": {
       "last_updated": "2026-05-01",
       "source_files": [
-        "docs/copilot-output/risk_register.md",
-        "docs/copilot-output/vault_state_summary.md",
-        "docs/copilot-output/vault_systems_snapshot.md",
-        "docs/copilot-output/persona_audit.md",
+        "docs/copilot-output/reference/risk_register.md",
+        "docs/copilot-output/reference/vault_state_summary.md",
+        "docs/copilot-output/reference/vault_systems_snapshot.md",
+        "docs/copilot-output/audits/persona_audit.md",
         "docs/copilot-context/document-reference-index.md"
       ]
     },

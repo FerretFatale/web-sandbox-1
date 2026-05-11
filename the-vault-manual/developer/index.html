@@ -113,7 +113,7 @@
   <div class="meta-grid">
     <div class="meta-card"><div class="val">20</div><div class="lbl">Active Personas</div></div>
     <div class="meta-card"><div class="val">v4</div><div class="lbl">Manual Version</div></div>
-    <div class="meta-card"><div class="val">800+</div><div class="lbl">Tests Passing</div></div>
+    <div class="meta-card"><div class="val">1100+</div><div class="lbl">Tests Passing</div></div>
     <div class="meta-card"><div class="val">3</div><div class="lbl">SR Gates Resolved</div></div>
   </div>
   <div class="banner warn">⚠️ <strong>Internal document.</strong> This manual contains repository paths, command-line instructions, security gate details, and implementation notes. Not for external distribution. See the <a href="../public/">Public Project Guide</a> for the public-facing version.</div>
@@ -163,7 +163,7 @@
 pip install -r requirements.txt</code></pre>
 <h3>Step 2 — Run the test suite</h3>
 <pre><code>python -m pytest Copilot_Tests/ -q --tb=short</code></pre>
-<p>Expected: 800+ tests passing, 0 failures.</p>
+<p>Expected: 1100+ tests passing, 0 failures.</p>
 <h3>Step 3 — Check system state</h3>
 <pre><code># Persona count
 python -c "import json; m=json.load(open('persona_manifest.json')); print(len(m), 'personas:', list(m.keys()))"</code></pre>
@@ -341,7 +341,7 @@ python -c "import json; m=json.load(open('persona_manifest.json')); print(len(m)
 
 <section id="manual-publishing">
 <h2>P. Manual Backend Publishing Workflow</h2>
-<h3>Manual structure (v4 — split)</h3>
+<h3>Manual structure (v4 &#8212; split)</h3>
 <table>
   <tr><th>File</th><th>Purpose</th></tr>
   <tr><td><code>docs/manual/source/developer_manual.md</code></td><td>Canonical prose source for developer manual</td></tr>
@@ -351,31 +351,50 @@ python -c "import json; m=json.load(open('persona_manifest.json')); print(len(m)
   <tr><td><code>docs/manual/public/index.html</code></td><td>Built public guide HTML</td></tr>
   <tr><td><code>docs/manual/index.html</code></td><td>Landing page linking to both</td></tr>
 </table>
+<h3>Current target status</h3>
+<table>
+  <tr><th>Target</th><th>Role</th><th>Status</th></tr>
+  <tr><td><code>web-sandbox-1</code></td><td>Preview / sandbox</td><td>Active &#8212; <code>the-vault-manual/</code> directory published</td></tr>
+  <tr><td><code>ferretfatale.github.io</code></td><td>Final / public</td><td>Active &#8212; <code>the-vault-manual/</code> directory published. Hosted at <a href="https://ferretfatale.github.io/the-vault-manual/">https://ferretfatale.github.io/the-vault-manual/</a></td></tr>
+  <tr><td><code>The_Vault</code></td><td>&#8212;</td><td><strong>DISALLOWED</strong></td></tr>
+  <tr><td><code>KAOS</code></td><td>&#8212;</td><td><strong>DISALLOWED</strong></td></tr>
+</table>
+<h3>Publisher API</h3>
+<table>
+  <tr><th>Function</th><th>Purpose</th></tr>
+  <tr><td><code>api_get_manual_publish_targets()</code></td><td>Returns config for all publish targets</td></tr>
+  <tr><td><code>api_prepare_manual_publish(target, dry_run=True)</code></td><td>Validates target and lists files to copy &#8212; no writes</td></tr>
+  <tr><td><code>api_publish_manual_to_pages_target(target, dry_run=True, publish_approved=False)</code></td><td>Copies files, optionally commits/pushes. Dry-run by default.</td></tr>
+  <tr><td><code>api_verify_hosted_manual(url, target)</code></td><td>Checks landing page and developer subdirectory for expected content. Network required.</td></tr>
+  <tr><td><code>api_promote_manual_to_public_target(dry_run=True, publish_approved=False)</code></td><td>Shortcut for promoting to <code>ferretfatale.github.io</code>.</td></tr>
+  <tr><td><code>api_setup_manual_publish_target(target, local_path, clone_approved, dry_run)</code></td><td>Set up a new publish target &#8212; clone repo locally and register path. Dry-run by default.</td></tr>
+</table>
 <h3>Publisher CLI</h3>
-<pre><code># Pre-flight check
+<pre><code># Step 0 (one-time): Set up a new publish target
+python Toolkit/manual_publisher.py --setup --target ferretfatale.github.io --local-path "C:\...\ferretfatale.github.io" --clone-approved --no-dry-run
+
+# Step 1: Pre-flight check
 python Toolkit/manual_publisher.py --prepare --target web-sandbox-1
 
-# Dry-run publish
+# Step 2: Dry-run + approved publish to sandbox
 python Toolkit/manual_publisher.py --publish --target web-sandbox-1 --dry-run
-
-# Live copy + push
 python Toolkit/manual_publisher.py --publish --target web-sandbox-1 --approved
 
-# Publish variant only
-python Toolkit/manual_publisher.py --publish --target web-sandbox-1 --variant developer --approved
+# Step 3: Promote to final public target
+python Toolkit/manual_publisher.py --promote --dry-run
+python Toolkit/manual_publisher.py --promote --approved
 
-# Verify hosted output
-python Toolkit/manual_publisher.py --verify --target web-sandbox-1</code></pre>
+# Step 4: Verify hosted output
+python Toolkit/manual_publisher.py --verify --target ferretfatale.github.io</code></pre>
 <h3>Publish path</h3>
 <p>Files are published under <code>/the-vault-manual/</code> in the target repo. Subdirectories
 (<code>developer/</code>, <code>public/</code>) are preserved via <code>relative_to(_MANUAL_DIR)</code> copy logic.</p>
 <h3>Change ledger</h3>
 <p>Each manual rebuild appends a record to <code>docs/manual/manual_change_log.jsonl</code>. The ledger
-tracks version, source hash, sections changed, and timestamp. Use it to audit what changed between
-builds and why a new publish was needed.</p>
+tracks version, source hash, sections changed, and timestamp.</p>
 <h3>Safety gates (always enforced)</h3>
 <ul>
-  <li><code>dry_run=True</code> is the default — no files copied unless explicitly set to <code>False</code></li>
+  <li><code>dry_run=True</code> is the default &#8212; no files copied unless explicitly set to <code>False</code></li>
   <li><code>publish_approved=False</code> prevents any <code>git push</code></li>
   <li>The_Vault and KAOS are refused as targets regardless of arguments</li>
   <li>Dirty target repos are refused unless <code>allow_dirty_target=True</code></li>
@@ -401,7 +420,7 @@ builds and why a new publish was needed.</p>
 <ul>
   <li><strong>Static HTTP fetch</strong> — <code>api_fetch_url_static()</code> — working</li>
   <li><strong>ALDI specials scraping</strong> — <code>api_fetch_aldi_specials()</code> — working (static HTML, 6h cache)</li>
-  <li><strong>JS-rendered page fetch</strong> — requires Playwright installed (<code>pip install playwright &amp;&amp; playwright install chromium</code>)</li>
+  <li><strong>JS-rendered page fetch</strong> — Playwright 1.58.0 installed; external navigation requires separate approval</li>
   <li><strong>Account scraping</strong> — blocked on credentials and ToS review</li>
 </ul>
 </section>
@@ -419,21 +438,54 @@ builds and why a new publish was needed.</p>
 <section id="social">
 <h2>T. Social / Discord / Twitch / OCR</h2>
 <ul>
-  <li><code>social_module/social_profiles_builder.py</code> — Profile CRUD, contact data</li>
-  <li><code>Toolkit/social_response_queue.py</code> — Incoming message queue</li>
-  <li><code>Toolkit/voice_assignment.py</code> — Communication voice selector</li>
+  <li><code>social_module/social_profiles_builder.py</code> &#8212; Profile CRUD, contact data</li>
+  <li><code>Toolkit/social_response_queue.py</code> &#8212; Incoming message queue</li>
+  <li><code>Toolkit/voice_assignment.py</code> &#8212; Communication voice selector</li>
 </ul>
 <div class="banner stop">🚫 <strong>No outbound messages may be sent without human review of each draft.</strong></div>
-<p>Discord: Stage A read-only approved but not yet implemented. <code>DISCORD_BOT_TOKEN</code> required.</p>
-<p>Twitch: Integration scaffold only. Credentials and two-role model decision pending.</p>
-<p>OCR: <code>api_archive_ocr_session()</code> scaffold implemented. Requires Tesseract binary + Python OCR packages.</p>
+<p><strong>Discord:</strong> Webhook-based messaging is operational. <code>api_send_discord_message</code> is granted to the <code>Conversationalist</code> persona. Env key: <code>DISCORD_WEBHOOK_URL</code>. Stage B (bot account with event loop) is still deferred.</p>
+<p><strong>Twitch:</strong> Integration scaffold only. Credentials and two-role model decision pending.</p>
+<p><strong>OCR:</strong> <code>api_archive_ocr_session()</code> scaffold implemented. Requires Tesseract binary + Python OCR packages.</p>
 </section>
 
 <section id="email">
-<h2>U. Email / Maton</h2>
-<p><code>Toolkit/maton_client.py</code> — integration gateway for Gmail, Outlook, GitHub, Google Drive, and other services via the Maton platform.</p>
-<div class="banner warn">⚠️ <strong>All live Maton calls are currently blocked.</strong> Three keys are missing from <code>.env</code>: <code>MATON_API_KEY</code>, <code>MATON_GATEWAY_URL</code>, <code>MATON_CTRL_URL</code>.</div>
-<p>Email Stage A is <strong>READ-ONLY</strong>. No mark-as-read, move, archive, delete, or send is implemented.</p>
+<h2>U. Email / Maton / Proton Bridge</h2>
+<p><code>Toolkit/maton_client.py</code> &#8212; integration gateway for Gmail, Outlook, GitHub, Google Drive, Snapchat, and other services via the Maton platform.</p>
+<div class="banner ok">✅ <strong>Maton Stage B is complete.</strong> All required env keys are present. Read-only and approval-gated write actions are operational.</div>
+<h3>Maton read-only APIs</h3>
+<ul>
+  <li><code>api_sanitize_email_body(text)</code> &#8212; <strong>Must</strong> be called before passing any email body to an LLM</li>
+  <li><code>api_maton_google_mail_list_inbox(max_results)</code> &#8212; List Gmail inbox</li>
+  <li><code>api_maton_outlook_list_inbox(max_results)</code> &#8212; List Outlook inbox (multi-path fallback)</li>
+  <li><code>api_maton_gmail_list_labels()</code> &#8212; List all Gmail labels/folders</li>
+  <li><code>api_maton_email_heuristic_triage(messages)</code> &#8212; Classify messages (phishing/spam/marketing/urgent)</li>
+  <li><code>api_maton_extract_email_obligations(messages)</code> &#8212; Extract DEADLINE, DEBT_NOTICE, FORM_REQUIRED patterns</li>
+</ul>
+<h3>Write APIs (approval-gated)</h3>
+<div class="banner warn">⚠️ No send operation executes without <code>approved=True</code> being explicitly set.</div>
+<ul>
+  <li><code>api_maton_outlook_send_email(to, subject, body, approved=False)</code> &#8212; Send via Outlook</li>
+  <li><code>api_maton_snapchat_send_message(recipient_username, message_text, approved=False)</code> &#8212; Send Snapchat DM</li>
+</ul>
+<h3>Email intelligence</h3>
+<ul>
+  <li><code>Toolkit/email_intelligence.py</code> &#8212; Stage B0 census and dry-run tagging planner</li>
+  <li><code>Toolkit/email_query.py</code> &#8212; Stage B2 query and action-planning (read-only)</li>
+  <li><code>Toolkit/email_records.py</code> &#8212; Stage B3 records, retention, task extraction, security scanner</li>
+  <li>Stage C (live label/category apply): blocked pending human review of policy forms in <code>Human_Input_Forms/</code></li>
+</ul>
+<h3>Proton Bridge (local-only read/search)</h3>
+<p><code>Toolkit/proton_bridge.py</code> &#8212; local IMAP read/search via Proton Mail Bridge. Implemented; live smoke test deferred pending Proton Bridge desktop app running.</p>
+<ul>
+  <li><code>api_get_proton_bridge_setup_status()</code> &#8212; Returns Bridge readiness and reachability (no secrets in output)</li>
+  <li><code>api_get_proton_bridge_dashboard_status()</code> &#8212; Config-only dashboard check (no TCP; safe for auto-refresh)</li>
+  <li><code>api_search_proton_bridge_mail(query, folder, limit, include_body, approved_local_read)</code> &#8212; Local IMAP search; requires <code>approved_local_read=True</code></li>
+  <li><code>api_list_proton_mailboxes()</code> &#8212; List IMAP folders/mailboxes</li>
+  <li><code>api_search_proton_headers(query, folder, limit, approved_local_read)</code> &#8212; Header-only search (no body fetch)</li>
+  <li><code>api_get_proton_message_metadata(uid, folder, approved_local_read)</code> &#8212; Single-message metadata</li>
+</ul>
+<p>No connection is attempted without <code>approved_local_read=True</code> and all 4 IMAP env vars present. <code>include_body=False</code> is the safe default. Secrets stay in <code>.env</code> only. Proton Bridge must be installed and running locally.</p>
+<p><strong>Phase 3 design docs:</strong> <code>docs/copilot-output/proton_bridge_local_index_design.md</code> (local index; requires operator review), <code>docs/copilot-output/proton_bridge_smtp_send_design.md</code> (SMTP send; requires operator approval before implementation).</p>
 </section>
 
 <section id="health">
