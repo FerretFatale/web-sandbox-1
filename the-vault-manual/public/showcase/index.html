@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Vault — Showcase Hub</title>
+  <style>
+    :root { --bg:#fffaf0; --ink:#1f2937; --muted:#6b7280; --card:#ffffff; --line:#e5e7eb; --accent:#ea580c; }
+    * { box-sizing:border-box; }
+    body { margin:0; color:var(--ink); font-family:Georgia,"Times New Roman",serif; background: radial-gradient(circle at 10% 10%, #ffedd5, #fffaf0 40%); }
+    .wrap { max-width: 980px; margin:0 auto; padding: 2rem 1.2rem 2.5rem; }
+    .back { color:var(--muted); text-decoration:none; font-size:0.92rem; }
+    h1 { margin:0.7rem 0 0.4rem; font-size:2rem; }
+    .lead { color:var(--muted); margin:0 0 1.2rem; max-width:75ch; }
+    .grid { display:grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap:0.9rem; }
+    .card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:1rem; }
+    .card h2 { margin:0 0 0.45rem; font-size:1.06rem; color:#9a3412; }
+    .card p { margin:0; color:var(--muted); font-size:0.92rem; line-height:1.45; }
+    .card a { display:inline-block; margin-top:0.6rem; color:var(--accent); font-weight:700; text-decoration:none; }
+    .card a:hover { text-decoration:underline; }
+    @media (max-width:860px){ .grid{ grid-template-columns:1fr 1fr; } }
+    @media (max-width:620px){ .grid{ grid-template-columns:1fr; } h1{ font-size:1.7rem; } }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <a class="back" href="../">← Back to Public Guide</a>
+    <h1>Showcase & Gallery Hub</h1>
+    <p class="lead">Planning and narrative pages for presenting The Vault visually and credibly in `web-sandbox-1` preview lanes.</p>
+    <div class="grid">
+      <div class="card"><h2>Gallery Strategy</h2><p>Narrative arc, audience intent, and section ordering for showcase pages.</p><a href="gallery-strategy.html">Open →</a></div>
+      <div class="card"><h2>Information Architecture</h2><p>Page topology, nav paths, and cross-link expectations.</p><a href="gallery-ia.html">Open →</a></div>
+      <div class="card"><h2>Content Inventory</h2><p>What assets exist now and what must still be created.</p><a href="gallery-content-inventory.html">Open →</a></div>
+      <div class="card"><h2>Style Direction</h2><p>Visual language, typography, layout rhythm, and accessibility baseline.</p><a href="gallery-style-direction.html">Open →</a></div>
+      <div class="card"><h2>Launch Checklist</h2><p>Pre-publish validations and safety gates for showcase rollout.</p><a href="gallery-launch-checklist.html">Open →</a></div>
+      <div class="card"><h2>Case Studies</h2><p>Reusable case-study skeleton for outcomes and proof points.</p><a href="case-studies.html">Open →</a></div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,6 +1,6 @@
 {
   "manual_version": "4.0",
-  "last_generated": "2026-05-01",
+  "last_generated": "2026-05-13",
   "generated_by": "Vault Systems Integrator",
   "source_commit": "bff1a0d+",
   "variants": {
@@ -76,7 +76,7 @@
         },
         "security-gates": {
           "source_files": [
-            "docs/copilot-output/reference/risk_register.md",
+            "docs/copilot-output/reference/10-process-patterns/risk_register.md",
             "vault_brain.py"
           ]
         },
@@ -189,7 +189,7 @@
         },
         "capabilities": {
           "source_files": [
-            "docs/copilot-output/reference/vault_state_summary.md"
+            "docs/copilot-output/reference/10-process-patterns/vault_state_summary.md"
           ]
         },
         "developing": {
@@ -206,7 +206,19 @@
     },
     "landing": {
       "html_output": "docs/manual/index.html",
-      "last_updated": "2026-05-01"
+      "last_updated": "2026-05-13"
+    },
+    "user": {
+      "version": "5.0",
+      "source_file": "docs/manual/user/README.md",
+      "html_output": "docs/manual/user/index.html",
+      "last_updated": "2026-05-13"
+    },
+    "showcase": {
+      "version": "5.0",
+      "source_file": "docs/manual/source/showcase/README.md",
+      "html_output": "docs/manual/public/showcase/index.html",
+      "last_updated": "2026-05-13"
     }
   },
   "sections": {
@@ -271,7 +283,7 @@
       "source_files": [
         "persona_manifest.json",
         "docs/copilot-output/audits/persona_audit.md",
-        "docs/copilot-output/reference/persona_thread_map.md"
+        "docs/copilot-output/reference/20-registries-indexes/persona_thread_map.md"
       ]
     },
     "tool-registry": {
@@ -306,7 +318,7 @@
     "security-gates": {
       "last_updated": "2026-05-01",
       "source_files": [
-        "docs/copilot-output/reference/risk_register.md",
+        "docs/copilot-output/reference/10-process-patterns/risk_register.md",
         "vault_brain.py"
       ]
     },
@@ -314,7 +326,7 @@
       "last_updated": "2026-05-01",
       "source_files": [
         "vault_brain.py",
-        "docs/copilot-output/reference/risk_register.md"
+        "docs/copilot-output/reference/10-process-patterns/risk_register.md"
       ]
     },
     "manual-publishing": {
@@ -428,9 +440,9 @@
     "governance": {
       "last_updated": "2026-05-01",
       "source_files": [
-        "docs/copilot-output/reference/risk_register.md",
-        "docs/copilot-output/reference/vault_state_summary.md",
-        "docs/copilot-output/reference/vault_systems_snapshot.md",
+        "docs/copilot-output/reference/10-process-patterns/risk_register.md",
+        "docs/copilot-output/reference/10-process-patterns/vault_state_summary.md",
+        "docs/copilot-output/reference/10-process-patterns/vault_systems_snapshot.md",
         "docs/copilot-output/audits/persona_audit.md",
         "docs/copilot-context/document-reference-index.md"
       ]

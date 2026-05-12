@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Vault — User Manual</title>
+  <style>
+    :root { --bg:#0f172a; --surface:#111827; --card:#1f2937; --text:#e5e7eb; --muted:#9ca3af; --accent:#22c55e; --border:#334155; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:"Segoe UI",Tahoma,Arial,sans-serif; background:linear-gradient(160deg,#020617,#0f172a 40%,#111827); color:var(--text); }
+    .wrap { max-width: 980px; margin: 0 auto; padding: 2rem 1.25rem 3rem; }
+    h1 { margin: 0; font-size: 2.1rem; }
+    p.lead { color: var(--muted); margin: 0.75rem 0 1.5rem; }
+    .back { color: var(--muted); text-decoration:none; font-size:0.92rem; }
+    .back:hover { color: var(--text); text-decoration:underline; }
+    .grid { display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 0.9rem; margin-top: 1.3rem; }
+    .card { background: rgba(31,41,55,0.8); border:1px solid var(--border); border-radius: 10px; padding: 1rem; }
+    .card h2 { margin:0 0 0.4rem; font-size:1rem; }
+    .card p { margin:0; color:var(--muted); font-size:0.9rem; line-height:1.45; }
+    .card a { color:#a7f3d0; text-decoration:none; font-weight:600; display:inline-block; margin-top:0.55rem; }
+    .card a:hover { text-decoration:underline; }
+    .badge { display:inline-block; margin-top:1.2rem; padding:0.25rem 0.55rem; border:1px solid #166534; border-radius:999px; font-size:0.78rem; color:#bbf7d0; }
+    @media (max-width:760px) { .grid { grid-template-columns: 1fr; } h1 { font-size:1.75rem; } }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <a class="back" href="../">← Back to Manual Hub</a>
+    <h1>User Manual</h1>
+    <p class="lead">Practical operator handbook for using The Vault day-to-day. This manual includes full persona coverage, workflow playbooks, approvals boundaries, tips, FAQ, and a generated tool catalog.</p>
+    <span class="badge">Manual v5 • Updated 2026-05-13</span>
+
+    <div class="grid">
+      <div class="card"><h2>1. Welcome</h2><p>What The Vault is and what to expect.</p><a href="01_welcome.md">Open section →</a></div>
+      <div class="card"><h2>2. How to Talk to The Vault</h2><p>Prompting patterns that produce strong outcomes.</p><a href="02_how_to_talk.md">Open section →</a></div>
+      <div class="card"><h2>3. Personas: Your AI Team</h2><p>Which persona to use and when.</p><a href="03_personas.md">Open section →</a></div>
+      <div class="card"><h2>4. Daily Rhythms</h2><p>Morning, during-day, and end-of-day operating rhythm.</p><a href="04_daily_rhythms.md">Open section →</a></div>
+      <div class="card"><h2>5. Tasks and Missions</h2><p>How to structure work and track completion.</p><a href="05_tasks_and_missions.md">Open section →</a></div>
+      <div class="card"><h2>6. Health, Memory, and Privacy</h2><p>What stays local, what gets used, and why.</p><a href="06_health_memory_privacy.md">Open section →</a></div>
+      <div class="card"><h2>7. Human-Gated Setup</h2><p>External systems that require explicit human approval/setup.</p><a href="07_human_gated_setup.md">Open section →</a></div>
+      <div class="card"><h2>8. Troubleshooting</h2><p>Recovery steps and common issue paths.</p><a href="08_troubleshooting.md">Open section →</a></div>
+      <div class="card"><h2>9. Public Showcase Narrative</h2><p>How to present The Vault to others clearly and safely.</p><a href="09_public_showcase_narrative.md">Open section →</a></div>
+      <div class="card"><h2>10. Persona Directory</h2><p>All personas and when to use them.</p><a href="10_persona_directory.md">Open section →</a></div>
+      <div class="card"><h2>11. Workflow Playbooks</h2><p>End-to-end operator runbooks for high-frequency lanes.</p><a href="11_workflow_playbooks.md">Open section →</a></div>
+      <div class="card"><h2>12. Tips and Patterns</h2><p>High-performing prompt patterns and anti-patterns.</p><a href="12_tips_tricks_operator_patterns.md">Open section →</a></div>
+      <div class="card"><h2>13. FAQ and Edge Cases</h2><p>Common questions, misroutes, and recovery behavior.</p><a href="13_faq_and_edge_cases.md">Open section →</a></div>
+      <div class="card"><h2>14. Approvals and Safety</h2><p>Approval matrix and risk boundaries.</p><a href="14_approvals_boundaries_safety.md">Open section →</a></div>
+      <div class="card"><h2>15. Glossary and Quick Ref</h2><p>Commands, terminology, and reusable prompts.</p><a href="15_glossary_and_quick_reference.md">Open section →</a></div>
+      <div class="card"><h2>16. External Skills Assimilation</h2><p>How external tools become internal process intelligence.</p><a href="16_external_skills_and_assimilation.md">Open section →</a></div>
+      <div class="card"><h2>Appendix: Full Tool Catalog</h2><p>Generated persona -> allowed tools list.</p><a href="appendix_persona_tool_catalog.md">Open appendix →</a></div>
+      <div class="card"><h2>Source Index</h2><p>Section list in markdown form.</p><a href="README.md">Open index →</a></div>
+    </div>
+  </div>
+</body>
+</html>
