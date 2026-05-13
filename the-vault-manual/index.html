@@ -3,66 +3,77 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The Vault — Manual Hub</title>
+  <title>The Vault Manual Hub</title>
   <style>
-    :root { --bg: #0b1020; --surface: #141b2f; --border: #2c3650; --text: #e7ebf5; --muted: #aab3c9; --accent: #1fb6ff; --accent-2: #2ee6a6; }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background: radial-gradient(1200px 500px at 20% -10%, #1b2b52 0, transparent 60%), radial-gradient(900px 400px at 85% 0%, #173a4b 0, transparent 55%), var(--bg); color: var(--text); font-family: "Source Serif 4", "Merriweather", Georgia, serif; font-size: 16px; line-height: 1.7; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
-    a { color: var(--accent); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    .container { max-width: 980px; padding: 3rem 2rem; text-align: center; }
-    h1 { font-size: 2.6rem; color: #fff; margin-bottom: 0.5rem; font-weight: 800; letter-spacing: 0.01em; }
-    .subtitle { color: var(--muted); font-size: 1.1rem; margin-bottom: 2.5rem; font-family: "Space Grotesk", "Avenir Next", sans-serif; }
-    .cards { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.25rem; margin: 2rem 0; }
-    .card { background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0)), var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2rem 1.5rem; transition: border-color 0.15s, transform 0.15s; }
-    .card:hover { border-color: var(--accent); transform: translateY(-2px); }
-    .card .icon { font-size: 2rem; margin-bottom: 0.75rem; }
-    .card h2 { font-size: 1.2rem; color: #fff; margin-bottom: 0.5rem; font-family: "Space Grotesk", "Avenir Next", sans-serif; }
-    .card p { font-size: 0.88rem; color: var(--muted); line-height: 1.5; }
-    .card .link { display: inline-block; margin-top: 1rem; background: linear-gradient(90deg, var(--accent), var(--accent-2)); color: #05101c; padding: 8px 20px; border-radius: 8px; font-size: 0.9rem; font-weight: 700; font-family: "Space Grotesk", "Avenir Next", sans-serif; }
-    .card .link:hover { opacity: 0.9; text-decoration: none; }
-    a:focus-visible { outline: 3px solid #f7c65f; outline-offset: 2px; border-radius: 6px; }
-    .note { color: var(--muted); font-size: 0.78rem; margin-top: 2rem; }
-    @media (max-width: 980px) { .cards { grid-template-columns: 1fr 1fr; } }
-    @media (max-width: 600px) { .cards { grid-template-columns: 1fr; } h1 { font-size: 1.8rem; } }
+    :root{--bg:#07111f;--bg2:#0d1d33;--panel:#12243d;--line:#2e4a70;--text:#eef4ff;--muted:#b5c6df;--a:#35b8ff;--b:#35e0a1}
+    *{box-sizing:border-box}body{margin:0;color:var(--text);font:16px/1.6 "Inter",system-ui,sans-serif;background:radial-gradient(1200px 600px at 10% -10%,#22406a 0,transparent 65%),linear-gradient(165deg,var(--bg),var(--bg2));}
+    .wrap{max-width:1160px;margin:0 auto;padding:2rem 1rem 3rem}
+    h1{font-size:2.3rem;margin:.2rem 0 .4rem}p{margin:.5rem 0;color:var(--muted)}
+    .pill{display:inline-block;border:1px solid #2c7d6b;border-radius:999px;padding:.2rem .6rem;font-size:.8rem;color:#b8ffe3}
+    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;margin-top:1rem}
+    .card{background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,0)),var(--panel);border:1px solid var(--line);border-radius:14px;padding:1rem}
+    .card h2{margin:.1rem 0 .4rem;font-size:1.2rem}
+    .meta{font-size:.9rem;color:var(--muted)}
+    .actions{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.8rem}
+    .btn{display:inline-block;border-radius:9px;padding:.48rem .8rem;font-weight:700;text-decoration:none}
+    .primary{background:linear-gradient(90deg,var(--a),var(--b));color:#062032}
+    .ghost{border:1px solid var(--line);color:var(--text)}
+    .checks{margin-top:1rem;padding-left:1.1rem}.checks li{margin:.2rem 0}
+    a:focus-visible{outline:3px solid #f2c76b;outline-offset:2px}
+    @media(max-width:840px){.grid{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
-<div class="container">
-  <h1>The Vault</h1>
-  <p class="subtitle">Personal AI Operating System — Documentation Hub</p>
+  <main class="wrap">
+    <span class="pill">Manual Suite · Overhaul Track</span>
+    <h1>The Vault Documentation Hub</h1>
+    <p>Choose the manual by intent, not by file type. Each surface is now task-oriented and designed for a specific reader.</p>
 
-  <div class="cards">
-    <div class="card">
-      <div class="icon">🛠️</div>
-      <h2>Developer &amp; Operator Manual</h2>
-      <p>Comprehensive technical guide for the owner and AI/Copilot instances. Includes repo structure, brain layer, persona system, testing, commands, security gates, and contribution rules.</p>
-      <a class="link" href="developer/">Open Developer Manual →</a>
-    </div>
-    <div class="card">
-      <div class="icon">🌐</div>
-      <h2>Public Project Guide</h2>
-      <p>Practical, polished introduction to what The Vault is and what it can do — for collaborators, helpers, and anyone who wants to understand the project without developer noise.</p>
-      <a class="link" href="public/">Open Project Guide →</a>
-    </div>
-    <div class="card">
-      <div class="icon">📘</div>
-      <h2>User Manual</h2>
-      <p>Operator-focused practical handbook for day-to-day use: how to talk to The Vault, run tasks and missions, handle setup, and troubleshoot quickly.</p>
-      <a class="link" href="user/">Open User Manual →</a>
-    </div>
-    <div class="card">
-      <div class="icon">🖼️</div>
-      <h2>Showcase &amp; Gallery</h2>
-      <p>Public-facing showcase structure, gallery strategy, case-study format, and launch checklist for `web-sandbox-1` preview lanes.</p>
-      <a class="link" href="public/showcase/">Open Showcase →</a>
-    </div>
-  </div>
+    <section class="grid" aria-label="Manual entry points">
+      <article class="card">
+        <h2>Developer + Operator</h2>
+        <p class="meta">For maintainers shipping code and running governance lanes.</p>
+        <ul class="checks">
+          <li>Architecture map and runtime ownership</li>
+          <li>Model/router behavior and tool contracts</li>
+          <li>Deployment and safety gate playbooks</li>
+        </ul>
+        <div class="actions"><a class="btn primary" href="developer/">Open Manual</a></div>
+      </article>
 
-  <p class="note">
-    The Vault — Local-first personal AI operating system &nbsp;·&nbsp; Built by <a href="https://github.com/FerretFatale">FerretFatale</a>
-    <br/>Manual v5 &nbsp;·&nbsp; Updated 2026-05-13
-  </p>
-</div>
+      <article class="card">
+        <h2>User Operations</h2>
+        <p class="meta">For daily use of The Vault and practical execution workflows.</p>
+        <ul class="checks">
+          <li>Prompting and delegation patterns</li>
+          <li>Task, mission, and backlog flows</li>
+          <li>Troubleshooting and approval boundaries</li>
+        </ul>
+        <div class="actions"><a class="btn primary" href="user/">Open Manual</a></div>
+      </article>
+
+      <article class="card">
+        <h2>Public Guide</h2>
+        <p class="meta">For collaborators and external readers understanding Vault capability and method.</p>
+        <ul class="checks">
+          <li>What exists now vs what is planned</li>
+          <li>How missing features are safely built</li>
+          <li>Privacy and control model</li>
+        </ul>
+        <div class="actions"><a class="btn primary" href="public/">Open Guide</a></div>
+      </article>
+
+      <article class="card">
+        <h2>Feature Deep Dives</h2>
+        <p class="meta">Page-per-feature operational references for backend/frontend flow and function surfaces.</p>
+        <ul class="checks">
+          <li>Evidence-linked feature specs</li>
+          <li>Configuration and governance constraints</li>
+          <li>Testing and verification surfaces</li>
+        </ul>
+        <div class="actions"><a class="btn primary" href="feature-pages/README.md">Open Feature Pages</a><a class="btn ghost" href="public/showcase/">Showcase</a></div>
+      </article>
+    </section>
+  </main>
 </body>
 </html>
