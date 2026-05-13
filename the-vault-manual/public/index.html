@@ -12,16 +12,16 @@
     rel="stylesheet" />
   <style>
     :root {
-      --bg: #070b16;
-      --surface: #0f1730;
-      --surface-2: #121d3d;
-      --surface-hover: #19274f;
-      --border: #2a3a6a;
-      --text: #edf3ff;
-      --muted: #b4c5e8;
-      --subtle: #7f96c7;
-      --accent: #6ee7ff;
-      --accent-2: #ff7ad9;
+      --bg: #120800;
+      --surface: #211306;
+      --surface-2: #2a1807;
+      --surface-hover: #39220a;
+      --border: #5d360f;
+      --text: #fff7ea;
+      --muted: #f2d9b5;
+      --subtle: #c79a5e;
+      --accent: #ffd24a;
+      --accent-2: #ff79c9;
       --nav-h: 60px;
       --sidebar-w: 280px
     }
@@ -39,7 +39,7 @@
     }
 
     body {
-      background: radial-gradient(900px 500px at 85% -5%, rgba(255, 122, 217, .18), transparent 60%), radial-gradient(900px 600px at -10% 0, rgba(110, 231, 255, .15), transparent 60%), var(--bg);
+      background: radial-gradient(900px 500px at 85% -5%, rgba(255, 121, 201, .22), transparent 60%), radial-gradient(900px 600px at -10% 0, rgba(255, 210, 74, .18), transparent 60%), var(--bg);
       color: var(--text);
       font-family: "Inter", system-ui, -apple-system, sans-serif;
       font-size: 15px;
@@ -57,7 +57,7 @@
       align-items: center;
       justify-content: space-between;
       padding: 0 1.5rem;
-      background: rgba(7, 11, 22, .9);
+      background: rgba(18, 8, 0, .92);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border)
     }
@@ -105,7 +105,7 @@
 
     .topnav-link:hover {
       color: var(--text);
-      background: rgba(255, 255, 255, .04)
+      background: rgba(255, 210, 74, .08)
     }
 
     .topnav-link.active {
@@ -312,7 +312,7 @@
 
     .cta-band {
       margin-top: 1.2rem;
-      background: linear-gradient(135deg, rgba(110, 231, 255, .12), rgba(255, 122, 217, .12));
+      background: linear-gradient(135deg, rgba(255, 210, 74, .15), rgba(255, 121, 201, .12));
       border: 1px solid var(--border);
       border-radius: 12px;
       padding: 1rem 1.1rem
@@ -376,7 +376,7 @@
       <a href="../developer/index.html" class="topnav-link">Developer</a>
       <a href="../user/index.html" class="topnav-link">User Guide</a>
       <span class="topnav-link active" aria-current="page">Public</span>
-      <a href="../feature-pages/feature-viewer.html" class="topnav-link">Features</a>
+      <a href="showcase/case-studies.html" class="topnav-link">Features</a>
     </div>
     <a href="https://github.com/FerretFatale/KAOS" class="github-btn" target="_blank" rel="noopener noreferrer">GitHub
       →</a>
@@ -395,7 +395,7 @@
       <div class="sidebar-group-label">Explore</div>
       <a href="showcase/index.html" class="sidebar-link">Public Showcase →</a>
       <a href="showcase/case-studies.html" class="sidebar-link">Case Studies →</a>
-      <a href="../feature-pages/feature-viewer.html" class="sidebar-link">All Feature Pages →</a>
+      <a href="showcase/case-studies.html" class="sidebar-link">All Feature Stories →</a>
     </div>
   </aside>
 
@@ -406,10 +406,14 @@
         <h1>The Vault helps keep life organized, one next step at a time</h1>
         <p class="hero-sub">Think of it like a tidy helper for your plans, notes, and routines. You tell it what you
           need,
-          it helps sort the mess into something useful, and it asks before doing anything important.</p>
+          it helps sort the mess into something useful, and it asks before doing anything important. That means less
+          hunting, less second-guessing, and fewer “where did I put that?” moments.</p>
+        <p class="hero-sub">The core workflow runs local first, with <code>Vault_Brain</code> coordinating safe steps.
+          The result feels calm, dependable, and surprisingly human.</p>
         <div class="tag-row">
           <span class="tag">Plain-language help</span>
           <span class="tag">Keeps plans in order</span>
+          <span class="tag">Saves time and worry</span>
           <span class="tag">Asks before risky actions</span>
           <span class="tag">Shows its work</span>
         </div>
@@ -420,41 +424,42 @@
       <section id="architecture">
         <h2>How it works, in plain English</h2>
         <p>Start with a request, let The Vault sort what matters, and then move to the next step only after the careful
-          checks are done.</p>
+          checks are done. It’s a bit like having a patient assistant who keeps the paper pile neat and the risky bits
+          off the table.</p>
         <div class="diagram-wrap">
           <span class="diagram-label">System Flow</span>
           <svg viewBox="0 0 860 180" style="width:100%;height:auto;" role="img" aria-label="Vault architecture flow">
             <defs>
               <marker id="arr1" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-                <polygon points="0 0,10 3.5,0 7" fill="#6ee7ff" />
+                <polygon points="0 0,10 3.5,0 7" fill="#ffd24a" />
               </marker>
             </defs>
-            <rect x="20" y="65" width="130" height="52" rx="10" fill="#121d3d" stroke="#4b66a8" />
-            <text x="85" y="96" text-anchor="middle" font-size="13" fill="#c9d8fb"
+            <rect x="20" y="65" width="130" height="52" rx="10" fill="#2a1807" stroke="#a86a12" />
+            <text x="85" y="96" text-anchor="middle" font-size="13" fill="#ffe4a5"
               font-family="Inter, sans-serif">Inputs</text>
-            <rect x="190" y="52" width="150" height="78" rx="10" fill="#0f1730" stroke="#6ee7ff" />
-            <text x="265" y="87" text-anchor="middle" font-size="13" fill="#a9f1ff"
+            <rect x="190" y="52" width="150" height="78" rx="10" fill="#211306" stroke="#ffd24a" />
+            <text x="265" y="87" text-anchor="middle" font-size="13" fill="#ffe9a8"
               font-family="Inter, sans-serif">Sorts the request</text>
-            <text x="265" y="106" text-anchor="middle" font-size="11" fill="#7f96c7"
+            <text x="265" y="106" text-anchor="middle" font-size="11" fill="#c79a5e"
               font-family="Inter, sans-serif">Keeps the next step clear</text>
-            <rect x="380" y="20" width="150" height="40" rx="8" fill="#121d3d" stroke="#6b8cd4" />
-            <text x="455" y="45" text-anchor="middle" font-size="12" fill="#c7d7fb"
+            <rect x="380" y="20" width="150" height="40" rx="8" fill="#2a1807" stroke="#ff79c9" />
+            <text x="455" y="45" text-anchor="middle" font-size="12" fill="#ffd8f1"
               font-family="Inter, sans-serif">Health / Daily rhythm</text>
-            <rect x="380" y="70" width="150" height="40" rx="8" fill="#121d3d" stroke="#6b8cd4" />
-            <text x="455" y="95" text-anchor="middle" font-size="12" fill="#c7d7fb"
+            <rect x="380" y="70" width="150" height="40" rx="8" fill="#2a1807" stroke="#ffd24a" />
+            <text x="455" y="95" text-anchor="middle" font-size="12" fill="#ffe9a8"
               font-family="Inter, sans-serif">Money / Work</text>
-            <rect x="380" y="120" width="150" height="40" rx="8" fill="#121d3d" stroke="#6b8cd4" />
-            <text x="455" y="145" text-anchor="middle" font-size="12" fill="#c7d7fb"
+            <rect x="380" y="120" width="150" height="40" rx="8" fill="#2a1807" stroke="#ffd24a" />
+            <text x="455" y="145" text-anchor="middle" font-size="12" fill="#ffe9a8"
               font-family="Inter, sans-serif">Ideas / Projects</text>
-            <rect x="570" y="52" width="130" height="78" rx="10" fill="#1b1431" stroke="#ff7ad9" />
-            <text x="635" y="87" text-anchor="middle" font-size="13" fill="#ffc5ee"
+            <rect x="570" y="52" width="130" height="78" rx="10" fill="#261206" stroke="#ff79c9" />
+            <text x="635" y="87" text-anchor="middle" font-size="13" fill="#ffd8f1"
               font-family="Inter, sans-serif">Safety checks</text>
-            <text x="635" y="106" text-anchor="middle" font-size="11" fill="#c9a9e6"
+            <text x="635" y="106" text-anchor="middle" font-size="11" fill="#d8b87c"
               font-family="Inter, sans-serif">Asks first</text>
-            <rect x="740" y="65" width="100" height="52" rx="10" fill="#0f1730" stroke="#6ee7ff" />
-            <text x="790" y="96" text-anchor="middle" font-size="13" fill="#a9f1ff" font-family="Inter, sans-serif">Next
+            <rect x="740" y="65" width="100" height="52" rx="10" fill="#211306" stroke="#ffd24a" />
+            <text x="790" y="96" text-anchor="middle" font-size="13" fill="#ffe9a8" font-family="Inter, sans-serif">Next
               step</text>
-            <path d="M150 91h36m154 0h30m160-50h26m-26 50h26m-26 50h26m144-50h32" stroke="#6ee7ff" stroke-width="2"
+            <path d="M150 91h36m154 0h30m160-50h26m-26 50h26m-26 50h26m144-50h32" stroke="#ffd24a" stroke-width="2"
               fill="none" marker-end="url(#arr1)" />
           </svg>
           <p class="diagram-caption">Simple on the outside, careful on the inside: one request enters, the system sorts
@@ -488,10 +493,12 @@
       <section id="governance">
         <h2>Why this feels safe and steady</h2>
         <p>The Vault keeps track of what it is doing, checks the work it produces, and stops to ask before anything
-          important goes outside. That makes it feel more like a careful helper than a loose cannon.</p>
+          important goes outside. That makes it feel more like a careful helper than a loose cannon — and that matters
+          when the job is your schedule, your health, or your money.</p>
         <div class="cta-band">
           If you want the picture book version, open <a href="showcase/index.html">Public Showcase</a>. If you want the
-          detailed pages, open <a href="../feature-pages/feature-viewer.html">Feature Pages</a>.
+          more detailed story cards, open <a href="showcase/case-studies.html">Case Studies</a>. It’s the same
+          system, just with more detail.
         </div>
       </section>
 
@@ -514,10 +521,9 @@
       </section>
 
       <footer>
-        <a href="../feature-pages/feature-viewer.html">Open Features Pages</a> ·
+        <a href="showcase/case-studies.html">Open Feature Stories</a> ·
         <a href="showcase/index.html">Public Showcase</a> ·
         <a href="showcase/case-studies.html">Case Studies</a> ·
-        <a href="../feature-pages/feature-viewer.html">Feature Pages</a> ·
         <a href="../index.html">Manual Hub</a>
         <br />Public Guide updated 2026-05-14.
       </footer>

@@ -12,16 +12,16 @@
     rel="stylesheet" />
   <style>
     :root {
-      --bg: #080918;
-      --surface: #11142a;
-      --surface-2: #171c39;
-      --surface-hover: #202857;
-      --border: #313d79;
-      --text: #eef2ff;
-      --muted: #bbc7eb;
-      --subtle: #879ad1;
-      --accent: #7ef9ff;
-      --accent-2: #ff8ed9;
+      --bg: #120800;
+      --surface: #1d1206;
+      --surface-2: #281707;
+      --surface-hover: #38210a;
+      --border: #5e3712;
+      --text: #fff7ea;
+      --muted: #f0d6b0;
+      --subtle: #c89b5f;
+      --accent: #ffd24a;
+      --accent-2: #ff79c9;
       --nav-h: 60px;
       --sidebar-w: 280px
     }
@@ -39,7 +39,7 @@
     }
 
     body {
-      background: radial-gradient(1200px 650px at 110% -10%, rgba(255, 142, 217, .2), transparent 62%), radial-gradient(1000px 600px at -12% -6%, rgba(126, 249, 255, .18), transparent 62%), var(--bg);
+      background: radial-gradient(1200px 650px at 110% -10%, rgba(255, 121, 201, .24), transparent 62%), radial-gradient(1000px 600px at -12% -6%, rgba(255, 210, 74, .18), transparent 62%), var(--bg);
       color: var(--text);
       font-family: "Inter", system-ui, -apple-system, sans-serif;
       font-size: 15px;
@@ -57,7 +57,7 @@
       align-items: center;
       justify-content: space-between;
       padding: 0 1.5rem;
-      background: rgba(8, 9, 24, .9);
+      background: rgba(18, 8, 0, .92);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border)
     }
@@ -105,7 +105,7 @@
 
     .topnav-link:hover {
       color: var(--text);
-      background: rgba(255, 255, 255, .05)
+      background: rgba(255, 210, 74, .08)
     }
 
     .topnav-link.active {
@@ -206,7 +206,7 @@
 
     .gallery-callout {
       margin-top: 1.2rem;
-      background: linear-gradient(135deg, rgba(126, 249, 255, .13), rgba(255, 142, 217, .12));
+      background: linear-gradient(135deg, rgba(255, 210, 74, .15), rgba(255, 121, 201, .12));
       border: 1px solid var(--border);
       border-radius: 12px;
       padding: 1rem 1.1rem;
@@ -376,7 +376,7 @@
       <a href="../../developer/index.html" class="topnav-link">Developer</a>
       <a href="../../user/index.html" class="topnav-link">User Guide</a>
       <a href="../index.html" class="topnav-link">Public</a>
-      <a href="../../feature-pages/feature-viewer.html" class="topnav-link">Features</a>
+      <a href="case-studies.html" class="topnav-link">Features</a>
     </div>
     <a href="https://github.com/FerretFatale/KAOS" class="github-btn" target="_blank" rel="noopener noreferrer">GitHub
       →</a>
@@ -394,7 +394,7 @@
       <div class="sidebar-group-label">Next</div>
       <a href="case-studies.html" class="sidebar-link">Case Studies →</a>
       <a href="../index.html" class="sidebar-link">Public Guide →</a>
-      <a href="../../feature-pages/feature-viewer.html" class="sidebar-link">All Feature Pages →</a>
+      <a href="case-studies.html" class="sidebar-link">All Feature Stories →</a>
     </div>
   </aside>
 
@@ -404,9 +404,10 @@
         <p class="hero-eyebrow">Public Showcase</p>
         <h1>A gallery that shows The Vault in action, not just in theory</h1>
         <p class="hero-sub">This page is the picture wall. It shows a few real parts of the system first, then points to
-          the deeper pages if you want to keep reading.</p>
-        <div class="gallery-callout">If a showcase only sends you somewhere else, it fails the job. A real showcase
-          should display something you can see and understand before you click through.</div>
+          the deeper pages if you want to keep reading. Think of it as the bright poster version of the system: quick
+          to scan, easy to understand, and rich enough to make you curious.</p>
+        <div class="gallery-callout">A real showcase should display something you can see and understand before you click
+          through. This one does that with big exhibit cards, plain labels, and a visible preview block up front.</div>
       </section>
 
       <hr class="section-divider" />
@@ -440,7 +441,7 @@
       <section id="highlights">
         <h2>Showcase Highlights</h2>
         <div class="gallery-grid">
-          <a class="gallery-card" href="../../feature-pages/feature-viewer.html?p=vault_brain">
+          <a class="gallery-card" href="case-studies.html#studies">
             <span class="kicker">Architecture</span>
             <h3>Vault Brain Orchestration</h3>
             <p>Everything starts here: requests are gathered, sorted, and handed to the right part of the system.</p>
@@ -448,7 +449,7 @@
             <span class="meta">Route: Feature Viewer → vault_brain</span>
           </a>
 
-          <a class="gallery-card" href="../../feature-pages/feature-viewer.html?p=health_overview">
+          <a class="gallery-card" href="case-studies.html#studies">
             <span class="kicker">Health Intelligence</span>
             <h3>Context-aware daily planning</h3>
             <p>Health and daily rhythm stay connected so the plan fits the person, not the other way around.</p>
@@ -456,7 +457,7 @@
             <span class="meta">Route: Feature Viewer → health_overview</span>
           </a>
 
-          <a class="gallery-card" href="../../feature-pages/feature-viewer.html?p=business_portal">
+          <a class="gallery-card" href="case-studies.html#studies">
             <span class="kicker">Business + Operations</span>
             <h3>Living business system</h3>
             <p>Business, money, and publishing work together instead of living in separate notebooks.</p>
@@ -464,7 +465,7 @@
             <span class="meta">Route: Feature Viewer → business_portal</span>
           </a>
 
-          <a class="gallery-card" href="../../feature-pages/feature-viewer.html?p=email_intelligence">
+          <a class="gallery-card" href="case-studies.html#studies">
             <span class="kicker">Comms Infrastructure</span>
             <h3>Email Intelligence under policy</h3>
             <p>Email gets sorted with care, with safety rules and logs keeping the process understandable.</p>
@@ -472,7 +473,7 @@
             <span class="meta">Route: Feature Viewer → email_intelligence</span>
           </a>
 
-          <a class="gallery-card" href="../../feature-pages/feature-viewer.html?p=research">
+          <a class="gallery-card" href="case-studies.html#studies">
             <span class="kicker">Research Pipeline</span>
             <h3>From discovery to action</h3>
             <p>Research notes do not just sit there — they turn into goals and next steps.</p>
@@ -480,7 +481,7 @@
             <span class="meta">Route: Feature Viewer → research</span>
           </a>
 
-          <a class="gallery-card" href="../../feature-pages/feature-viewer.html?p=governance">
+          <a class="gallery-card" href="case-studies.html#studies">
             <span class="kicker">Governance Layer</span>
             <h3>Control without paralysis</h3>
             <p>Careful checks keep the system safe without slowing everything to a crawl.</p>
@@ -494,7 +495,7 @@
         <h2>Proof Layer</h2>
         <div class="proof-block">
           <ul class="proof-list">
-            <li>Each highlight card shows a real capability in plain language before it points to the deeper page.</li>
+              <li>Each highlight card shows a real capability in plain language before it points to the deeper page.</li>
             <li>Governance references align to repository surfaces: mission state, contracts, test matrix, and
               gatekeeper logs.</li>
             <li>External writes stay approval-gated, and dry-run-first patterns remain in place.</li>
@@ -511,25 +512,21 @@
           </article>
           <article class="resource-card">
             <h3>Gallery Build Notes</h3>
-            <a href="gallery-strategy.html">Strategy →</a>
-            <a href="gallery-ia.html">Information Architecture →</a>
-            <a href="gallery-content-inventory.html">Content Inventory →</a>
-            <a href="gallery-style-direction.html">Style Direction →</a>
-            <a href="gallery-launch-checklist.html">Launch Checklist →</a>
+            <a href="case-studies.html">Case Studies →</a>
+            <a href="../index.html">Public Guide →</a>
           </article>
           <article class="resource-card">
             <h3>Deep Technical Index</h3>
-            <a href="../../feature-pages/feature-viewer.html">All Feature Pages →</a>
+            <a href="case-studies.html#studies">Exhibit Cards →</a>
             <a href="../../developer/index.html">Developer Portal →</a>
           </article>
         </div>
       </section>
 
       <footer>
-        <a href="../../feature-pages/feature-viewer.html">Open Features Pages</a> ·
+        <a href="case-studies.html">Open Feature Stories</a> ·
         <a href="../index.html">Public Guide</a> ·
         <a href="case-studies.html">Case Studies</a> ·
-        <a href="../../feature-pages/feature-viewer.html">Feature Pages</a> ·
         <a href="../../index.html">Manual Hub</a>
         <br />Public Showcase updated 2026-05-14.
       </footer>
