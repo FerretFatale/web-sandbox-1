@@ -1,43 +1,771 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>The Vault User Manual</title>
-<style>
-:root{--bg:#08121f;--panel:#14243c;--line:#31517a;--text:#edf4ff;--muted:#b4c6e1;--a:#35d3a7;--b:#39b5ff}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(1000px 520px at 12% -12%,#22446f 0,transparent 64%),linear-gradient(160deg,#05101d,#0d1b30);color:var(--text);font:16px/1.65 Inter,system-ui,sans-serif}
-.wrap{max-width:1060px;margin:0 auto;padding:1.5rem 1rem 2.5rem}h1{margin:.1rem 0 .4rem}.lead{color:var(--muted)}
-.kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.7rem;margin:1rem 0}.k{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:.7rem}.k b{font-size:1.2rem}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.8rem}.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:.85rem}
-.card h2{margin:.1rem 0 .3rem;font-size:1.02rem}.card p{margin:0;color:var(--muted)}.card a{display:inline-block;margin-top:.55rem;font-weight:700;color:#cffff0;text-decoration:none}
-.row{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-top:1rem}.panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:.9rem}
-ul{margin:.3rem 0 .2rem 1rem}li{margin:.2rem 0}a:focus-visible{outline:3px solid #f2c46b;outline-offset:2px}
-@media(max-width:820px){.grid,.row,.kpis{grid-template-columns:1fr}}
-</style></head><body><main class="wrap">
-  <a href="../" style="color:var(--muted)">← Hub</a>
-  <h1>User Operations Manual</h1>
-  <p class="lead">Use this for daily operation: how to ask, how to execute, how to recover, and how to stay inside approval/safety boundaries.</p>
+﻿<!DOCTYPE html>
+<html lang="en">
 
-  <section class="kpis" aria-label="quick metrics">
-    <div class="k"><b>Fast Start</b><div>3-step start flow</div></div>
-    <div class="k"><b>Mission Flow</b><div>Prompt -> plan -> execute</div></div>
-    <div class="k"><b>Safety</b><div>Approval-first actions</div></div>
-  </section>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>User Guide — The Vault</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0e0b16;
+      --surface: #160f28;
+      --surface-hover: #1e1636;
+      --border: #2a1f45;
+      --border-accent: #3d2e65;
+      --text: #f0eeff;
+      --text-muted: #a99dd0;
+      --text-subtle: #6b5e90;
+      --accent: #a78bfa;
+      --accent-hover: #9061f9;
+      --accent-warm: #f59e0b;
+      --accent-green: #34d399;
+      --accent-red: #f87171;
+      --code-bg: #1a1230;
+      --code-border: #2d2050;
+      --nav-h: 60px;
+      --sidebar-w: 280px;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--text);font-family:"Inter",system-ui,-apple-system,sans-serif;font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased}
+    .topnav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;background:rgba(14,11,22,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+    .topnav-left{display:flex;align-items:center;gap:.75rem}
+    .logo-mark{width:28px;height:28px;background:var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;color:#fff;flex-shrink:0;font-family:"JetBrains Mono",monospace}
+    .logo-text{font-size:.9rem;font-weight:600;color:var(--text);letter-spacing:-.01em}
+    .topnav-right{display:flex;align-items:center;gap:.25rem}
+    .topnav-link{padding:.35rem .7rem;border-radius:6px;font-size:.85rem;font-weight:500;color:var(--text-muted);text-decoration:none;transition:color .15s,background .15s}
+    .topnav-link:hover{color:var(--text);background:var(--surface-hover)}
+    .topnav-link.active{color:var(--accent);background:rgba(167,139,250,.1)}
+    .btn-github{margin-left:.5rem;padding:.35rem .75rem;border-radius:6px;font-size:.82rem;font-weight:600;background:var(--surface);border:1px solid var(--border-accent);color:var(--text);text-decoration:none;transition:background .15s,border-color .15s}
+    .btn-github:hover{background:var(--surface-hover);border-color:var(--accent)}
+    .hamburger{display:none;background:none;border:none;cursor:pointer;color:var(--text-muted);padding:.35rem}
+    .layout{display:flex;padding-top:var(--nav-h);min-height:100vh}
+    .sidebar{position:sticky;top:var(--nav-h);height:calc(100vh - var(--nav-h));width:var(--sidebar-w);flex-shrink:0;overflow-y:auto;padding:1.25rem 1rem 2rem;border-right:1px solid var(--border);scrollbar-width:thin;scrollbar-color:var(--border-accent) transparent}
+    .sidebar-group{margin-bottom:1.5rem}
+    .sidebar-group-label{font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--text-subtle);padding:0 .5rem;margin-bottom:.4rem}
+    .sidebar-link{display:block;padding:.32rem .5rem;border-radius:5px;font-size:.84rem;color:var(--text-muted);text-decoration:none;transition:color .15s,background .15s}
+    .sidebar-link:hover{color:var(--text);background:var(--surface-hover)}
+    .sidebar-link.active{color:var(--accent);background:rgba(167,139,250,.1)}
+    .main{flex:1;min-width:0;padding:3rem 3.5rem 4rem;max-width:860px}
+    .section{margin-bottom:4rem}
+    .hero-eyebrow{display:inline-block;font-size:.75rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);background:rgba(167,139,250,.1);border:1px solid rgba(167,139,250,.25);border-radius:999px;padding:.2rem .75rem;margin-bottom:.75rem}
+    h1{font-size:2.4rem;font-weight:700;letter-spacing:-.03em;line-height:1.15;margin-bottom:.6rem}
+    h2{font-size:1.45rem;font-weight:600;letter-spacing:-.02em;margin-bottom:.6rem;margin-top:2rem}
+    h3{font-size:1.1rem;font-weight:600;margin-bottom:.4rem;margin-top:1.25rem;color:var(--text)}
+    p{color:var(--text-muted);margin-bottom:.75rem}
+    .hero-sub{font-size:1.05rem;color:var(--text-muted);max-width:560px;margin-bottom:1.5rem}
+    .cta-row{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:2rem}
+    .btn-primary{display:inline-block;padding:.55rem 1.25rem;border-radius:8px;font-weight:600;font-size:.9rem;background:var(--accent);color:#0e0b16;text-decoration:none;transition:background .15s}
+    .btn-primary:hover{background:var(--accent-hover)}
+    .btn-outline{display:inline-block;padding:.55rem 1.25rem;border-radius:8px;font-weight:600;font-size:.9rem;background:transparent;border:1px solid var(--border-accent);color:var(--text);text-decoration:none;transition:border-color .15s,background .15s}
+    .btn-outline:hover{border-color:var(--accent);background:rgba(167,139,250,.05)}
+    .steps{display:flex;flex-direction:column;gap:1rem;margin:1.25rem 0}
+    .step{display:flex;gap:1rem;align-items:flex-start;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1rem 1.25rem}
+    .step-num{flex-shrink:0;width:32px;height:32px;border-radius:50%;background:rgba(167,139,250,.15);border:1.5px solid var(--accent);color:var(--accent);font-weight:700;font-size:.9rem;display:flex;align-items:center;justify-content:center}
+    .step-body{flex:1}
+    .step-title{font-weight:600;font-size:.95rem;margin-bottom:.25rem;color:var(--text)}
+    .step-desc{font-size:.88rem;color:var(--text-muted);margin:0}
+    .callout{border-radius:10px;padding:.9rem 1.1rem;margin:1rem 0;font-size:.88rem;display:flex;gap:.65rem;align-items:flex-start}
+    .callout-icon{flex-shrink:0;font-size:1.1rem;line-height:1.5}
+    .callout-body{flex:1}
+    .callout-title{font-weight:600;margin-bottom:.2rem}
+    .callout.tip{background:rgba(52,211,153,.07);border:1px solid rgba(52,211,153,.2);color:var(--text-muted)}
+    .callout.tip .callout-title{color:var(--accent-green)}
+    .callout.info{background:rgba(167,139,250,.07);border:1px solid rgba(167,139,250,.2);color:var(--text-muted)}
+    .callout.info .callout-title{color:var(--accent)}
+    .callout.warn{background:rgba(245,158,11,.07);border:1px solid rgba(245,158,11,.2);color:var(--text-muted)}
+    .callout.warn .callout-title{color:var(--accent-warm)}
+    .callout.safe{background:rgba(248,113,113,.07);border:1px solid rgba(248,113,113,.2);color:var(--text-muted)}
+    .callout.safe .callout-title{color:var(--accent-red)}
+    .chat-example{background:var(--code-bg);border:1px solid var(--code-border);border-radius:10px;padding:.9rem 1.1rem;margin:.75rem 0;font-size:.88rem}
+    .chat-label{font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--text-subtle);margin-bottom:.5rem}
+    .chat-you{color:var(--accent);margin-bottom:.3rem}
+    .chat-vault{color:var(--accent-green)}
+    .card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:.85rem;margin:1.25rem 0}
+    .feat-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1rem;text-decoration:none;transition:border-color .15s,background .15s;display:block}
+    .feat-card:hover{border-color:var(--accent);background:var(--surface-hover)}
+    .feat-card-icon{font-size:1.5rem;margin-bottom:.5rem;line-height:1}
+    .feat-card-title{font-weight:600;font-size:.9rem;color:var(--text);margin-bottom:.25rem}
+    .feat-card-desc{font-size:.82rem;color:var(--text-muted)}
+    .divider{border:none;border-top:1px solid var(--border);margin:2rem 0}
+    .section-tag{display:inline-block;font-size:.72rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--text-subtle);margin-bottom:.4rem}
+    .feature-block{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.35rem 1.5rem;margin-bottom:1.1rem}
+    .feature-block-header{display:flex;align-items:center;gap:.65rem;margin-bottom:.6rem}
+    .feature-block-icon{font-size:1.4rem;line-height:1}
+    .feature-block-title{font-weight:600;font-size:1rem;color:var(--text)}
+    .feature-block p{font-size:.88rem;margin-bottom:.5rem}
+    .feature-block .deep-link{display:inline-block;font-size:.82rem;font-weight:600;color:var(--accent);text-decoration:none;border:1px solid rgba(167,139,250,.25);border-radius:6px;padding:.2rem .6rem;margin-top:.35rem;transition:background .15s}
+    .feature-block .deep-link:hover{background:rgba(167,139,250,.1)}
+    details{background:var(--surface);border:1px solid var(--border);border-radius:10px;margin-bottom:.6rem;overflow:hidden}
+    summary{padding:.85rem 1.1rem;font-weight:600;font-size:.9rem;cursor:pointer;list-style:none;color:var(--text);display:flex;justify-content:space-between;align-items:center}
+    summary::after{content:"+";color:var(--accent);font-size:1.1rem;font-weight:400}
+    details[open] summary::after{content:"−"}
+    details>div{padding:.1rem 1.1rem 1rem;font-size:.88rem;color:var(--text-muted)}
+    details>div p{margin-bottom:.4rem}
+    .glossary-row{display:flex;gap:1rem;border-bottom:1px solid var(--border);padding:.65rem 0;font-size:.88rem}
+    .glossary-term{flex-shrink:0;width:160px;font-weight:600;color:var(--accent)}
+    .glossary-def{color:var(--text-muted)}
+    .code-inline{background:var(--code-bg);padding:.1rem .35rem;border-radius:4px;color:var(--accent);font-size:.85rem;font-family:"JetBrains Mono",monospace}
+    @media(max-width:900px){.main{padding:2rem 1.5rem 3rem}}
+    @media(max-width:700px){.sidebar{position:fixed;left:-100%;top:var(--nav-h);height:calc(100vh - var(--nav-h));z-index:90;transition:left .25s;background:var(--bg);width:85vw;max-width:300px}.sidebar.open{left:0}.sidebar-overlay{display:none;position:fixed;inset:0;z-index:89;background:rgba(0,0,0,.5)}.sidebar-overlay.open{display:block}.hamburger{display:flex}.topnav-right .topnav-link{display:none}.main{padding:1.5rem 1rem 3rem}}
+    .fade-in{animation:fadeUp .4s ease both}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+  </style>
+</head>
 
-  <section class="row">
-    <article class="panel"><h2>Start Here</h2><ul><li>What The Vault is: <a href="01_welcome.md">Section 1</a></li><li>How to prompt: <a href="02_how_to_talk.md">Section 2</a></li><li>Which persona to use: <a href="03_personas.md">Section 3</a></li></ul></article>
-    <article class="panel"><h2>Run Work</h2><ul><li>Daily rhythm: <a href="04_daily_rhythms.md">Section 4</a></li><li>Tasks and missions: <a href="05_tasks_and_missions.md">Section 5</a></li><li>Workflow playbooks: <a href="11_workflow_playbooks.md">Section 11</a></li></ul></article>
-  </section>
+<body>
 
-  <section class="grid" style="margin-top:1rem" aria-label="manual index">
-    <div class="card"><h2>Health/Memory/Privacy</h2><p>Storage behavior, privacy boundaries, practical usage.</p><a href="06_health_memory_privacy.md">Open</a></div>
-    <div class="card"><h2>Human-Gated Setup</h2><p>External tools requiring explicit human setup/approval.</p><a href="07_human_gated_setup.md">Open</a></div>
-    <div class="card"><h2>Troubleshooting</h2><p>When things go wrong: diagnosis and recovery flow.</p><a href="08_troubleshooting.md">Open</a></div>
-    <div class="card"><h2>Public Narrative</h2><p>How to present The Vault safely to others.</p><a href="09_public_showcase_narrative.md">Open</a></div>
-    <div class="card"><h2>Persona Directory</h2><p>Extended role map for each persona.</p><a href="10_persona_directory.md">Open</a></div>
-    <div class="card"><h2>Tips + Patterns</h2><p>High-leverage patterns and anti-patterns.</p><a href="12_tips_tricks_operator_patterns.md">Open</a></div>
-    <div class="card"><h2>FAQ + Edge Cases</h2><p>Known pitfalls and expected behavior.</p><a href="13_faq_and_edge_cases.md">Open</a></div>
-    <div class="card"><h2>Approvals + Safety</h2><p>What requires approval and why.</p><a href="14_approvals_boundaries_safety.md">Open</a></div>
-    <div class="card"><h2>Glossary</h2><p>Quick reference for terms and commands.</p><a href="15_glossary_and_quick_reference.md">Open</a></div>
-    <div class="card"><h2>External Skill Assimilation</h2><p>How external tools become internal process intelligence.</p><a href="16_external_skills_and_assimilation.md">Open</a></div>
-    <div class="card"><h2>Feature Deep Dives</h2><p>26 pages covering core and extended features, each mapped to real source files and API surfaces.</p><a href="../feature-pages/README.md">Open</a></div>
-    <div class="card"><h2>Tool Catalog</h2><p>Persona-to-tool grant inventory.</p><a href="appendix_persona_tool_catalog.md">Open</a></div>
-  </section>
-</main></body></html>
+  <header class="topnav">
+    <div class="topnav-left">
+      <div class="logo-mark" aria-hidden="true">V</div>
+      <span class="logo-text">The Vault &middot; User Guide</span>
+    </div>
+    <div class="topnav-right">
+      <a href="#overview" class="topnav-link active">User Guide</a>
+      <a href="../" class="topnav-link">Manual Home</a>
+      <a href="../developer/" class="topnav-link">Developer</a>
+      <a href="../public/" class="topnav-link">Public</a>
+      <a href="../feature-pages/feature-viewer.html" class="topnav-link">Features</a>
+      <a href="https://github.com/FerretFatale/KAOS" class="btn-github" target="_blank" rel="noopener">GitHub &rarr;</a>
+      <button class="hamburger" aria-label="Open navigation" onclick="toggleSidebar()">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+          <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+  <div class="layout">
+    <nav class="sidebar" id="sidebar" aria-label="User guide sections">
+      <div class="sidebar-group">
+        <div class="sidebar-group-label">Start Here</div>
+        <a href="#overview" class="sidebar-link">What is The Vault?</a>
+        <a href="#quickstart" class="sidebar-link">Your first 5 minutes</a>
+        <a href="#how-to-talk" class="sidebar-link">How to talk to The Vault</a>
+        <a href="#meet-your-team" class="sidebar-link">Meet your AI team</a>
+      </div>
+      <div class="sidebar-group">
+        <div class="sidebar-group-label">Daily Life</div>
+        <a href="#daily-life" class="sidebar-link">Your day at a glance</a>
+        <a href="#schedule" class="sidebar-link">Schedule &amp; calendar</a>
+        <a href="#routines" class="sidebar-link">Morning &amp; evening routines</a>
+        <a href="#goals" class="sidebar-link">Goals &amp; to-do lists</a>
+        <a href="#memory" class="sidebar-link">Memory &amp; research</a>
+        <a href="#email" class="sidebar-link">Email</a>
+      </div>
+      <div class="sidebar-group">
+        <div class="sidebar-group-label">Health &amp; Wellbeing</div>
+        <a href="#health" class="sidebar-link">Health overview</a>
+        <a href="#cycle" class="sidebar-link">Period &amp; cycle tracking</a>
+        <a href="#fitness" class="sidebar-link">Fitness &amp; exercise</a>
+        <a href="#nutrition" class="sidebar-link">Food &amp; nutrition</a>
+        <a href="#sleep" class="sidebar-link">Sleep</a>
+        <a href="#hydration" class="sidebar-link">Hydration</a>
+        <a href="#prescriptions" class="sidebar-link">Medications</a>
+        <a href="#wellbeing" class="sidebar-link">Wellbeing &amp; journal</a>
+      </div>
+      <div class="sidebar-group">
+        <div class="sidebar-group-label">Home &amp; Lifestyle</div>
+        <a href="#wardrobe" class="sidebar-link">Wardrobe</a>
+        <a href="#shopping" class="sidebar-link">Shopping &amp; kitchen</a>
+        <a href="#weather" class="sidebar-link">Weather</a>
+        <a href="#finances" class="sidebar-link">Finances &amp; budget</a>
+      </div>
+      <div class="sidebar-group">
+        <div class="sidebar-group-label">Work &amp; Creative</div>
+        <a href="#streaming" class="sidebar-link">Streaming &amp; Twitch</a>
+        <a href="#social" class="sidebar-link">Social media</a>
+        <a href="#business" class="sidebar-link">Grants &amp; business</a>
+        <a href="#creative" class="sidebar-link">Design &amp; image creation</a>
+      </div>
+      <div class="sidebar-group">
+        <div class="sidebar-group-label">Help</div>
+        <a href="#approvals" class="sidebar-link">Approvals &amp; safety</a>
+        <a href="#privacy" class="sidebar-link">Your privacy</a>
+        <a href="#faq" class="sidebar-link">FAQ</a>
+        <a href="#glossary" class="sidebar-link">Glossary</a>
+      </div>
+    </nav>
+
+    <main class="main">
+
+      <section class="section hero fade-in" id="overview">
+        <div class="hero-eyebrow">User Guide</div>
+        <h1>Welcome to The Vault &#128075;</h1>
+        <p class="hero-sub">The Vault is your personal AI assistant. Think of it as having a brilliant, tireless helper who remembers everything, never judges, and is always available whenever you need them.</p>
+        <div class="cta-row">
+          <a href="#quickstart" class="btn-primary">Get started in 5 minutes &rarr;</a>
+          <a href="../feature-pages/feature-viewer.html" class="btn-outline">Browse all features &rarr;</a>
+        </div>
+        <div class="callout info">
+          <div class="callout-icon">&#128156;</div>
+          <div class="callout-body">
+            <div class="callout-title">You don&rsquo;t need to be technical to use this</div>
+            Just talk to The Vault like you&rsquo;d talk to a helpful friend. You can ask it anything, give it tasks, ask it to remember things, or ask it to look something up. This guide will walk you through everything.
+          </div>
+        </div>
+        <h2>What can The Vault do for me?</h2>
+        <p>The Vault covers every area of daily life. Here&rsquo;s a quick overview:</p>
+        <div class="card-grid">
+          <a href="#daily-life" class="feat-card"><div class="feat-card-icon">&#128197;</div><div class="feat-card-title">Daily Schedule</div><div class="feat-card-desc">Manage your calendar, set reminders, and plan your week.</div></a>
+          <a href="#health" class="feat-card"><div class="feat-card-icon">&#128151;</div><div class="feat-card-title">Health &amp; Wellness</div><div class="feat-card-desc">Track sleep, food, exercise, hydration, cycle, and more.</div></a>
+          <a href="#goals" class="feat-card"><div class="feat-card-icon">&#127919;</div><div class="feat-card-title">Goals &amp; Tasks</div><div class="feat-card-desc">Set goals, track progress, manage your to-do list.</div></a>
+          <a href="#shopping" class="feat-card"><div class="feat-card-icon">&#128722;</div><div class="feat-card-title">Shopping &amp; Kitchen</div><div class="feat-card-desc">Plan meals, make shopping lists, track your pantry.</div></a>
+          <a href="#wardrobe" class="feat-card"><div class="feat-card-icon">&#128247;</div><div class="feat-card-title">Wardrobe</div><div class="feat-card-desc">Plan outfits and track your clothes digitally.</div></a>
+          <a href="#streaming" class="feat-card"><div class="feat-card-icon">&#127918;</div><div class="feat-card-title">Streaming &amp; Twitch</div><div class="feat-card-desc">Manage your stream, VOD library, and channel info.</div></a>
+          <a href="#business" class="feat-card"><div class="feat-card-icon">&#128188;</div><div class="feat-card-title">Grants &amp; Business</div><div class="feat-card-desc">Track grant applications, business milestones, revenue.</div></a>
+          <a href="#creative" class="feat-card"><div class="feat-card-icon">&#127912;</div><div class="feat-card-title">Design &amp; Creative</div><div class="feat-card-desc">Generate images, design briefs, and manage brand assets.</div></a>
+          <a href="#email" class="feat-card"><div class="feat-card-icon">&#128231;</div><div class="feat-card-title">Email</div><div class="feat-card-desc">Read, sort, and reply to email via ProtonMail.</div></a>
+          <a href="#memory" class="feat-card"><div class="feat-card-icon">&#129504;</div><div class="feat-card-title">Memory &amp; Research</div><div class="feat-card-desc">The Vault remembers what you tell it and can research anything.</div></a>
+          <a href="#finances" class="feat-card"><div class="feat-card-icon">&#128176;</div><div class="feat-card-title">Finances &amp; Budget</div><div class="feat-card-desc">Track spending, set budgets, monitor your financial health.</div></a>
+          <a href="#wellbeing" class="feat-card"><div class="feat-card-icon">&#128211;</div><div class="feat-card-title">Journal &amp; Wellbeing</div><div class="feat-card-desc">Daily check-ins, private journal, coping strategies.</div></a>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <section class="section" id="quickstart">
+        <div class="section-tag">Getting started</div>
+        <h2>Your first 5 minutes</h2>
+        <p>Getting up and running only takes three steps:</p>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <div class="step-title">Start the dashboard</div>
+              <p class="step-desc">Open a terminal and run <code class="code-inline">python vault_dashboard.py</code>. This starts The Vault. You&rsquo;ll see a menu you can navigate with your keyboard. If this is your first time, a setup guide will appear.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <div class="step-title">Ask your first question</div>
+              <p class="step-desc">Type anything you want help with. Try <em>&ldquo;What can you help me with today?&rdquo;</em> or <em>&ldquo;Set up my health tracking.&rdquo;</em> The Vault will respond in plain English.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <div class="step-title">Tell it about yourself</div>
+              <p class="step-desc">The Vault works best when it knows a bit about you. Try: <em>&ldquo;My daily water target is 2 litres&rdquo;</em>, <em>&ldquo;I take metformin in the mornings&rdquo;</em>, or <em>&ldquo;My fitness goal is 10,000 steps a day.&rdquo;</em> It will remember.</p>
+            </div>
+          </div>
+        </div>
+        <div class="callout tip">
+          <div class="callout-icon">&#10003;</div>
+          <div class="callout-body">
+            <div class="callout-title">You can&rsquo;t break anything</div>
+            The Vault will ask for your approval before doing anything that can&rsquo;t be undone &mdash; like sending an email. You&rsquo;re always in control.
+          </div>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <section class="section" id="how-to-talk">
+        <div class="section-tag">Communication</div>
+        <h2>How to talk to The Vault</h2>
+        <p>The Vault understands plain, everyday English. No special commands. No technical words. Just describe what you want, the same way you&rsquo;d ask a friend.</p>
+        <h3>Examples</h3>
+        <div class="chat-example">
+          <div class="chat-label">&#128197; Scheduling something</div>
+          <div class="chat-you">You: &ldquo;Add a dentist appointment on Thursday at 2pm.&rdquo;</div>
+          <div class="chat-vault">Vault: &ldquo;Done &mdash; dentist added for Thursday 2:00 PM. Want a reminder the day before?&rdquo;</div>
+        </div>
+        <div class="chat-example">
+          <div class="chat-label">&#128151; Tracking health</div>
+          <div class="chat-you">You: &ldquo;I slept for 7 hours last night. Quality was about a 7 out of 10.&rdquo;</div>
+          <div class="chat-vault">Vault: &ldquo;Logged! That&rsquo;s your third night in a row above 7 hours &mdash; you&rsquo;re doing great.&rdquo;</div>
+        </div>
+        <div class="chat-example">
+          <div class="chat-label">&#128722; Shopping help</div>
+          <div class="chat-you">You: &ldquo;I need to do a grocery shop. Making pasta this week and I&rsquo;m low on bread.&rdquo;</div>
+          <div class="chat-vault">Vault: &ldquo;Here&rsquo;s your list: pasta sauce, spaghetti, parmesan, bread. Want me to check the ALDI specials first?&rdquo;</div>
+        </div>
+        <div class="chat-example">
+          <div class="chat-label">&#127919; Setting a goal</div>
+          <div class="chat-you">You: &ldquo;I want to drink more water. Set my goal to 2.5 litres a day.&rdquo;</div>
+          <div class="chat-vault">Vault: &ldquo;Hydration target updated to 2,500 ml per day. Want a midday reminder if you haven&rsquo;t hit 1,000 ml?&rdquo;</div>
+        </div>
+        <div class="callout tip">
+          <div class="callout-icon">&#128161;</div>
+          <div class="callout-body">
+            <div class="callout-title">Be as specific or as vague as you like</div>
+            If you say &ldquo;I went to the gym,&rdquo; The Vault will ask for more details if it needs them. You don&rsquo;t have to get it perfect the first time.
+          </div>
+        </div>
+        <div class="callout warn">
+          <div class="callout-icon">&#9888;</div>
+          <div class="callout-body">
+            <div class="callout-title">Some things need your approval first</div>
+            Sending emails, posting to social media, or making financial records are &ldquo;gated&rdquo; &mdash; The Vault always asks before anything like that happens.
+          </div>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <section class="section" id="meet-your-team">
+        <div class="section-tag">Your AI team</div>
+        <h2>Meet your AI team</h2>
+        <p>The Vault isn&rsquo;t just one AI &mdash; it&rsquo;s a team of 20 specialist assistants. You don&rsquo;t need to know all of them, but here are the key players:</p>
+        <div class="card-grid">
+          <div class="feat-card" style="cursor:default"><div class="feat-card-icon">&#129504;</div><div class="feat-card-title">KAOS</div><div class="feat-card-desc">The main brain. Routes your requests to the right specialist and coordinates everything.</div></div>
+          <div class="feat-card" style="cursor:default"><div class="feat-card-icon">&#128203;</div><div class="feat-card-title">TaskMaster</div><div class="feat-card-desc">Manages tasks, missions, and to-do lists. Keeps track of what needs doing.</div></div>
+          <div class="feat-card" style="cursor:default"><div class="feat-card-icon">&#128151;</div><div class="feat-card-title">Nurse Joy</div><div class="feat-card-desc">Your health specialist. Handles all health tracking, logs, and wellness check-ins.</div></div>
+          <div class="feat-card" style="cursor:default"><div class="feat-card-icon">&#128176;</div><div class="feat-card-title">Budget Manager</div><div class="feat-card-desc">Watches over your finances, tracks spending, and helps with budget planning.</div></div>
+          <div class="feat-card" style="cursor:default"><div class="feat-card-icon">&#128300;</div><div class="feat-card-title">Research Agent</div><div class="feat-card-desc">Looks things up, finds information, and summarises anything you need to know.</div></div>
+          <div class="feat-card" style="cursor:default"><div class="feat-card-icon">&#128231;</div><div class="feat-card-title">Email Agent</div><div class="feat-card-desc">Reads, sorts, and drafts emails via your ProtonMail account.</div></div>
+          <div class="feat-card" style="cursor:default"><div class="feat-card-icon">&#127912;</div><div class="feat-card-title">Creative Director</div><div class="feat-card-desc">Generates images, writes design briefs, manages brand assets.</div></div>
+          <div class="feat-card" style="cursor:default"><div class="feat-card-icon">&#127918;</div><div class="feat-card-title">Stream Manager</div><div class="feat-card-desc">Handles your Twitch setup, VOD library, and streaming workflow.</div></div>
+        </div>
+        <div class="callout info">
+          <div class="callout-icon">&#8505;</div>
+          <div class="callout-body">
+            <div class="callout-title">The Vault picks the right specialist automatically</div>
+            You don&rsquo;t need to say &ldquo;ask the health agent&rdquo; &mdash; just say what you need and the right team member takes over. They also double-check each other&rsquo;s work before giving you an answer.
+          </div>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <section class="section" id="daily-life">
+        <div class="section-tag">Daily Life</div>
+        <h2>Your day at a glance</h2>
+        <p>Start every morning with a briefing. Say <em>&ldquo;Give me my morning briefing&rdquo;</em> and The Vault will show you today&rsquo;s schedule, open tasks, health nudges, and the weather.</p>
+        <div class="chat-example">
+          <div class="chat-label">&#9728; Morning briefing example</div>
+          <div class="chat-you">You: &ldquo;Good morning. What&rsquo;s on today?&rdquo;</div>
+          <div class="chat-vault">Vault: &ldquo;Good morning! Today is Thursday 14 May. Dentist at 2pm. Hydration: 2,500 ml goal &mdash; you hit it 4 of 7 days this week. Sleep last night: 7h (quality 7/10). Weather: 19&deg;C, partly cloudy. 3 tasks from yesterday are still open &mdash; want to review them?&rdquo;</div>
+        </div>
+      </section>
+
+      <section class="section" id="schedule">
+        <div class="section-tag">Daily Life</div>
+        <h2>&#128197; Schedule &amp; calendar</h2>
+        <p>The Vault keeps a living schedule &mdash; a smart calendar that reorganises itself around your day. Add events, move things, and The Vault will flag anything that clashes.</p>
+        <div class="chat-example">
+          <div class="chat-label">Adding an event</div>
+          <div class="chat-you">&ldquo;Add a vet appointment for Bunyip next Tuesday at 10am.&rdquo;</div>
+        </div>
+        <div class="chat-example">
+          <div class="chat-label">Rescheduling</div>
+          <div class="chat-you">&ldquo;Move my Wednesday workout to Friday morning.&rdquo;</div>
+        </div>
+        <div class="chat-example">
+          <div class="chat-label">Rolling a task forward</div>
+          <div class="chat-you">&ldquo;I didn&rsquo;t get to the grocery shop today. Move it to tomorrow.&rdquo;</div>
+        </div>
+        <a href="../feature-pages/feature-viewer.html?p=living_schedule" class="btn-outline" style="font-size:.85rem;margin-top:.5rem">Deep dive: Living Schedule &rarr;</a>
+      </section>
+
+      <section class="section" id="routines">
+        <div class="section-tag">Daily Life</div>
+        <h2>&#128260; Morning &amp; evening routines</h2>
+        <p>Routines are step-by-step checklists that repeat on a schedule you choose. The Vault walks through them with you and remembers which steps you completed.</p>
+        <div class="chat-example">
+          <div class="chat-label">Starting your morning routine</div>
+          <div class="chat-you">&ldquo;Start my morning routine.&rdquo;</div>
+          <div class="chat-vault">Vault: &ldquo;Morning routine: Step 1 &mdash; Take medications. Done? Step 2 &mdash; Log your weight. Done? Step 3 &mdash; Set your intention for today&hellip;&rdquo;</div>
+        </div>
+        <a href="../feature-pages/feature-viewer.html?p=routines" class="btn-outline" style="font-size:.85rem;margin-top:.5rem">Deep dive: Routines &rarr;</a>
+      </section>
+
+      <section class="section" id="goals">
+        <div class="section-tag">Daily Life</div>
+        <h2>&#127919; Goals &amp; to-do lists</h2>
+        <p>Set goals and The Vault tracks your progress. It can break big goals into smaller steps, remind you when you&rsquo;re off track, and celebrate milestones with you.</p>
+        <div class="chat-example">
+          <div class="chat-label">Setting a goal</div>
+          <div class="chat-you">&ldquo;I want to save $2,000 by the end of July.&rdquo;</div>
+          <div class="chat-vault">Vault: &ldquo;Goal set: Save $2,000 by 31 July. That&rsquo;s roughly $500 per week. Want me to track your savings progress weekly?&rdquo;</div>
+        </div>
+        <div class="chat-example">
+          <div class="chat-label">Checking progress</div>
+          <div class="chat-you">&ldquo;How am I doing on my goals?&rdquo;</div>
+        </div>
+        <a href="../feature-pages/feature-viewer.html?p=goals" class="btn-outline" style="font-size:.85rem;margin-top:.5rem">Deep dive: Goals &rarr;</a>
+      </section>
+
+      <section class="section" id="memory">
+        <div class="section-tag">Daily Life</div>
+        <h2>&#129504; Memory &amp; research</h2>
+        <p>The Vault remembers things you tell it &mdash; permanently. It also has a Research Assistant that can look things up and summarise results for you.</p>
+        <div class="chat-example">
+          <div class="chat-label">Storing a memory</div>
+          <div class="chat-you">&ldquo;Remember that my GP&rsquo;s phone number is 03 9555 1234.&rdquo;</div>
+        </div>
+        <div class="chat-example">
+          <div class="chat-label">Research request</div>
+          <div class="chat-you">&ldquo;Research: what grants are available for small creative businesses in Victoria?&rdquo;</div>
+        </div>
+        <a href="../feature-pages/feature-viewer.html?p=memory" class="btn-outline" style="font-size:.85rem;margin-top:.5rem">Deep dive: Memory &rarr;</a>
+        <a href="../feature-pages/feature-viewer.html?p=research" class="btn-outline" style="font-size:.85rem;margin-top:.5rem;margin-left:.5rem">Deep dive: Research &rarr;</a>
+      </section>
+
+      <section class="section" id="email">
+        <div class="section-tag">Daily Life</div>
+        <h2>&#128231; Email</h2>
+        <p>The Vault connects to your ProtonMail account and can read, sort, and summarise emails. It will never send email without your explicit approval.</p>
+        <div class="chat-example">
+          <div class="chat-label">Checking email</div>
+          <div class="chat-you">&ldquo;Check my email. Anything important?&rdquo;</div>
+          <div class="chat-vault">Vault: &ldquo;3 unread emails. 1 from Medicare (appointment confirmation), 1 from your bank (statement ready), 1 newsletter. Want me to summarise any of them?&rdquo;</div>
+        </div>
+        <div class="callout warn">
+          <div class="callout-icon">&#9888;</div>
+          <div class="callout-body">
+            <div class="callout-title">Email sending always needs your &ldquo;yes&rdquo;</div>
+            The Vault drafts the email and shows it to you for review. It only sends after you say &ldquo;Yes, send it.&rdquo;
+          </div>
+        </div>
+        <a href="../feature-pages/feature-viewer.html?p=email_intelligence" class="btn-outline" style="font-size:.85rem;margin-top:.5rem">Deep dive: Email Intelligence &rarr;</a>
+      </section>
+
+      <hr class="divider" />
+
+      <section class="section" id="health">
+        <div class="section-tag">Health &amp; Wellbeing</div>
+        <h2>&#128151; Health overview</h2>
+        <p>The Vault has a full health suite. Everything is stored <strong>only on your computer</strong> &mdash; nothing goes to the cloud.</p>
+        <div class="callout safe">
+          <div class="callout-icon">&#128274;</div>
+          <div class="callout-body">
+            <div class="callout-title">Your health data never leaves your device</div>
+            All health tracking &mdash; cycle data, sleep, medications, journal entries &mdash; is stored as local files only. The Vault does not upload health information to any server.
+          </div>
+        </div>
+        <div class="callout warn">
+          <div class="callout-icon">&#9888;</div>
+          <div class="callout-body">
+            <div class="callout-title">Not a medical device</div>
+            The Vault is a personal tracking tool, not a medical service. Always consult a qualified healthcare professional for medical decisions.
+          </div>
+        </div>
+        <a href="../feature-pages/feature-viewer.html?p=health_overview" class="btn-outline" style="font-size:.85rem;margin-top:.5rem">Full health module map &rarr;</a>
+      </section>
+
+      <section class="section" id="cycle">
+        <div class="section-tag">Health &amp; Wellbeing</div>
+        <h2>&#127800; Period &amp; cycle tracking</h2>
+        <p>Track your menstrual cycle, symptoms, mood, and energy. The Vault spots patterns over time and can predict your next period or flag anything worth discussing with a doctor.</p>
+        <div class="card-grid">
+          <div class="feat-card" style="cursor:default"><div class="feat-card-icon">&#129656;</div><div class="feat-card-title">Flow</div><div class="feat-card-desc">Light, medium, heavy, or spotting.</div></div>
+          <div class="feat-card" style="cursor:default"><div class="feat-card-icon">&#128522;</div><div class="feat-card-title">Mood</div><div class="feat-card-desc">Happy, anxious, irritable, calm, and more.</div></div>
+          <div class="feat-card" style="cursor:default"><div class="feat-card-icon">&#9889;</div><div class="feat-card-title">Energy</div><div class="feat-card-desc">Your energy level on a 1&ndash;5 scale.</div></div>
+          <div class="feat-card" style="cursor:default"><div class="feat-card-icon">&#128543;</div><div class="feat-card-title">Symptoms</div><div class="feat-card-desc">Cramps, bloating, headache, fatigue, and more.</div></div>
+        </div>
+        <div class="chat-example">
+          <div class="chat-label">Logging a cycle day</div>
+          <div class="chat-you">&ldquo;My period started today. Flow is medium, mood is 3, energy is 2, cramps and bloating.&rdquo;</div>
+          <div class="chat-vault">Vault: &ldquo;Logged. Day 1 of your cycle. Based on your history, your next period is predicted around 14 June.&rdquo;</div>
+        </div>
+        <a href="../feature-pages/feature-viewer.html?p=reproductive_health" class="btn-outline" style="font-size:.85rem;margin-top:.5rem">Deep dive: Reproductive Health &rarr;</a>
+      </section>
+
+      <section class="section" id="fitness">
+        <div class="section-tag">Health &amp; Wellbeing</div>
+        <h2>&#127939; Fitness &amp; exercise</h2>
+        <p>Log any workout in plain English. The Vault tracks your progress and celebrates consistency.</p>
+        <div class="chat-example">
+          <div class="chat-label">Logging a workout</div>
+          <div class="chat-you">&ldquo;I just did a 40 minute walk and 20 minutes of stretching.&rdquo;</div>
+          <div class="chat-vault">Vault: &ldquo;Logged &mdash; 40 min walking + 20 min stretching. That&rsquo;s your 4th workout this week!&rdquo;</div>
+        </div>
+        <a href="../feature-pages/feature-viewer.html?p=fitness_and_exercise" class="btn-outline" style="font-size:.85rem;margin-top:.5rem">Deep dive: Fitness &amp; Exercise &rarr;</a>
+      </section>
+
+      <section class="section" id="nutrition">
+        <div class="section-tag">Health &amp; Wellbeing</div>
+        <h2>&#129382; Food &amp; nutrition</h2>
+        <p>Describe what you ate in plain English and The Vault estimates calories and macros using AI. No barcodes, no databases, no complicated app.</p>
+        <div class="chat-example">
+          <div class="chat-label">Logging food</div>
+          <div class="chat-you">&ldquo;For lunch I had a chicken and salad sandwich on wholegrain bread and a banana.&rdquo;</div>
+          <div class="chat-vault">Vault: &ldquo;Logged! Estimated ~520 calories, 34g protein, 58g carbs, 12g fat. You&rsquo;re at 960 cal for today.&rdquo;</div>
+        </div>
+        <a href="../feature-pages/feature-viewer.html?p=nutrition_and_food" class="btn-outline" style="font-size:.85rem;margin-top:.5rem">Deep dive: Nutrition &amp; Food &rarr;</a>
+      </section>
+
+      <section class="section" id="sleep">
+        <div class="section-tag">Health &amp; Wellbeing</div>
+        <h2>&#128564; Sleep</h2>
+        <p>Log your sleep each morning &mdash; how long you slept and how well you slept on a scale of 1 to 10. The Vault tracks trends and flags if your sleep quality is declining.</p>
+        <div class="chat-example">
+          <div class="chat-label">Logging sleep</div>
+          <div class="chat-you">&ldquo;Slept 6.5 hours, quality was a 5. Woke up a few times.&rdquo;</div>
+          <div class="chat-vault">Vault: &ldquo;Logged. Your average quality this week is 6.2/10. You tend to sleep better on nights you exercise &mdash; want me to compare?&rdquo;</div>
+        </div>
+        <a href="../feature-pages/feature-viewer.html?p=sleep" class="btn-outline" style="font-size:.85rem;margin-top:.5rem">Deep dive: Sleep &rarr;</a>
+      </section>
+
+      <section class="section" id="hydration">
+        <div class="section-tag">Health &amp; Wellbeing</div>
+        <h2>&#128167; Hydration</h2>
+        <p>Tell The Vault every time you drink something and it tracks your daily total against your goal. Quick and easy.</p>
+        <div class="chat-example">
+          <div class="chat-label">Logging water</div>
+          <div class="chat-you">&ldquo;Just had a big glass of water &mdash; about 400ml.&rdquo;</div>
+          <div class="chat-vault">Vault: &ldquo;Logged. You&rsquo;re at 1,200 ml &mdash; 1,300 ml left to hit your 2,500 ml target.&rdquo;</div>
+        </div>
+        <a href="../feature-pages/feature-viewer.html?p=hydration" class="btn-outline" style="font-size:.85rem;margin-top:.5rem">Deep dive: Hydration &rarr;</a>
+      </section>
+
+      <section class="section" id="prescriptions">
+        <div class="section-tag">Health &amp; Wellbeing</div>
+        <h2>&#128138; Medications</h2>
+        <p>Store your medication schedule &mdash; what you take, when, who prescribed it, and when you need a refill. The Vault reminds you when a refill is coming up.</p>
+        <div class="callout safe">
+          <div class="callout-icon">&#9888;</div>
+          <div class="callout-body">
+            <div class="callout-title">Administrative records only</div>
+            This is a personal reminder system. The Vault does not give dosing advice. Always follow your doctor&rsquo;s or pharmacist&rsquo;s instructions.
+          </div>
+        </div>
+        <div class="chat-example">
+          <div class="chat-label">Adding a medication</div>
+          <div class="chat-you">&ldquo;Add my medication: metformin 500mg twice a day with food, prescribed by Dr Sharma.&rdquo;</div>
+          <div class="chat-vault">Vault: &ldquo;Added &mdash; metformin 500mg, twice daily with food. Want reminders at 8am and 6pm?&rdquo;</div>
+        </div>
+        <a href="../feature-pages/feature-viewer.html?p=prescriptions" class="btn-outline" style="font-size:.85rem;margin-top:.5rem">Deep dive: Prescriptions &rarr;</a>
+      </section>
+
+      <section class="section" id="wellbeing">
+        <div class="section-tag">Health &amp; Wellbeing</div>
+        <h2>&#128211; Wellbeing &amp; journal</h2>
+        <p>A private daily journal, wellbeing check-ins, and a library of coping strategies and breathing exercises. Your journal is <strong>never read by AI by default</strong> &mdash; it is completely private.</p>
+        <div class="chat-example">
+          <div class="chat-label">Daily check-in</div>
+          <div class="chat-you">&ldquo;Daily check-in: feeling anxious about work, energy is low, but I had a good lunch.&rdquo;</div>
+          <div class="chat-vault">Vault: &ldquo;Got it &mdash; logged your check-in. Would you like a grounding exercise, or just vent more?&rdquo;</div>
+        </div>
+        <div class="callout safe">
+          <div class="callout-icon">&#128682;</div>
+          <div class="callout-body">
+            <div class="callout-title">In a mental health crisis?</div>
+            Please contact Lifeline on <strong>13 11 14</strong> (Australia, 24/7). The Vault is not a crisis service.
+          </div>
+        </div>
+        <a href="../feature-pages/feature-viewer.html?p=wellbeing_and_journal" class="btn-outline" style="font-size:.85rem;margin-top:.5rem">Deep dive: Wellbeing &amp; Journal &rarr;</a>
+      </section>
+
+      <hr class="divider" />
+
+      <section class="section" id="wardrobe">
+        <div class="section-tag">Home &amp; Lifestyle</div>
+        <h2>&#128247; Wardrobe</h2>
+        <p>Your digital wardrobe keeps track of your clothes and helps you plan outfits. Add garments once and The Vault can suggest what to wear based on the occasion and weather.</p>
+        <div class="steps">
+          <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Add a garment</div><p class="step-desc">&ldquo;Add to my wardrobe: black midi dress, formal, brand Zara, colour black, size 12.&rdquo;</p></div></div>
+          <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Ask for an outfit</div><p class="step-desc">&ldquo;What should I wear today? Work meeting in the morning and dinner out tonight.&rdquo;</p></div></div>
+          <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Save outfits you love</div><p class="step-desc">&ldquo;Save this outfit as &lsquo;Smart casual Friday&rsquo;.&rdquo; &mdash; The Vault remembers it for next time.</p></div></div>
+        </div>
+        <a href="../feature-pages/feature-viewer.html?p=wardrobe" class="btn-outline" style="font-size:.85rem;margin-top:.5rem">Deep dive: Wardrobe &rarr;</a>
+      </section>
+
+      <section class="section" id="shopping">
+        <div class="section-tag">Home &amp; Lifestyle</div>
+        <h2>&#128722; Shopping &amp; kitchen</h2>
+        <p>Plan meals, generate shopping lists automatically, track your pantry, and check ALDI&rsquo;s weekly specials to save money.</p>
+        <div class="steps">
+          <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Share your meal plan</div><p class="step-desc">&ldquo;This week I want pasta Monday, chicken stir fry Wednesday, soup Friday.&rdquo;</p></div></div>
+          <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">It checks your pantry</div><p class="step-desc">The Vault compares your meal plan against what you already have and removes duplicates.</p></div></div>
+          <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Shopping list ready</div><p class="step-desc">&ldquo;Here&rsquo;s your list for this week. Want me to check the ALDI specials first?&rdquo;</p></div></div>
+        </div>
+        <a href="../feature-pages/feature-viewer.html?p=shopping_and_kitchen" class="btn-outline" style="font-size:.85rem;margin-top:.5rem">Deep dive: Shopping &amp; Kitchen &rarr;</a>
+      </section>
+
+      <section class="section" id="weather">
+        <div class="section-tag">Home &amp; Lifestyle</div>
+        <h2>&#127780; Weather</h2>
+        <p>Ask The Vault about the weather any time. It can also flag weather risks for upcoming plans.</p>
+        <div class="chat-example">
+          <div class="chat-label">Checking the weather</div>
+          <div class="chat-you">&ldquo;What&rsquo;s the weather today?&rdquo;</div>
+          <div class="chat-vault">Vault: &ldquo;Currently 18&deg;C, partly cloudy. High of 22&deg;C this afternoon. 60% chance of light rain after 4pm &mdash; take an umbrella.&rdquo;</div>
+        </div>
+        <a href="../feature-pages/feature-viewer.html?p=weather" class="btn-outline" style="font-size:.85rem;margin-top:.5rem">Deep dive: Weather &rarr;</a>
+      </section>
+
+      <section class="section" id="finances">
+        <div class="section-tag">Home &amp; Lifestyle</div>
+        <h2>&#128176; Finances &amp; budget</h2>
+        <p>Track expenses, set category budgets, and see exactly where your money is going.</p>
+        <div class="chat-example">
+          <div class="chat-label">Logging an expense</div>
+          <div class="chat-you">&ldquo;I just spent $47.50 at Coles on groceries.&rdquo;</div>
+          <div class="chat-vault">Vault: &ldquo;Logged &mdash; $47.50 groceries. You&rsquo;re at $163 of your $200 weekly grocery budget.&rdquo;</div>
+        </div>
+        <a href="../feature-pages/feature-viewer.html?p=budget" class="btn-outline" style="font-size:.85rem;margin-top:.5rem">Deep dive: Finances &amp; Budget &rarr;</a>
+      </section>
+
+      <hr class="divider" />
+
+      <section class="section" id="streaming">
+        <div class="section-tag">Work &amp; Creative</div>
+        <h2>&#127918; Streaming &amp; Twitch</h2>
+        <p>Manage your Twitch channel, VOD library, and streaming workflow &mdash; from pre-stream setup to post-stream archiving.</p>
+        <div class="feature-block">
+          <div class="feature-block-header"><div class="feature-block-icon">&#128252;</div><div class="feature-block-title">VOD Library</div></div>
+          <p>Every stream can be registered in The Vault&rsquo;s VOD library. It tracks whether each VOD has been downloaded, transcribed, clipped, edited, or uploaded.</p>
+          <a href="../feature-pages/feature-viewer.html?p=streaming" class="deep-link">Full streaming guide &rarr;</a>
+        </div>
+        <div class="callout info">
+          <div class="callout-icon">&#8505;</div>
+          <div class="callout-body">
+            <div class="callout-title">Live Twitch actions need your approval</div>
+            The Vault can read your channel info and help you plan &mdash; but always asks before updating anything live on Twitch.
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="social">
+        <div class="section-tag">Work &amp; Creative</div>
+        <h2>&#128227;</h2>
+        <h2>Social media</h2>
+        <p>Draft social media posts in your voice. The Vault never posts anything without you &mdash; you always publish yourself.</p>
+        <div class="chat-example">
+          <div class="chat-label">Drafting a post</div>
+          <div class="chat-you">&ldquo;Draft a Twitter post for my stream tonight at 8pm. Tone: hype.&rdquo;</div>
+          <div class="chat-vault">Vault: &ldquo;Draft: &lsquo;&#128308; LIVE TONIGHT at 8PM AEST! Come hang &mdash; it&rsquo;s going to be a vibe &#128156; twitch.tv/[channel]&rsquo; &mdash; Want to tweak anything?&rdquo;</div>
+        </div>
+        <a href="../feature-pages/feature-viewer.html?p=social_media" class="btn-outline" style="font-size:.85rem;margin-top:.5rem">Deep dive: Social Media &rarr;</a>
+      </section>
+
+      <section class="section" id="business">
+        <div class="section-tag">Work &amp; Creative</div>
+        <h2>&#128188; Grants &amp; business</h2>
+        <p>Track grant opportunities, manage your business plan, and log revenue milestones. Keep your business admin in one place.</p>
+        <div class="chat-example">
+          <div class="chat-label">Tracking a grant</div>
+          <div class="chat-you">&ldquo;I submitted the Creative Victoria grant today. Deadline was 14 May.&rdquo;</div>
+          <div class="chat-vault">Vault: &ldquo;Logged &mdash; Creative Victoria, submitted 14 May. I&rsquo;ll remind you to follow up in 6 weeks.&rdquo;</div>
+        </div>
+        <a href="../feature-pages/feature-viewer.html?p=grants_and_business" class="btn-outline" style="font-size:.85rem;margin-top:.5rem">Deep dive: Grants &amp; Business &rarr;</a>
+      </section>
+
+      <section class="section" id="creative">
+        <div class="section-tag">Work &amp; Creative</div>
+        <h2>&#127912; Design &amp; image creation</h2>
+        <p>Generate images with AI, write design briefs, and manage your brand assets. The Vault can even run an A/B comparison &mdash; generate two versions and have an AI pick the stronger one.</p>
+        <div class="chat-example">
+          <div class="chat-label">Generating an image</div>
+          <div class="chat-you">&ldquo;Generate: cosy purple gaming setup at night, neon lights, ferret on the desk, photorealistic.&rdquo;</div>
+          <div class="chat-vault">Vault: &ldquo;Generating&hellip; Here&rsquo;s your image. Saved to Images/output/. Want me to refine it or generate an alternative?&rdquo;</div>
+        </div>
+        <a href="../feature-pages/feature-viewer.html?p=design_and_creative" class="btn-outline" style="font-size:.85rem;margin-top:.5rem">Design &amp; Creative &rarr;</a>
+        <a href="../feature-pages/feature-viewer.html?p=image_creation" class="btn-outline" style="font-size:.85rem;margin-top:.5rem;margin-left:.5rem">Image Creation &rarr;</a>
+      </section>
+
+      <hr class="divider" />
+
+      <section class="section" id="approvals">
+        <div class="section-tag">Help</div>
+        <h2>&#128274; Approvals &amp; safety</h2>
+        <p>The Vault has a safety system that prevents it from doing anything irreversible without your explicit permission.</p>
+        <div class="feature-block">
+          <div class="feature-block-header"><div class="feature-block-icon">&#10003;</div><div class="feature-block-title">What The Vault can do without asking</div></div>
+          <p>Log health data, remember things, add calendar events, update shopping lists, track expenses, draft emails (not send), draft social posts (not publish).</p>
+        </div>
+        <div class="feature-block">
+          <div class="feature-block-header"><div class="feature-block-icon">&#128274;</div><div class="feature-block-title">What always needs your &ldquo;yes&rdquo; first</div></div>
+          <p>Sending email, posting to social media, making real-world financial records, deleting data, connecting to any external service.</p>
+        </div>
+        <div class="callout tip">
+          <div class="callout-icon">&#128161;</div>
+          <div class="callout-body">
+            <div class="callout-title">If The Vault asks &ldquo;Are you sure?&rdquo; &mdash; that&rsquo;s a good thing</div>
+            It means it&rsquo;s about to do something that affects the outside world. Read the confirmation and only approve if it looks right.
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="privacy">
+        <div class="section-tag">Help</div>
+        <h2>&#128274; Your privacy</h2>
+        <div class="feature-block">
+          <div class="feature-block-header"><div class="feature-block-icon">&#128187;</div><div class="feature-block-title">Stored only on your computer</div></div>
+          <p>All health data, journal entries, financial records, and personal notes are stored as files on your own machine. They never leave unless you explicitly export them.</p>
+        </div>
+        <div class="feature-block">
+          <div class="feature-block-header"><div class="feature-block-icon">&#129504;</div><div class="feature-block-title">What goes to AI services</div></div>
+          <p>When The Vault needs an AI model to process a request, only the specific text for that request is sent. Your health profile, journal, and financial data are never included in AI prompts.</p>
+        </div>
+        <div class="feature-block">
+          <div class="feature-block-header"><div class="feature-block-icon">&#128273;</div><div class="feature-block-title">API keys and credentials</div></div>
+          <p>Your API keys are stored in a local <code class="code-inline">.env</code> file on your computer. They are never committed to GitHub or shared anywhere.</p>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <section class="section" id="faq">
+        <div class="section-tag">Help</div>
+        <h2>&#10067; Frequently asked questions</h2>
+        <details><summary>Does The Vault need the internet to work?</summary><div><p>Most features &mdash; schedule, health, goals, wardrobe, shopping &mdash; work completely offline. Features that need internet: email, weather, web research, and AI image generation.</p></div></details>
+        <details><summary>Can The Vault read my private journal?</summary><div><p>No. Journal entries are stored locally and never passed to any AI by default. The Vault only reads your journal if you explicitly ask it to.</p></div></details>
+        <details><summary>What if The Vault makes a mistake?</summary><div><p>Just say so: &ldquo;That&rsquo;s wrong &mdash; I actually slept 8 hours, not 6.&rdquo; It will update the record. All data is stored in plain files you can edit directly if needed.</p></div></details>
+        <details><summary>Can The Vault post to my social media?</summary><div><p>No &mdash; it can only draft posts. You review and publish yourself. The Vault never posts on your behalf.</p></div></details>
+        <details><summary>How do I back up my data?</summary><div><p>All your data is in the The_Vault folder on your computer. Back it up like any important folder &mdash; copy to an external drive or cloud. Or say &ldquo;Run a backup&rdquo; for an automated timestamped archive.</p></div></details>
+        <details><summary>Can I use The Vault on my phone?</summary><div><p>Currently The Vault runs on your computer only. A mobile interface is on the roadmap.</p></div></details>
+        <details><summary>What&rsquo;s the difference between tasks and goals?</summary><div><p>A <strong>task</strong> is something to do today or this week &mdash; a single action. A <strong>goal</strong> is a bigger outcome you&rsquo;re working toward over weeks or months, broken into smaller tasks.</p></div></details>
+        <details><summary>Does The Vault connect to Google Calendar or Apple Calendar?</summary><div><p>Not automatically yet. The Vault has its own internal schedule. Calendar export/import integration is on the roadmap.</p></div></details>
+      </section>
+
+      <hr class="divider" />
+
+      <section class="section" id="glossary">
+        <div class="section-tag">Help</div>
+        <h2>&#128214; Glossary &mdash; plain English</h2>
+        <div class="glossary-row"><div class="glossary-term">API key</div><div class="glossary-def">A password-like code that lets The Vault talk to an external service. Stored privately on your computer.</div></div>
+        <div class="glossary-row"><div class="glossary-term">Approval gate</div><div class="glossary-def">A safety checkpoint. The Vault stops and asks &ldquo;Are you sure?&rdquo; before doing anything that affects the outside world.</div></div>
+        <div class="glossary-row"><div class="glossary-term">Dashboard</div><div class="glossary-def">The main screen when you start The Vault. Shows your daily overview and gives you a menu.</div></div>
+        <div class="glossary-row"><div class="glossary-term">Dry run</div><div class="glossary-def">A practice run &mdash; The Vault shows you what it would do without actually doing it.</div></div>
+        <div class="glossary-row"><div class="glossary-term">Feature page</div><div class="glossary-def">A detailed guide for a specific capability, like the period tracker or shopping assistant.</div></div>
+        <div class="glossary-row"><div class="glossary-term">Human Input</div><div class="glossary-def">A task that needs a human to complete it &mdash; like entering a password or making a phone call.</div></div>
+        <div class="glossary-row"><div class="glossary-term">Living schedule</div><div class="glossary-def">The Vault&rsquo;s smart calendar that reorganises tasks around your availability automatically.</div></div>
+        <div class="glossary-row"><div class="glossary-term">Mission</div><div class="glossary-def">A larger project The Vault is actively working on &mdash; something that takes multiple steps over multiple sessions.</div></div>
+        <div class="glossary-row"><div class="glossary-term">Persona</div><div class="glossary-def">One of the 20 specialist AI assistants inside The Vault. Each has a specific job.</div></div>
+        <div class="glossary-row"><div class="glossary-term">Prompt</div><div class="glossary-def">What you type to The Vault. Any message you send is a prompt.</div></div>
+        <div class="glossary-row"><div class="glossary-term">Routine</div><div class="glossary-def">A repeating step-by-step checklist that runs on a schedule, like a morning routine.</div></div>
+        <div class="glossary-row"><div class="glossary-term">VOD</div><div class="glossary-def">A recording of a past stream. The Vault can track and organise your VOD library.</div></div>
+        <div class="glossary-row" style="border-bottom:none"><div class="glossary-term">.env file</div><div class="glossary-def">A hidden config file on your computer that stores API keys privately. Never shared or uploaded.</div></div>
+      </section>
+
+    </main>
+  </div>
+
+  <script>
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('open');
+      document.getElementById('sidebarOverlay').classList.toggle('open');
+    }
+    const links = document.querySelectorAll('.sidebar-link');
+    const sections = [];
+    links.forEach(l => {
+      const id = l.getAttribute('href').replace('#', '');
+      const el = document.getElementById(id);
+      if (el) sections.push({ id, el, link: l });
+    });
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          links.forEach(l => l.classList.remove('active'));
+          const match = sections.find(s => s.id === e.target.id);
+          if (match) match.link.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    sections.forEach(s => io.observe(s.el));
+  </script>
+
+</body>
+</html>
