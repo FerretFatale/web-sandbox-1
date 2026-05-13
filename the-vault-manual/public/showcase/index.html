@@ -1,72 +1,371 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The Vault &middot; Feature Showcase</title>
+  <title>The Vault · Public Showcase</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet" />
   <style>
-    :root{--bg:#0f0a05;--surface:#1a1205;--surface-hover:#221808;--border:#2d1f08;--border-accent:#422e0e;--text:#f5f0e8;--text-muted:#b8a890;--text-subtle:#6b5a45;--accent:#f59e0b;--accent-hover:#d97706;--nav-h:60px;--sidebar-w:280px}
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    html{scroll-behavior:smooth}
-    body{background:var(--bg);color:var(--text);font-family:"Inter",system-ui,-apple-system,sans-serif;font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased}
-    .topnav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;background:rgba(15,10,5,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
-    .topnav-left{display:flex;align-items:center;gap:.65rem}
-    .logo-mark{width:28px;height:28px;background:var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;color:#0f0a05;font-family:"JetBrains Mono",monospace;flex-shrink:0}
-    .logo-text{font-size:.9rem;font-weight:600;color:var(--text);letter-spacing:-.01em}
-    .nav-divider{width:1px;height:20px;background:var(--border);margin:0 .25rem}
-    .topnav-link{color:var(--text-muted);text-decoration:none;font-size:.85rem;padding:.3rem .5rem;border-radius:6px;transition:color .12s}
-    .topnav-link:hover{color:var(--text)}
-    .topnav-link.active{color:var(--accent);font-weight:500}
-    .github-btn{display:flex;align-items:center;gap:.4rem;background:var(--surface);border:1px solid var(--border);color:var(--text-muted);text-decoration:none;font-size:.82rem;padding:.35rem .75rem;border-radius:8px;transition:all .12s}
-    .github-btn:hover{color:var(--text);border-color:var(--border-accent)}
-    .sidebar{position:fixed;top:var(--nav-h);left:0;bottom:0;width:var(--sidebar-w);overflow-y:auto;background:var(--surface);border-right:1px solid var(--border);padding:1.5rem 0;z-index:50}
-    .sidebar-group{margin-bottom:1.5rem}
-    .sidebar-group-label{padding:.25rem 1.25rem;font-size:.72rem;font-weight:600;color:var(--text-subtle);text-transform:uppercase;letter-spacing:.06em;display:block}
-    .sidebar-link{display:block;padding:.4rem 1.25rem;color:var(--text-muted);text-decoration:none;font-size:.87rem;transition:all .1s}
-    .sidebar-link:hover{color:var(--text);background:var(--surface-hover)}
-    .sidebar-link.active{color:var(--accent);font-weight:500;border-right:2px solid var(--accent)}
-    .main-content{margin-left:var(--sidebar-w);margin-top:var(--nav-h);padding:2rem 2.5rem 4rem}
-    .content-wrap{max-width:860px}
-    .hero-eyebrow{font-size:.78rem;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.75rem}
-    h1{font-size:2rem;font-weight:700;color:var(--text);margin-bottom:.75rem;line-height:1.2}
-    .hero-sub{color:var(--text-muted);max-width:680px;margin-bottom:1.5rem;font-size:1.02rem}
-    h2{font-size:1.3rem;font-weight:600;color:var(--text);margin:2.5rem 0 .75rem}
-    h3{font-size:1rem;font-weight:600;color:var(--text);margin:0 0 .5rem}
-    p{color:var(--text-muted);margin-bottom:.85rem}
-    a{color:var(--accent);text-decoration:none}
-    a:hover{text-decoration:underline}
-    .callout{border-left:4px solid var(--accent);background:rgba(245,158,11,.07);border-radius:0 8px 8px 0;padding:.75rem 1rem;margin:1rem 0;color:var(--text-muted);font-size:.92rem}
-    .section-divider{border:none;border-top:1px solid var(--border);margin:2.5rem 0}
-    .feature-block{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.5rem;margin-bottom:1.25rem}
-    .feature-header{display:flex;align-items:flex-start;gap:1rem;margin-bottom:1rem}
-    .feature-number{font-size:.78rem;font-weight:700;color:var(--accent);font-family:"JetBrains Mono",monospace;text-transform:uppercase;letter-spacing:.05em;white-space:nowrap;padding-top:.15rem}
-    .feature-name{font-size:1.15rem;font-weight:700;color:var(--text);line-height:1.2}
-    .feature-lead{color:var(--text-muted);font-size:.95rem;margin-bottom:1rem}
-    .feature-details{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-bottom:1rem}
-    .detail-item{background:var(--surface-hover);border:1px solid var(--border);border-radius:8px;padding:.6rem .85rem}
-    .detail-label{font-size:.72rem;font-weight:600;color:var(--text-subtle);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.2rem}
-    .detail-text{font-size:.88rem;color:var(--text-muted)}
-    .feature-link{font-size:.85rem;color:var(--accent);text-decoration:none;font-weight:500}
-    .feature-link:hover{text-decoration:underline}
-    .link-card{background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:10px;padding:1rem 1.25rem;display:flex;align-items:center;justify-content:space-between;text-decoration:none;transition:background .12s;margin-bottom:.75rem}
-    .link-card:hover{background:var(--surface-hover)}
-    .link-card-label{font-size:.95rem;font-weight:600;color:var(--text)}
-    .link-card-sub{font-size:.87rem;color:var(--text-muted);margin-top:.2rem}
-    .link-card-arrow{color:var(--accent);font-size:1.1rem}
-    .build-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin:1rem 0}
-    .build-card{background:var(--surface-hover);border:1px solid var(--border);border-radius:8px;padding:.7rem 1rem}
-    .build-card h4{font-size:.88rem;font-weight:600;color:var(--text-muted);margin:0 0 .3rem}
-    .build-card a{font-size:.82rem;color:var(--accent)}
-    .build-card p{font-size:.82rem;color:var(--text-subtle);margin:0}
-    .build-note{font-size:.85rem;color:var(--text-subtle);font-style:italic;margin:.75rem 0 0;padding:.6rem .9rem;background:var(--surface);border:1px solid var(--border);border-radius:8px}
-    footer{margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--border);color:var(--text-subtle);font-size:.85rem}
-    footer a{color:var(--text-muted)}
-    @media(max-width:860px){.sidebar{display:none}.main-content{margin-left:0;padding:1.5rem 1.25rem 3rem}.feature-details{grid-template-columns:1fr}.build-grid{grid-template-columns:1fr}}
+    :root {
+      --bg: #080918;
+      --surface: #11142a;
+      --surface-2: #171c39;
+      --surface-hover: #202857;
+      --border: #313d79;
+      --text: #eef2ff;
+      --muted: #bbc7eb;
+      --subtle: #879ad1;
+      --accent: #7ef9ff;
+      --accent-2: #ff8ed9;
+      --nav-h: 60px;
+      --sidebar-w: 280px
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    body {
+      background: radial-gradient(1200px 650px at 110% -10%, rgba(255, 142, 217, .2), transparent 62%), radial-gradient(1000px 600px at -12% -6%, rgba(126, 249, 255, .18), transparent 62%), var(--bg);
+      color: var(--text);
+      font-family: "Inter", system-ui, -apple-system, sans-serif;
+      font-size: 15px;
+      line-height: 1.65
+    }
+
+    .topnav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--nav-h);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.5rem;
+      background: rgba(8, 9, 24, .9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border)
+    }
+
+    .topnav-left {
+      display: flex;
+      align-items: center;
+      gap: .65rem
+    }
+
+    .logo-mark {
+      width: 28px;
+      height: 28px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #05101f;
+      font-size: .75rem;
+      font-weight: 700;
+      font-family: "JetBrains Mono", monospace
+    }
+
+    .logo-text {
+      font-size: .9rem;
+      font-weight: 600
+    }
+
+    .nav-divider {
+      width: 1px;
+      height: 20px;
+      background: var(--border);
+      margin: 0 .25rem
+    }
+
+    .topnav-link {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: .85rem;
+      padding: .3rem .5rem;
+      border-radius: 6px;
+      transition: .15s
+    }
+
+    .topnav-link:hover {
+      color: var(--text);
+      background: rgba(255, 255, 255, .05)
+    }
+
+    .topnav-link.active {
+      color: var(--accent);
+      font-weight: 600
+    }
+
+    .github-btn {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      text-decoration: none;
+      font-size: .82rem;
+      padding: .35rem .75rem;
+      border-radius: 8px
+    }
+
+    .github-btn:hover {
+      color: var(--text);
+      border-color: var(--accent)
+    }
+
+    .sidebar {
+      position: fixed;
+      top: var(--nav-h);
+      left: 0;
+      bottom: 0;
+      width: var(--sidebar-w);
+      overflow-y: auto;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      padding: 1.45rem 0
+    }
+
+    .sidebar-group {
+      margin-bottom: 1.4rem
+    }
+
+    .sidebar-group-label {
+      display: block;
+      padding: .25rem 1.25rem;
+      font-size: .72rem;
+      font-weight: 600;
+      color: var(--subtle);
+      text-transform: uppercase;
+      letter-spacing: .06em
+    }
+
+    .sidebar-link {
+      display: block;
+      padding: .42rem 1.25rem;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: .87rem
+    }
+
+    .sidebar-link:hover {
+      color: var(--text);
+      background: var(--surface-hover)
+    }
+
+    .sidebar-link.active {
+      color: var(--accent);
+      font-weight: 600;
+      border-right: 2px solid var(--accent)
+    }
+
+    .main-content {
+      margin-left: var(--sidebar-w);
+      margin-top: var(--nav-h);
+      padding: 2rem 2.5rem 4rem
+    }
+
+    .content-wrap {
+      max-width: 980px
+    }
+
+    .hero-eyebrow {
+      font-size: .78rem;
+      font-weight: 600;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      margin-bottom: .75rem
+    }
+
+    h1 {
+      font-size: 2.3rem;
+      line-height: 1.14;
+      margin-bottom: .9rem
+    }
+
+    .hero-sub {
+      font-size: 1.06rem;
+      color: var(--muted);
+      max-width: 780px
+    }
+
+    .gallery-callout {
+      margin-top: 1.2rem;
+      background: linear-gradient(135deg, rgba(126, 249, 255, .13), rgba(255, 142, 217, .12));
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem 1.1rem;
+      color: var(--muted)
+    }
+
+    h2 {
+      font-size: 1.34rem;
+      margin: 2.4rem 0 .7rem
+    }
+
+    p {
+      color: var(--muted);
+      margin-bottom: .85rem
+    }
+
+    .section-divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2.4rem 0
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: .9rem;
+      margin-top: 1rem
+    }
+
+    .gallery-card {
+      display: block;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1rem 1.05rem;
+      text-decoration: none;
+      transition: .16s
+    }
+
+    .gallery-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--accent)
+    }
+
+    .gallery-card .kicker {
+      font-size: .72rem;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      display: block;
+      margin-bottom: .45rem
+    }
+
+    .gallery-card h3 {
+      font-size: 1.05rem;
+      color: var(--text);
+      margin: 0 0 .4rem
+    }
+
+    .gallery-card p {
+      font-size: .9rem;
+      color: var(--muted);
+      margin: 0 0 .55rem
+    }
+
+    .gallery-card .meta {
+      font-size: .82rem;
+      color: var(--subtle)
+    }
+
+    .proof-block {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem 1.1rem;
+      margin-top: 1rem
+    }
+
+    .proof-list {
+      padding-left: 1.2rem;
+      color: var(--muted)
+    }
+
+    .proof-list li {
+      margin: .35rem 0
+    }
+
+    .resource-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: .75rem;
+      margin-top: 1rem
+    }
+
+    .resource-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: .85rem .95rem
+    }
+
+    .resource-card h3 {
+      font-size: .9rem;
+      margin-bottom: .35rem;
+      color: var(--accent)
+    }
+
+    .resource-card a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: .84rem;
+      display: block;
+      margin-top: .3rem
+    }
+
+    .resource-card a:hover {
+      color: var(--text);
+      text-decoration: underline
+    }
+
+    footer {
+      margin-top: 3rem;
+      border-top: 1px solid var(--border);
+      padding-top: 1.4rem;
+      color: var(--subtle);
+      font-size: .85rem
+    }
+
+    footer a {
+      color: var(--muted);
+      text-decoration: none
+    }
+
+    footer a:hover {
+      text-decoration: underline
+    }
+
+    @media(max-width:980px) {
+      .sidebar {
+        display: none
+      }
+
+      .main-content {
+        margin-left: 0;
+        padding: 1.4rem 1.2rem 3rem
+      }
+
+      .gallery-grid {
+        grid-template-columns: 1fr
+      }
+
+      .resource-grid {
+        grid-template-columns: 1fr
+      }
+    }
   </style>
 </head>
+
 <body>
   <nav class="topnav" aria-label="Manual navigation">
     <div class="topnav-left">
@@ -74,200 +373,141 @@
       <span class="logo-text">The Vault</span>
       <div class="nav-divider"></div>
       <a href="../../index.html" class="topnav-link">Manual Home</a>
-      <a href="../../developer/" class="topnav-link">Developer</a>
-      <a href="../../user/" class="topnav-link">User Guide</a>
+      <a href="../../developer/index.html" class="topnav-link">Developer</a>
+      <a href="../../user/index.html" class="topnav-link">User Guide</a>
       <a href="../index.html" class="topnav-link">Public</a>
       <a href="../../feature-pages/feature-viewer.html" class="topnav-link">Features</a>
     </div>
-    <a href="https://github.com/FerretFatale/KAOS" class="github-btn" target="_blank" rel="noopener noreferrer">GitHub &rarr;</a>
+    <a href="https://github.com/FerretFatale/KAOS" class="github-btn" target="_blank" rel="noopener noreferrer">GitHub
+      →</a>
   </nav>
+
   <aside class="sidebar" aria-label="Section navigation">
     <div class="sidebar-group">
-      <div class="sidebar-group-label">Feature Spotlights</div>
-      <a href="#vault-brain" class="sidebar-link active">Vault Brain</a>
-      <a href="#health-intelligence" class="sidebar-link">Health Intelligence</a>
-      <a href="#business-engine" class="sidebar-link">Business Engine</a>
-      <a href="#email-intelligence" class="sidebar-link">Email Intelligence</a>
-      <a href="#research-pipeline" class="sidebar-link">Research Pipeline</a>
-      <a href="#governance-engine" class="sidebar-link">Governance Engine</a>
+      <div class="sidebar-group-label">Showcase Gallery</div>
+      <a href="#hero" class="sidebar-link active">Intro</a>
+      <a href="#highlights" class="sidebar-link">Highlights</a>
+      <a href="#proof" class="sidebar-link">Proof Layer</a>
+      <a href="#resources" class="sidebar-link">Supporting Material</a>
     </div>
     <div class="sidebar-group">
-      <div class="sidebar-group-label">Deeper</div>
-      <a href="#case-studies" class="sidebar-link">Case Studies</a>
-      <a href="#behind-the-build" class="sidebar-link">Behind the Build</a>
-      <a href="../../feature-pages/feature-viewer.html" class="sidebar-link">All 44 Features &rarr;</a>
-      <a href="../index.html" class="sidebar-link">&larr; Public Guide</a>
+      <div class="sidebar-group-label">Next</div>
+      <a href="case-studies.html" class="sidebar-link">Case Studies →</a>
+      <a href="../index.html" class="sidebar-link">Public Guide →</a>
+      <a href="../../feature-pages/feature-viewer.html" class="sidebar-link">All Feature Pages →</a>
     </div>
   </aside>
+
   <main class="main-content">
     <div class="content-wrap">
-
-      <p class="hero-eyebrow">Feature Showcase</p>
-      <h1>The Vault in motion</h1>
-      <p class="hero-sub">These are not demos. They are real capabilities running on real data in a real operating system. Each spotlight pairs a signal, a mechanism, a boundary, and evidence.</p>
-      <div class="callout"><strong>How to read this page:</strong> each feature block shows what makes it impressive (Signal), how it actually works (Mechanism), what is intentionally constrained (Boundary), and where the proof is (Evidence). Display posture: demonstrating quality, not selling access.</div>
-
-      <hr class="section-divider" />
-
-      <section id="vault-brain">
-        <div class="feature-block">
-          <div class="feature-header">
-            <div class="feature-number">01 / Architecture</div>
-            <h2 class="feature-name" style="margin:0">Vault Brain Orchestration</h2>
-          </div>
-          <p class="feature-lead">Every request entering The Vault is routed through Vault Brain to the correct specialist domain. No domain bypasses the governance chain. No action is taken without a traceable decision path.</p>
-          <div class="feature-details">
-            <div class="detail-item"><div class="detail-label">Signal</div><div class="detail-text">44 specialised capabilities routed through a single governed orchestration layer</div></div>
-            <div class="detail-item"><div class="detail-label">Mechanism</div><div class="detail-text">vault_brain.py with omni_router, domain-specific tool registries, persona manifest</div></div>
-            <div class="detail-item"><div class="detail-label">Boundary</div><div class="detail-text">External writes require explicit human approval; dry-run-first patterns enforced at code level</div></div>
-            <div class="detail-item"><div class="detail-label">Evidence</div><div class="detail-text">KAOS_CONTRACTS.json, persona_manifest.json, Copilot_Tests/ suite (400+ deterministic tests)</div></div>
-          </div>
-          <a href="../../feature-pages/feature-viewer.html?p=vault-brain" class="feature-link">View in Feature Reference &rarr;</a>
-        </div>
-      </section>
-
-      <section id="health-intelligence">
-        <div class="feature-block">
-          <div class="feature-header">
-            <div class="feature-number">02 / Capabilities</div>
-            <h2 class="feature-name" style="margin:0">Health Intelligence</h2>
-          </div>
-          <p class="feature-lead">Oura Ring biometric data feeds directly into scheduling, task prioritisation, and routine adjustment. The system adapts to real physical state, not aspirational plans.</p>
-          <div class="feature-details">
-            <div class="detail-item"><div class="detail-label">Signal</div><div class="detail-text">Wearable biometrics drive scheduling and cognitive load decisions in real time</div></div>
-            <div class="detail-item"><div class="detail-label">Mechanism</div><div class="detail-text">Oura API integration, Health/ domain, readiness and sleep scoring fed to Vault Brain context</div></div>
-            <div class="detail-item"><div class="detail-label">Boundary</div><div class="detail-text">Health data stays local; never sent to external services; no AI diagnosis claims</div></div>
-            <div class="detail-item"><div class="detail-label">Evidence</div><div class="detail-text">Health/ folder, Routines/ integration, Oura connector code in Skills_Index.json</div></div>
-          </div>
-          <a href="../../feature-pages/feature-viewer.html?p=health-intelligence" class="feature-link">View in Feature Reference &rarr;</a>
-        </div>
-      </section>
-
-      <section id="business-engine">
-        <div class="feature-block">
-          <div class="feature-header">
-            <div class="feature-number">03 / Business + Creative</div>
-            <h2 class="feature-name" style="margin:0">Living Business Plan</h2>
-          </div>
-          <p class="feature-lead">The business plan is not a static document. It updates from real revenue data, grant tracker activity, and business operations logs. The document reflects what is actually happening, not what was written six months ago.</p>
-          <div class="feature-details">
-            <div class="detail-item"><div class="detail-label">Signal</div><div class="detail-text">Business plan self-updates from live operational data; always reflects current state</div></div>
-            <div class="detail-item"><div class="detail-label">Mechanism</div><div class="detail-text">Business/living_business_plan.py, revenue_framework.py, grant_tracker.py, business_ops.py</div></div>
-            <div class="detail-item"><div class="detail-label">Boundary</div><div class="detail-text">No external publishing without approval; financial projections are internal planning only</div></div>
-            <div class="detail-item"><div class="detail-label">Evidence</div><div class="detail-text">Business/ folder, brand_registry.json, business_milestone_tracker.py</div></div>
-          </div>
-          <a href="../../feature-pages/feature-viewer.html?p=business-planning" class="feature-link">View in Feature Reference &rarr;</a>
-        </div>
-      </section>
-
-      <section id="email-intelligence">
-        <div class="feature-block">
-          <div class="feature-header">
-            <div class="feature-number">04 / Capabilities</div>
-            <h2 class="feature-name" style="margin:0">Email Intelligence</h2>
-          </div>
-          <p class="feature-lead">Proton Bridge IMAP integration with pattern-based routing, contact allowlists, urgency classification, and hold-folder policy for uncertain clusters. Zero silent deletions, full auditability.</p>
-          <div class="feature-details">
-            <div class="detail-item"><div class="detail-label">Signal</div><div class="detail-text">Governed email triage with urgency dimensions, spam-cluster scanning, and protected sender lists</div></div>
-            <div class="detail-item"><div class="detail-label">Mechanism</div><div class="detail-text">Toolkit/email_intelligence.py, Toolkit/proton_bridge.py, contact_allowlist.json, IMAP local integration</div></div>
-            <div class="detail-item"><div class="detail-label">Boundary</div><div class="detail-text">Proton Bridge only; no cloud email APIs; hold-folder policy prevents irreversible deletes</div></div>
-            <div class="detail-item"><div class="detail-label">Evidence</div><div class="detail-text">Copilot_Tests/test_email_intelligence.py (457 tests passing), proton_bridge.py, hold-folder protocol</div></div>
-          </div>
-          <a href="../../feature-pages/feature-viewer.html?p=email-intelligence" class="feature-link">View in Feature Reference &rarr;</a>
-        </div>
-      </section>
-
-      <section id="research-pipeline">
-        <div class="feature-block">
-          <div class="feature-header">
-            <div class="feature-number">05 / Capabilities</div>
-            <h2 class="feature-name" style="margin:0">Research Pipeline</h2>
-          </div>
-          <p class="feature-lead">Web search feeds synthesis, which feeds the Inbox Router, which routes findings into goals, schedules, and planning surfaces. Research does not dead-end in a folder.</p>
-          <div class="feature-details">
-            <div class="detail-item"><div class="detail-label">Signal</div><div class="detail-text">Research automatically integrates into planning workflows rather than accumulating as passive notes</div></div>
-            <div class="detail-item"><div class="detail-label">Mechanism</div><div class="detail-text">Websearch/ domain, Research/ domain, synthesis routing through Inbox Router, Goals/ integration</div></div>
-            <div class="detail-item"><div class="detail-label">Boundary</div><div class="detail-text">Search is read-only; no automated posting or sharing; all outputs require human review before action</div></div>
-            <div class="detail-item"><div class="detail-label">Evidence</div><div class="detail-text">Websearch/ folder, Research/ folder, Inbox Router wiring in vault_brain.py</div></div>
-          </div>
-          <a href="../../feature-pages/feature-viewer.html?p=research" class="feature-link">View in Feature Reference &rarr;</a>
-        </div>
-      </section>
-
-      <section id="governance-engine">
-        <div class="feature-block">
-          <div class="feature-header">
-            <div class="feature-number">06 / Architecture</div>
-            <h2 class="feature-name" style="margin:0">Governance Engine</h2>
-          </div>
-          <p class="feature-lead">Gatekeeper Reviews, mission state tracking, KAOS_CONTRACTS.json, and KAOS_TEST_MATRIX.json form a governance layer that prevents rogue behaviour, off-mission execution, and unverified promotions from sandbox to production.</p>
-          <div class="feature-details">
-            <div class="detail-item"><div class="detail-label">Signal</div><div class="detail-text">Every major operation is governed, traceable, and reversible before commit</div></div>
-            <div class="detail-item"><div class="detail-label">Mechanism</div><div class="detail-text">.kaos_mission.json, KAOS_CONTRACTS.json, KAOS_TEST_MATRIX.json, Consensus_Engine/, gatekeeper_process_intelligence_log.md</div></div>
-            <div class="detail-item"><div class="detail-label">Boundary</div><div class="detail-text">KAOS is sandbox-only; The_Vault is production-authoritative; promotion requires test-pass evidence</div></div>
-            <div class="detail-item"><div class="detail-label">Evidence</div><div class="detail-text">docs/copilot-output/reference/30-gatekeeper-reviews/, docs/copilot-output/reference/40-intelligence-logs/, AGENTS.md</div></div>
-          </div>
-          <a href="../../developer/" class="feature-link">View Developer Manual &rarr;</a>
-        </div>
+      <section id="hero">
+        <p class="hero-eyebrow">Public Showcase</p>
+        <h1>A gallery of how The Vault performs when complexity is real</h1>
+        <p class="hero-sub">This showcase is built for evaluators, collaborators, and technically curious operators. It
+          highlights capabilities that are already implemented, governed, and evidence-backed.</p>
+        <div class="gallery-callout">Marketing, yes. Hype, no. Every card below ties signal to mechanism and points to
+          verifiable implementation surfaces.</div>
       </section>
 
       <hr class="section-divider" />
 
-      <section id="case-studies">
-        <h2>Case Studies</h2>
-        <p>Concrete examples connecting constraints, decisions, and verified outcomes from real operation of The Vault.</p>
-        <a href="case-studies.html" class="link-card">
-          <div>
-            <div class="link-card-label">Three Case Studies</div>
-            <div class="link-card-sub">Manual ecosystem repositioning, high-trust showcase design, execution discipline through re-gatekeeper closure</div>
-          </div>
-          <span class="link-card-arrow">&rarr;</span>
-        </a>
+      <section id="highlights">
+        <h2>Showcase Highlights</h2>
+        <div class="gallery-grid">
+          <a class="gallery-card" href="../../feature-pages/feature-viewer.html?p=vault_brain">
+            <span class="kicker">Architecture</span>
+            <h3>Vault Brain Orchestration</h3>
+            <p>A single governed command center that routes intent across the entire system without losing traceability.
+            </p>
+            <span class="meta">Route: Feature Viewer → vault_brain</span>
+          </a>
+
+          <a class="gallery-card" href="../../feature-pages/feature-viewer.html?p=health_overview">
+            <span class="kicker">Health Intelligence</span>
+            <h3>Context-aware daily planning</h3>
+            <p>Health signals influence scheduling and routine execution so plans align with real-world energy and
+              constraints.</p>
+            <span class="meta">Route: Feature Viewer → health_overview</span>
+          </a>
+
+          <a class="gallery-card" href="../../feature-pages/feature-viewer.html?p=business_portal">
+            <span class="kicker">Business + Operations</span>
+            <h3>Living business system</h3>
+            <p>Business planning, grants, social, and finance operate as connected flows rather than disconnected
+              documents.</p>
+            <span class="meta">Route: Feature Viewer → business_portal</span>
+          </a>
+
+          <a class="gallery-card" href="../../feature-pages/feature-viewer.html?p=email_intelligence">
+            <span class="kicker">Comms Infrastructure</span>
+            <h3>Email Intelligence under policy</h3>
+            <p>Sorting, triage, and safety controls are explicit, logged, and constrained by non-destructive rules.</p>
+            <span class="meta">Route: Feature Viewer → email_intelligence</span>
+          </a>
+
+          <a class="gallery-card" href="../../feature-pages/feature-viewer.html?p=research">
+            <span class="kicker">Research Pipeline</span>
+            <h3>From discovery to action</h3>
+            <p>Research outputs route into goals, schedule, and execution surfaces instead of dying in passive notes.
+            </p>
+            <span class="meta">Route: Feature Viewer → research</span>
+          </a>
+
+          <a class="gallery-card" href="../../feature-pages/feature-viewer.html?p=governance">
+            <span class="kicker">Governance Layer</span>
+            <h3>Control without paralysis</h3>
+            <p>Mission-state integrity, test gates, and review artifacts keep execution disciplined while still moving
+              fast.</p>
+            <span class="meta">Route: Feature Viewer → governance</span>
+          </a>
+        </div>
       </section>
 
-      <hr class="section-divider" />
+      <section id="proof">
+        <h2>Proof Layer</h2>
+        <div class="proof-block">
+          <ul class="proof-list">
+            <li>All highlight cards route to real feature pages in `docs/manual/feature-pages/` via
+              `feature-viewer.html?p=...`.</li>
+            <li>Governance references align to repository surfaces: mission state, contracts, test matrix, and
+              gatekeeper logs.</li>
+            <li>External writes remain approval-gated; dry-run-first patterns are used where applicable.</li>
+          </ul>
+        </div>
+      </section>
 
-      <section id="behind-the-build">
-        <h2>Behind the Build</h2>
-        <p>These pages document how this showcase itself was designed and validated. They are process artifacts, not feature demonstrations.</p>
-        <div class="build-note">These are internal planning documents published in the spirit of transparency: showing how a public display surface is governed and validated is itself evidence of engineering discipline.</div>
-        <div class="build-grid">
-          <div class="build-card">
-            <h4>Gallery Strategy</h4>
-            <p>Narrative architecture that turns curiosity into trust without hype</p>
-            <a href="gallery-strategy.html">Open &rarr;</a>
-          </div>
-          <div class="build-card">
-            <h4>Information Architecture</h4>
-            <p>Page topology and user movement map</p>
-            <a href="gallery-ia.html">Open &rarr;</a>
-          </div>
-          <div class="build-card">
-            <h4>Content Inventory</h4>
-            <p>Launch-readiness assessment and what was emerging</p>
-            <a href="gallery-content-inventory.html">Open &rarr;</a>
-          </div>
-          <div class="build-card">
-            <h4>Style Direction</h4>
-            <p>Visual and readability system for the showcase</p>
-            <a href="gallery-style-direction.html">Open &rarr;</a>
-          </div>
-          <div class="build-card">
-            <h4>Launch Checklist</h4>
-            <p>Quality gates used before public-facing publication</p>
-            <a href="gallery-launch-checklist.html">Open &rarr;</a>
-          </div>
+      <section id="resources">
+        <h2>Supporting Material</h2>
+        <div class="resource-grid">
+          <article class="resource-card">
+            <h3>Case Studies</h3>
+            <a href="case-studies.html">Open case-studies.html →</a>
+          </article>
+          <article class="resource-card">
+            <h3>Gallery Build Notes</h3>
+            <a href="gallery-strategy.html">Strategy →</a>
+            <a href="gallery-ia.html">Information Architecture →</a>
+            <a href="gallery-content-inventory.html">Content Inventory →</a>
+            <a href="gallery-style-direction.html">Style Direction →</a>
+            <a href="gallery-launch-checklist.html">Launch Checklist →</a>
+          </article>
+          <article class="resource-card">
+            <h3>Deep Technical Index</h3>
+            <a href="../../feature-pages/feature-viewer.html">All Feature Pages →</a>
+            <a href="../../developer/index.html">Developer Portal →</a>
+          </article>
         </div>
       </section>
 
       <footer>
-        <a href="../index.html">Public Guide</a> &middot;
-        <a href="../../feature-pages/feature-viewer.html">All 44 Features</a> &middot;
-        <a href="../../index.html">Manual Hub</a> &middot;
-        <a href="https://github.com/FerretFatale/KAOS" target="_blank" rel="noopener noreferrer">GitHub</a>
-        <br />Feature Showcase &mdash; last reviewed 2026-05-14.
+        <a href="../index.html">Public Guide</a> ·
+        <a href="case-studies.html">Case Studies</a> ·
+        <a href="../../feature-pages/feature-viewer.html">Feature Pages</a> ·
+        <a href="../../index.html">Manual Hub</a>
+        <br />Public Showcase updated 2026-05-14.
       </footer>
     </div>
   </main>
 </body>
+
 </html>

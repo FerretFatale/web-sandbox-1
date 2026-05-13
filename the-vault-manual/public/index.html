@@ -1,61 +1,371 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The Vault &middot; Public Guide</title>
+  <title>The Vault · Public Guide</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet" />
   <style>
-    :root{--bg:#0f0a05;--surface:#1a1205;--surface-hover:#221808;--border:#2d1f08;--border-accent:#422e0e;--text:#f5f0e8;--text-muted:#b8a890;--text-subtle:#6b5a45;--accent:#f59e0b;--accent-hover:#d97706;--nav-h:60px;--sidebar-w:280px}
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    html{scroll-behavior:smooth}
-    body{background:var(--bg);color:var(--text);font-family:"Inter",system-ui,-apple-system,sans-serif;font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased}
-    .topnav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;background:rgba(15,10,5,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
-    .topnav-left{display:flex;align-items:center;gap:.65rem}
-    .logo-mark{width:28px;height:28px;background:var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;color:#0f0a05;font-family:"JetBrains Mono",monospace;flex-shrink:0}
-    .logo-text{font-size:.9rem;font-weight:600;color:var(--text);letter-spacing:-.01em}
-    .nav-divider{width:1px;height:20px;background:var(--border);margin:0 .25rem}
-    .topnav-link{color:var(--text-muted);text-decoration:none;font-size:.85rem;padding:.3rem .5rem;border-radius:6px;transition:color .12s}
-    .topnav-link:hover{color:var(--text)}
-    .topnav-link.active{color:var(--accent);font-weight:500}
-    .github-btn{display:flex;align-items:center;gap:.4rem;background:var(--surface);border:1px solid var(--border);color:var(--text-muted);text-decoration:none;font-size:.82rem;padding:.35rem .75rem;border-radius:8px;transition:all .12s}
-    .github-btn:hover{color:var(--text);border-color:var(--border-accent)}
-    .sidebar{position:fixed;top:var(--nav-h);left:0;bottom:0;width:var(--sidebar-w);overflow-y:auto;background:var(--surface);border-right:1px solid var(--border);padding:1.5rem 0;z-index:50}
-    .sidebar-group{margin-bottom:1.5rem}
-    .sidebar-group-label{padding:.25rem 1.25rem;font-size:.72rem;font-weight:600;color:var(--text-subtle);text-transform:uppercase;letter-spacing:.06em;display:block}
-    .sidebar-link{display:block;padding:.4rem 1.25rem;color:var(--text-muted);text-decoration:none;font-size:.87rem;transition:all .1s}
-    .sidebar-link:hover{color:var(--text);background:var(--surface-hover)}
-    .sidebar-link.active{color:var(--accent);font-weight:500;border-right:2px solid var(--accent)}
-    .main-content{margin-left:var(--sidebar-w);margin-top:var(--nav-h);padding:2rem 2.5rem 4rem}
-    .content-wrap{max-width:860px}
-    .hero-eyebrow{font-size:.78rem;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.75rem}
-    h1{font-size:2rem;font-weight:700;color:var(--text);margin-bottom:.75rem;line-height:1.2}
-    .hero-sub{color:var(--text-muted);max-width:680px;margin-bottom:1.5rem;font-size:1.02rem}
-    .tag-row{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:2rem}
-    .tag{background:var(--surface);border:1px solid var(--border-accent);color:var(--text-muted);font-size:.8rem;padding:.3rem .75rem;border-radius:999px}
-    h2{font-size:1.3rem;font-weight:600;color:var(--text);margin:2rem 0 .6rem}
-    p{color:var(--text-muted);margin-bottom:.85rem}
-    ol,ul{color:var(--text-muted);padding-left:1.5rem;margin-bottom:.85rem}
-    li{margin-bottom:.35rem}
-    .section-divider{border:none;border-top:1px solid var(--border);margin:2.5rem 0}
-    .diagram-wrap{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1rem 1.25rem;margin:1rem 0 1.5rem}
-    .diagram-label{font-size:.78rem;font-weight:600;color:var(--text-subtle);text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:.75rem}
-    .diagram-caption{font-size:.85rem;color:var(--text-subtle);margin-top:.75rem;margin-bottom:0}
-    .kpi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;margin:1rem 0}
-    .kpi-card{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:10px;padding:.85rem 1rem}
-    .kpi-card strong{display:block;color:var(--accent);font-size:.92rem;margin-bottom:.35rem}
-    .kpi-card p{font-size:.87rem;margin-bottom:0}
-    .callout{border-left:4px solid var(--accent);background:rgba(245,158,11,.07);border-radius:0 8px 8px 0;padding:.75rem 1rem;margin:1rem 0;color:var(--text-muted);font-size:.92rem}
-    .feat-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin:1rem 0}
-    .feat-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:.85rem 1rem}
-    .feat-card h3{font-size:.95rem;font-weight:600;color:var(--text);margin:0 0 .4rem}
-    .feat-card ul{font-size:.87rem;margin-bottom:0}
-    footer{margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--border);color:var(--text-subtle);font-size:.85rem}
-    @media(max-width:860px){.sidebar{display:none}.main-content{margin-left:0;padding:1.5rem 1.25rem 3rem}.kpi-grid{grid-template-columns:1fr}.feat-grid{grid-template-columns:1fr}}
+    :root {
+      --bg: #070b16;
+      --surface: #0f1730;
+      --surface-2: #121d3d;
+      --surface-hover: #19274f;
+      --border: #2a3a6a;
+      --text: #edf3ff;
+      --muted: #b4c5e8;
+      --subtle: #7f96c7;
+      --accent: #6ee7ff;
+      --accent-2: #ff7ad9;
+      --nav-h: 60px;
+      --sidebar-w: 280px
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    body {
+      background: radial-gradient(900px 500px at 85% -5%, rgba(255, 122, 217, .18), transparent 60%), radial-gradient(900px 600px at -10% 0, rgba(110, 231, 255, .15), transparent 60%), var(--bg);
+      color: var(--text);
+      font-family: "Inter", system-ui, -apple-system, sans-serif;
+      font-size: 15px;
+      line-height: 1.65
+    }
+
+    .topnav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--nav-h);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.5rem;
+      background: rgba(7, 11, 22, .9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border)
+    }
+
+    .topnav-left {
+      display: flex;
+      align-items: center;
+      gap: .65rem
+    }
+
+    .logo-mark {
+      width: 28px;
+      height: 28px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #06101f;
+      font-size: .75rem;
+      font-weight: 700;
+      font-family: "JetBrains Mono", monospace
+    }
+
+    .logo-text {
+      font-size: .9rem;
+      font-weight: 600
+    }
+
+    .nav-divider {
+      width: 1px;
+      height: 20px;
+      background: var(--border);
+      margin: 0 .25rem
+    }
+
+    .topnav-link {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: .85rem;
+      padding: .3rem .5rem;
+      border-radius: 6px;
+      transition: .15s
+    }
+
+    .topnav-link:hover {
+      color: var(--text);
+      background: rgba(255, 255, 255, .04)
+    }
+
+    .topnav-link.active {
+      color: var(--accent);
+      font-weight: 600
+    }
+
+    .github-btn {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      text-decoration: none;
+      font-size: .82rem;
+      padding: .35rem .75rem;
+      border-radius: 8px
+    }
+
+    .github-btn:hover {
+      color: var(--text);
+      border-color: var(--accent)
+    }
+
+    .sidebar {
+      position: fixed;
+      top: var(--nav-h);
+      left: 0;
+      bottom: 0;
+      width: var(--sidebar-w);
+      overflow-y: auto;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      padding: 1.4rem 0
+    }
+
+    .sidebar-group {
+      margin-bottom: 1.4rem
+    }
+
+    .sidebar-group-label {
+      display: block;
+      padding: .25rem 1.25rem;
+      font-size: .72rem;
+      font-weight: 600;
+      color: var(--subtle);
+      text-transform: uppercase;
+      letter-spacing: .06em
+    }
+
+    .sidebar-link {
+      display: block;
+      padding: .42rem 1.25rem;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: .87rem
+    }
+
+    .sidebar-link:hover {
+      color: var(--text);
+      background: var(--surface-hover)
+    }
+
+    .sidebar-link.active {
+      color: var(--accent);
+      font-weight: 600;
+      border-right: 2px solid var(--accent)
+    }
+
+    .main-content {
+      margin-left: var(--sidebar-w);
+      margin-top: var(--nav-h);
+      padding: 2rem 2.5rem 4rem
+    }
+
+    .content-wrap {
+      max-width: 920px
+    }
+
+    .hero-eyebrow {
+      font-size: .78rem;
+      font-weight: 600;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      margin-bottom: .75rem
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      line-height: 1.15;
+      margin-bottom: .8rem
+    }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 760px
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .55rem;
+      margin: 1.3rem 0 2rem
+    }
+
+    .tag {
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      color: var(--muted);
+      font-size: .8rem;
+      padding: .3rem .75rem;
+      border-radius: 999px
+    }
+
+    h2 {
+      font-size: 1.35rem;
+      margin: 2.2rem 0 .65rem
+    }
+
+    p {
+      color: var(--muted);
+      margin-bottom: .85rem
+    }
+
+    .section-divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2.3rem 0
+    }
+
+    .diagram-wrap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1rem 1.25rem;
+      margin: 1rem 0 1.4rem
+    }
+
+    .diagram-label {
+      display: block;
+      font-size: .78rem;
+      font-weight: 600;
+      color: var(--subtle);
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      margin-bottom: .75rem
+    }
+
+    .diagram-caption {
+      font-size: .85rem;
+      color: var(--subtle);
+      margin-top: .75rem;
+      margin-bottom: 0
+    }
+
+    .proof-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: .75rem;
+      margin-top: 1rem
+    }
+
+    .proof-card {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: .9rem
+    }
+
+    .proof-card h3 {
+      font-size: .92rem;
+      margin-bottom: .4rem;
+      color: var(--accent)
+    }
+
+    .proof-card p {
+      font-size: .86rem;
+      margin-bottom: 0
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: .75rem;
+      margin-top: 1rem
+    }
+
+    .feature-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem
+    }
+
+    .feature-card h3 {
+      font-size: 1rem;
+      margin-bottom: .45rem
+    }
+
+    .feature-card p {
+      font-size: .9rem;
+      margin-bottom: 0
+    }
+
+    .cta-band {
+      margin-top: 1.2rem;
+      background: linear-gradient(135deg, rgba(110, 231, 255, .12), rgba(255, 122, 217, .12));
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem 1.1rem
+    }
+
+    .cta-band a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600
+    }
+
+    .cta-band a:hover {
+      text-decoration: underline
+    }
+
+    footer {
+      margin-top: 3rem;
+      border-top: 1px solid var(--border);
+      padding-top: 1.4rem;
+      color: var(--subtle);
+      font-size: .85rem
+    }
+
+    footer a {
+      color: var(--muted);
+      text-decoration: none
+    }
+
+    footer a:hover {
+      text-decoration: underline
+    }
+
+    @media(max-width:920px) {
+      .sidebar {
+        display: none
+      }
+
+      .main-content {
+        margin-left: 0;
+        padding: 1.4rem 1.2rem 3rem
+      }
+
+      .proof-grid {
+        grid-template-columns: 1fr
+      }
+
+      .feature-grid {
+        grid-template-columns: 1fr
+      }
+    }
   </style>
 </head>
+
 <body>
   <nav class="topnav" aria-label="Manual navigation">
     <div class="topnav-left">
@@ -63,140 +373,154 @@
       <span class="logo-text">The Vault</span>
       <div class="nav-divider"></div>
       <a href="../index.html" class="topnav-link">Manual Home</a>
-      <a href="../developer/" class="topnav-link">Developer</a>
-      <a href="../user/" class="topnav-link">User Guide</a>
+      <a href="../developer/index.html" class="topnav-link">Developer</a>
+      <a href="../user/index.html" class="topnav-link">User Guide</a>
       <span class="topnav-link active" aria-current="page">Public</span>
       <a href="../feature-pages/feature-viewer.html" class="topnav-link">Features</a>
     </div>
-    <a href="https://github.com/FerretFatale/KAOS" class="github-btn" target="_blank" rel="noopener noreferrer">GitHub &rarr;</a>
+    <a href="https://github.com/FerretFatale/KAOS" class="github-btn" target="_blank" rel="noopener noreferrer">GitHub
+      →</a>
   </nav>
+
   <aside class="sidebar" aria-label="Section navigation">
     <div class="sidebar-group">
-      <div class="sidebar-group-label">Public Guide</div>
+      <div class="sidebar-group-label">Public Story</div>
       <a href="#overview" class="sidebar-link active">Overview</a>
-      <a href="#how-it-works" class="sidebar-link">How it works</a>
-      <a href="#inbox-router" class="sidebar-link">Inbox Router</a>
-      <a href="#missing-feature" class="sidebar-link">Missing Feature Path</a>
-      <a href="#boundaries" class="sidebar-link">Private vs Public</a>
-      <a href="#status" class="sidebar-link">What&rsquo;s working now</a>
+      <a href="#architecture" class="sidebar-link">Architecture</a>
+      <a href="#capabilities" class="sidebar-link">Capabilities</a>
+      <a href="#governance" class="sidebar-link">Governance</a>
+      <a href="#proof" class="sidebar-link">Proof & Signals</a>
     </div>
     <div class="sidebar-group">
-      <div class="sidebar-group-label">Go deeper</div>
-      <a href="showcase/" class="sidebar-link">Feature Showcase &rarr;</a>
-      <a href="../feature-pages/feature-viewer.html" class="sidebar-link">All 44 Features &rarr;</a>
-      <a href="../index.html" class="sidebar-link">Manual Hub &rarr;</a>
+      <div class="sidebar-group-label">Explore</div>
+      <a href="showcase/index.html" class="sidebar-link">Public Showcase →</a>
+      <a href="showcase/case-studies.html" class="sidebar-link">Case Studies →</a>
+      <a href="../feature-pages/feature-viewer.html" class="sidebar-link">All Feature Pages →</a>
     </div>
   </aside>
+
   <main class="main-content">
     <div class="content-wrap">
       <section id="overview">
-        <p class="hero-eyebrow">Public Project Guide</p>
-        <h1>The Vault</h1>
-        <p class="hero-sub">This is a display page, not a sales page. The Vault is a local-first personal AI operating system that turns inspiration into structured execution through governance, routing intelligence, and human-controlled approval gates.</p>
+        <p class="hero-eyebrow">Public Guide</p>
+        <h1>The Vault is a personal AI operating system built for real execution</h1>
+        <p class="hero-sub">This is where strategy, operations, and daily life meet in one governed system. It doesn't
+          just generate ideas; it routes intent into structured work, protected decisions, and accountable outcomes.</p>
         <div class="tag-row">
-          <span class="tag">Showcase, not sales</span>
-          <span class="tag">Inspiration to execution</span>
-          <span class="tag">Human-governed automation</span>
-          <span class="tag">Missing feature build path</span>
+          <span class="tag">Local-first operation</span>
+          <span class="tag">Approval-gated high impact actions</span>
+          <span class="tag">Cross-domain orchestration</span>
+          <span class="tag">Evidence-backed capability</span>
         </div>
       </section>
+
       <hr class="section-divider" />
-      <section id="how-it-works">
-        <h2>From inspiration to aspiration to execution</h2>
-        <p>The Vault takes messy inspiration and converts it into governed execution. Aspiration shaping, planning, approval gates, and action sequencing are explicit &mdash; nothing silently jumps to irreversible behaviour.</p>
+
+      <section id="architecture">
+        <h2>Architecture in one view</h2>
+        <p>Inputs flow into Vault Brain, route through domain specialists, and pass governance checkpoints before
+          external impact. The point is not just intelligence — it is controlled intelligence.</p>
         <div class="diagram-wrap">
-          <span class="diagram-label">Diagram &mdash; Inspiration to Execution</span>
-          <svg viewBox="0 0 760 140" style="width:100%;height:auto;" role="img" aria-label="Flow from inspiration through planning to execution">
-            <defs><marker id="a1" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#f59e0b"/></marker></defs>
-            <rect x="8" y="30" width="128" height="60" rx="8" fill="#1a1e2a" stroke="#5a8ee8"/><text x="72" y="65" text-anchor="middle" font-size="13" fill="#8aaae8" font-family="Inter,sans-serif">Inspiration</text>
-            <rect x="152" y="30" width="128" height="60" rx="8" fill="#1a2a1e" stroke="#5ab87a"/><text x="216" y="65" text-anchor="middle" font-size="13" fill="#7ac87a" font-family="Inter,sans-serif">Aspiration</text>
-            <rect x="296" y="30" width="128" height="60" rx="8" fill="#2a1e08" stroke="#f59e0b"/><text x="360" y="65" text-anchor="middle" font-size="13" fill="#f5be6a" font-family="Inter,sans-serif">Planning</text>
-            <rect x="440" y="30" width="128" height="60" rx="8" fill="#1e1a2a" stroke="#9e7de0"/><text x="504" y="65" text-anchor="middle" font-size="13" fill="#b09ae0" font-family="Inter,sans-serif">Approval</text>
-            <rect x="584" y="30" width="168" height="60" rx="8" fill="#1a2a1e" stroke="#5ab87a"/><text x="668" y="65" text-anchor="middle" font-size="13" fill="#7ac87a" font-family="Inter,sans-serif">Execution</text>
-            <path d="M136 60h16m128 0h16m128 0h16m128 0h16" stroke="#f59e0b" stroke-width="2" marker-end="url(#a1)"/>
+          <span class="diagram-label">System Flow</span>
+          <svg viewBox="0 0 860 180" style="width:100%;height:auto;" role="img" aria-label="Vault architecture flow">
+            <defs>
+              <marker id="arr1" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                <polygon points="0 0,10 3.5,0 7" fill="#6ee7ff" />
+              </marker>
+            </defs>
+            <rect x="20" y="65" width="130" height="52" rx="10" fill="#121d3d" stroke="#4b66a8" />
+            <text x="85" y="96" text-anchor="middle" font-size="13" fill="#c9d8fb"
+              font-family="Inter, sans-serif">Inputs</text>
+            <rect x="190" y="52" width="150" height="78" rx="10" fill="#0f1730" stroke="#6ee7ff" />
+            <text x="265" y="87" text-anchor="middle" font-size="13" fill="#a9f1ff"
+              font-family="Inter, sans-serif">Vault Brain</text>
+            <text x="265" y="106" text-anchor="middle" font-size="11" fill="#7f96c7"
+              font-family="Inter, sans-serif">Routing + planning</text>
+            <rect x="380" y="20" width="150" height="40" rx="8" fill="#121d3d" stroke="#6b8cd4" />
+            <text x="455" y="45" text-anchor="middle" font-size="12" fill="#c7d7fb"
+              font-family="Inter, sans-serif">Health / Routines</text>
+            <rect x="380" y="70" width="150" height="40" rx="8" fill="#121d3d" stroke="#6b8cd4" />
+            <text x="455" y="95" text-anchor="middle" font-size="12" fill="#c7d7fb"
+              font-family="Inter, sans-serif">Business / Finance</text>
+            <rect x="380" y="120" width="150" height="40" rx="8" fill="#121d3d" stroke="#6b8cd4" />
+            <text x="455" y="145" text-anchor="middle" font-size="12" fill="#c7d7fb"
+              font-family="Inter, sans-serif">Research / Creative</text>
+            <rect x="570" y="52" width="130" height="78" rx="10" fill="#1b1431" stroke="#ff7ad9" />
+            <text x="635" y="87" text-anchor="middle" font-size="13" fill="#ffc5ee"
+              font-family="Inter, sans-serif">Governance</text>
+            <text x="635" y="106" text-anchor="middle" font-size="11" fill="#c9a9e6"
+              font-family="Inter, sans-serif">Checks + approvals</text>
+            <rect x="740" y="65" width="100" height="52" rx="10" fill="#0f1730" stroke="#6ee7ff" />
+            <text x="790" y="96" text-anchor="middle" font-size="13" fill="#a9f1ff"
+              font-family="Inter, sans-serif">Action</text>
+            <path d="M150 91h36m154 0h30m160-50h26m-26 50h26m-26 50h26m144-50h32" stroke="#6ee7ff" stroke-width="2"
+              fill="none" marker-end="url(#arr1)" />
           </svg>
-          <p class="diagram-caption">Architecture quality is visible in the flow: clear stages, clear gates, clear accountability.</p>
+          <p class="diagram-caption">Accurate at a systems level: intent enters once, decisions happen in controlled
+            layers, and high-impact actions stay gated.</p>
         </div>
       </section>
-      <section id="inbox-router">
-        <h2>The Inbox Router: where intelligence becomes useful</h2>
-        <p>The Inbox Router prevents idea loss and context fragmentation by routing each input to the right domain. A single input can cascade through goals, routines, budget, schedule, and research before execution.</p>
-        <div class="diagram-wrap">
-          <span class="diagram-label">Diagram &mdash; Inbox Router</span>
-          <svg viewBox="0 0 760 180" style="width:100%;height:auto;" role="img" aria-label="Inbox router routing to multiple domains">
-            <defs><marker id="a2" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#f59e0b"/></marker></defs>
-            <rect x="18" y="66" width="130" height="48" rx="8" fill="#2a1e08" stroke="#f59e0b"/><text x="83" y="95" text-anchor="middle" font-size="13" fill="#f5be6a" font-family="Inter,sans-serif">Inbox Router</text>
-            <rect x="206" y="10" width="140" height="40" rx="8" fill="#1a2a1e" stroke="#5ab87a"/><text x="276" y="35" text-anchor="middle" font-size="12" fill="#7ac87a" font-family="Inter,sans-serif">Aspirations</text>
-            <rect x="206" y="60" width="140" height="40" rx="8" fill="#1a2a1e" stroke="#5ab87a"/><text x="276" y="85" text-anchor="middle" font-size="12" fill="#7ac87a" font-family="Inter,sans-serif">Goals + Routines</text>
-            <rect x="206" y="110" width="140" height="40" rx="8" fill="#1a2a1e" stroke="#5ab87a"/><text x="276" y="135" text-anchor="middle" font-size="12" fill="#7ac87a" font-family="Inter,sans-serif">Schedule</text>
-            <rect x="400" y="10" width="140" height="40" rx="8" fill="#1a1e2a" stroke="#5a8ee8"/><text x="470" y="35" text-anchor="middle" font-size="12" fill="#8aaae8" font-family="Inter,sans-serif">Research</text>
-            <rect x="400" y="60" width="140" height="40" rx="8" fill="#1a1e2a" stroke="#5a8ee8"/><text x="470" y="85" text-anchor="middle" font-size="12" fill="#8aaae8" font-family="Inter,sans-serif">Business + Budget</text>
-            <rect x="400" y="110" width="140" height="40" rx="8" fill="#1a1e2a" stroke="#5a8ee8"/><text x="470" y="135" text-anchor="middle" font-size="12" fill="#8aaae8" font-family="Inter,sans-serif">Task Queue</text>
-            <rect x="594" y="60" width="130" height="40" rx="8" fill="#1e1a2a" stroke="#9e7de0"/><text x="659" y="85" text-anchor="middle" font-size="12" fill="#b09ae0" font-family="Inter,sans-serif">Review Gate</text>
-            <path d="M148 90h58m-58-60h58m-58 120h58m186-60h14m-14-60h14m-14 120h14m150-60h36" stroke="#f59e0b" stroke-width="2" marker-end="url(#a2)"/>
-          </svg>
-          <p class="diagram-caption">The Inbox Router is practical brilliance: it converts chaotic input into governed motion.</p>
+
+      <section id="capabilities">
+        <h2>What this actually enables</h2>
+        <div class="feature-grid">
+          <article class="feature-card">
+            <h3>Health-aware planning</h3>
+            <p>Schedules and routines are informed by live wellbeing context, not static to-do lists.</p>
+          </article>
+          <article class="feature-card">
+            <h3>Operational inbox routing</h3>
+            <p>Raw inputs are routed to the right domain, then converted into concrete next actions.</p>
+          </article>
+          <article class="feature-card">
+            <h3>Business + creative integration</h3>
+            <p>Revenue, grants, content, and creative pipelines operate as one connected system.</p>
+          </article>
+          <article class="feature-card">
+            <h3>Transparent capability growth</h3>
+            <p>Missing features follow a design/test/approval path before they become live behavior.</p>
+          </article>
         </div>
       </section>
-      <section id="missing-feature">
-        <h2>Missing feature pathway</h2>
-        <p>The request "add Redbubble support" demonstrates how The Vault handles missing capabilities honestly. No fake feature claims, no silent side effects, and no account writes without explicit approval.</p>
-        <ol>
-          <li>Capability gap is confirmed and bounded.</li>
-          <li>Proposal records risk, scope, and assumptions.</li>
-          <li>Read-only-first plan and tests are created.</li>
-          <li>Dry-run behaviour is validated before action.</li>
-          <li>Human approval is required for external writes.</li>
-          <li>Reusable workflow intelligence is documented.</li>
-        </ol>
-        <div class="diagram-wrap">
-          <span class="diagram-label">Diagram &mdash; Missing Feature Workflow</span>
-          <svg viewBox="0 0 760 140" style="width:100%;height:auto;" role="img" aria-label="Missing feature request through design and approval to capability">
-            <defs><marker id="a3" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#f59e0b"/></marker></defs>
-            <rect x="8" y="30" width="120" height="60" rx="8" fill="#1a1e2a" stroke="#5a8ee8"/><text x="68" y="65" text-anchor="middle" font-size="12" fill="#8aaae8" font-family="Inter,sans-serif">Request</text>
-            <rect x="144" y="30" width="120" height="60" rx="8" fill="#1a2a1e" stroke="#5ab87a"/><text x="204" y="65" text-anchor="middle" font-size="12" fill="#7ac87a" font-family="Inter,sans-serif">Gap Check</text>
-            <rect x="280" y="30" width="140" height="60" rx="8" fill="#2a1e08" stroke="#f59e0b"/><text x="350" y="65" text-anchor="middle" font-size="12" fill="#f5be6a" font-family="Inter,sans-serif">Design + Tests</text>
-            <rect x="436" y="30" width="120" height="60" rx="8" fill="#1e1a2a" stroke="#9e7de0"/><text x="496" y="65" text-anchor="middle" font-size="12" fill="#b09ae0" font-family="Inter,sans-serif">Dry Run</text>
-            <rect x="572" y="30" width="180" height="60" rx="8" fill="#1a2a1e" stroke="#5ab87a"/><text x="662" y="65" text-anchor="middle" font-size="12" fill="#7ac87a" font-family="Inter,sans-serif">Human Approval</text>
-            <path d="M128 60h16m128 0h16m156 0h16m120 0h16" stroke="#f59e0b" stroke-width="2" marker-end="url(#a3)"/>
-          </svg>
-          <p class="diagram-caption">Brilliance without recklessness: capability growth is controlled and auditable.</p>
+
+      <section id="governance">
+        <h2>Governance is a core feature, not an afterthought</h2>
+        <p>The Vault uses explicit mission-state tracking, deterministic tests, and bounded tool execution so execution
+          quality does not depend on luck, mood, or memory. High-impact external actions remain human-controlled by
+          design.</p>
+        <div class="cta-band">
+          See the live capability gallery in <a href="showcase/index.html">Public Showcase</a>, then inspect
+          implementation-level references in <a href="../feature-pages/feature-viewer.html">Feature Pages</a>.
         </div>
       </section>
-      <section id="boundaries">
-        <h2>Private vs public boundary</h2>
-        <p>The Vault keeps sensitive operations local and publishes only curated architecture and capability narratives. This page is public-safe: transparent enough to evaluate quality, disciplined enough to protect private context.</p>
-        <div class="kpi-grid">
-          <div class="kpi-card"><strong>Private</strong><p>Credentials, personal records, sensitive operational state</p></div>
-          <div class="kpi-card"><strong>Public</strong><p>Architecture narrative, capability boundaries, approved demonstrations</p></div>
-          <div class="kpi-card"><strong>Control</strong><p>Human approval mandatory for all high-impact actions</p></div>
-        </div>
-        <div class="callout">The project is being displayed, not sold. The value is in the engineering discipline and the governed intelligence model.</div>
-      </section>
-      <section id="status">
-        <h2>Working reliably now and evolving next</h2>
-        <div class="feat-grid">
-          <div class="feat-card">
-            <h3>Working reliably today</h3>
-            <ul>
-              <li>Inspiration-to-aspiration execution pathways</li>
-              <li>Cross-domain planning and prioritisation</li>
-              <li>Health-aware context and routine alignment</li>
-              <li>Budget and business-planning integration</li>
-            </ul>
-          </div>
-          <div class="feat-card">
-            <h3>Developing next</h3>
-            <ul>
-              <li>Broader external integration through approval-first governance</li>
-              <li>Richer public showcase evidence and guided demos</li>
-              <li>Expanded onboarding pathways for new operators</li>
-            </ul>
-          </div>
+
+      <section id="proof">
+        <h2>Proof points</h2>
+        <div class="proof-grid">
+          <article class="proof-card">
+            <h3>Architecture</h3>
+            <p>Central orchestration through Vault Brain with domain-specialist delegation and fallback controls.</p>
+          </article>
+          <article class="proof-card">
+            <h3>Safety</h3>
+            <p>Approval gates, dry-run-first patterns, and no-silent-deletion policy on critical pathways.</p>
+          </article>
+          <article class="proof-card">
+            <h3>Traceability</h3>
+            <p>Gatekeeper review artifacts, intelligence logs, and test-backed workflow codification.</p>
+          </article>
         </div>
       </section>
-      <footer>The Vault Public Guide is a transparent showcase of architecture, governance, and execution quality. It is intentionally non-sales: a display of what exists and how it works. Last reviewed: 2026-05-14.</footer>
+
+      <footer>
+        <a href="showcase/index.html">Public Showcase</a> ·
+        <a href="showcase/case-studies.html">Case Studies</a> ·
+        <a href="../feature-pages/feature-viewer.html">Feature Pages</a> ·
+        <a href="../index.html">Manual Hub</a>
+        <br />Public Guide updated 2026-05-14.
+      </footer>
     </div>
   </main>
 </body>
+
 </html>
