@@ -1,63 +1,161 @@
 # Feature: Maintenance
 
 ## 1) Purpose and outcomes
-- Sustain system health through scheduled checks, backlog hygiene, and safe corrective actions.
-- Success requires deterministic execution, explicit blocker reporting, and auditable state transitions.
-- This page is for both operator usage and maintenance governance.
 
-## 2) User-facing workflow
-1. User/operator submits an objective tied to this feature.
-2. Vault_Brain or TaskMaster_Brain routes the request to the mapped capability lane.
-3. Preconditions (authority, approvals, credentials, maintenance gates) are checked before mutation.
-4. Output is returned with status, evidence, and required next actions.
-5. Unmet dependencies are written to human-input/backlog surfaces.
+The Vault entered maintenance mode after Phase 10 (RC tag `vault-rc-20260501`). In maintenance mode, bug fixes and hygiene commits are preferred over new features. New features require a proposal in `Human_Input_Proposal_Queue.txt`. Architecture files require documented rationale and tests before any change.
 
-## 3) Backend flow (stage-by-stage)
-1. Intake normalization and intent classification.
-2. Policy and risk gating (including approval-required checks).
-3. Tool/function execution against this feature's mapped API surface.
-4. Persistence to canonical stores (json/jsonl/markdown/log/audit surfaces as applicable).
-5. Post-run verification and optional gatekeeper capture.
+## 2) Maintenance cadence
 
-## 4) Frontend flow (stage-by-stage)
-1. User prompt enters CLI/VS Code/Copilot interface.
-2. In-progress state presents objective and blocker status.
-3. Completion state includes changed artifacts and validation summary.
-4. Failure state includes deterministic recovery path.
-5. Escalation state routes unresolved requirements to Human_Input/backlog.
+### Daily (before any Copilot session)
 
-## 5) Function and tool surface
-- `api_start_backlog_scheduler`
-- `api_stop_backlog_scheduler`
-- `api_backlog_scheduler_status`
-- `api_run_audit_cadence_check`
+```bash
+git status --short
+git --no-pager log --oneline -5
+python -m pytest Copilot_Tests/test_backlog_lint.py -q
+```
 
-## 6) Configuration and preconditions
-- Default model/tool routing follows omni-router and model governance when no explicit model is provided.
-- Runtime mutation requires approval when external write, remote push, or credential mutation is involved.
-- Missing prerequisites must fail closed with explicit blocker output.
+Also review:
+- `Human_Input.txt` — any new blockers?
+- `KAOS OS ACTIVE BACKLOG.txt` — any new tasks?
 
-## 7) Data model, storage, and sorting
-- Inputs are normalized into structured payloads where possible.
-- Outputs are written to stable storage and governance surfaces according to risk class.
-- Sensitive fields are redacted from publish-facing artifacts.
+### Weekly
 
-## 8) Governance, risks, and controls
-- Authority and maintenance-mode controls are mandatory.
-- High-risk actions require explicit human approval.
-- Policy-impacting changes require Gatekeeper review evidence.
+```bash
+# Full test suite (excluding live service, local-only, and slow tests)
+python -m pytest Copilot_Tests/ -m "not live_service and not local_only and not private_data and not slow" -q
 
-## 9) Testing and verification
-- Use deterministic tests for behavior contracts and safety constraints.
-- Prefer dry-run pathways before irreversible actions.
-- For front-facing outputs, run quality gates and post-publish visual QA.
+# Vault snapshot and state summary
+python Toolkit/vault_snapshot_generator.py
+python Toolkit/vault_state_summary.py
 
-## 10) Dependencies and integrations
-- `Toolkit/run_maintenance_health_check.py`
-- `Toolkit/backlog_maintenance.py`
-- `Toolkit/audit_cadence_monitor.py`
+# Registry and report coverage refresh
+python Toolkit/report_coverage_registry_manager.py --refresh --validate --write-summary
 
-## 11) Change log and manual maintenance
-- Last reviewed: 2026-05-13
-- Update triggers: function signature changes, routing changes, policy changes, storage contract changes.
-- If this feature changes, queue a manual update entry in `docs/manual/manual_change_log.jsonl`.
+# Output lifecycle audit
+python Toolkit/copilot_output_lifecycle_audit.py --write-summary
+
+# Root inventory governance
+python Toolkit/root_inventory_governance.py --lint --write-summary
+
+# Verify manual is current
+python Toolkit/manual_publisher.py --verify --target ferretfatale
+
+# Check KAOS mirror
+# cd ../KAOS && git log --oneline -5
+```
+
+## 3) Maintenance definitions
+
+| Work type | Rule |
+|---|---|
+| Bugfix | Allowed freely. Small, test-backed. |
+| Hygiene | Allowed. Import cleanup, dead-code removal (with evidence). |
+| Refactor | Allowed when architecture-aware and test-backed. |
+| New feature | Blocked unless proposal in `Human_Input_Proposal_Queue.txt` is approved. |
+| Architecture file changes | Require documented rationale + tests before any edit. |
+
+## 4) Architecture files (high-risk, protected)
+
+Changes to these files require Gatekeeper review evidence and test coverage:
+
+```
+vault_brain.py
+TaskMaster_Brain.py
+vault_config.py
+Toolkit/models_manager.py
+Toolkit/omni_router.py
+Toolkit/registry_sync.py
+persona_manifest.json
+Custom_Tools_Registry.py
+AGENTS.md
+.github/copilot-instructions.md
+```
+
+Do NOT change the mission-state field shape, persona/model routing, or routing fallback behavior without updating all downstream consumers and tests in the same commit.
+
+## 5) Maintenance health check: `Toolkit/run_maintenance_health_check.py`
+
+```bash
+python Toolkit/run_maintenance_health_check.py
+```
+
+Checks:
+- Python syntax validity across all `.py` files
+- Import chain completeness
+- Mission state read/write round-trip
+- Registry sync integrity
+- Backlog lint pass
+
+## 6) Audit cadence monitor: `Toolkit/audit_cadence_monitor.py`
+
+Tracks whether all scheduled audit workflows have run within their required cadence window.
+
+```python
+from Toolkit.audit_cadence_monitor import api_run_audit_cadence_check
+
+result = api_run_audit_cadence_check()
+# {"status": "success", "data": {"overdue": [str, ...], "on_schedule": [str, ...]}}
+```
+
+Overdue audit types are also written to `AUDITS_BACKLOG.txt`.
+
+## 7) Backlog scheduler: `Toolkit/backlog_maintenance.py`
+
+```python
+from Toolkit.backlog_maintenance import api_start_backlog_scheduler, api_stop_backlog_scheduler, api_backlog_scheduler_status
+
+# Start the background scheduler (runs audit cadence + backlog hygiene periodically)
+result = api_start_backlog_scheduler()
+# {"status": "success", "data": {"scheduler_id": str, "next_run": str}}
+
+# Check status
+result = api_backlog_scheduler_status()
+# {"status": "success", "data": {"running": bool, "last_run": str, "next_run": str}}
+
+# Stop
+result = api_stop_backlog_scheduler()
+```
+
+## 8) Pre-commit requirements
+
+Before every commit touching backlog or checklist files:
+
+```bash
+python -m pytest Copilot_Tests/test_backlog_lint.py -q
+```
+
+This lint test verifies:
+- All backlog task blocks have required fields (48-dash separator, TASK:, STATUS:, GOAL:, STEPS:)
+- No forbidden phrasing in backlog items
+- ACTIVE TASK INDEX count matches actual unchecked task count
+
+## 9) Baseline reference
+
+| Item | Value |
+|---|---|
+| Maintenance baseline commit | `f59e7e1` — vault-rc-20260501 |
+| Phase 11 entry commit | `a91ea15` |
+| Tag | `vault-rc-20260501` |
+
+Use `git log --oneline -1` at session start to verify current HEAD before any session.
+
+## 10) Copilot output lifecycle
+
+Every file in `docs/copilot-output/{reference,audits,action-packets,completion-reports,archive}/` must be tracked in `docs/copilot-output/copilot_output_registry.json`. Registry entries require meaningful `intent_class` and `owner` fields, not path-only placeholders.
+
+## 11) Dependencies and integrations
+
+- `Toolkit/run_maintenance_health_check.py` — system health sweep
+- `Toolkit/backlog_maintenance.py` — scheduled backlog hygiene
+- `Toolkit/audit_cadence_monitor.py` — cadence tracking
+- `Toolkit/vault_snapshot_generator.py` — weekly vault snapshots
+- `Toolkit/manual_publisher.py` — manual currency verification
+- `Copilot_Tests/test_backlog_lint.py` — pre-commit backlog lint
+- `docs/copilot-output/reference/00-authority/maintenance_mode_operating_rules.md` — full operating rules
+- `Human_Input_Proposal_Queue.txt` — new feature proposal surface
+
+## 12) Change log and manual maintenance
+
+- Last reviewed: 2026-05-14
+- Source of truth: `docs/copilot-output/reference/00-authority/maintenance_mode_operating_rules.md`
+- Update triggers: cadence schedule changed, new maintenance command added, health check tests changed, architecture file list changed.

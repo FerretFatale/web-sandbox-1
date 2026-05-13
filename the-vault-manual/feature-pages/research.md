@@ -1,64 +1,162 @@
 # Feature: Research
 
 ## 1) Purpose and outcomes
-- Create rigorous, source-backed research outputs with depth controls and quality validation.
-- Success requires deterministic execution, explicit blocker reporting, and auditable state transitions.
-- This page is for both operator usage and maintenance governance.
 
-## 2) User-facing workflow
-1. User/operator submits an objective tied to this feature.
-2. Vault_Brain or TaskMaster_Brain routes the request to the mapped capability lane.
-3. Preconditions (authority, approvals, credentials, maintenance gates) are checked before mutation.
-4. Output is returned with status, evidence, and required next actions.
-5. Unmet dependencies are written to human-input/backlog surfaces.
+The Vault research system has two distinct layers: a personal research project manager (`Internal_Memory_Retrieval/research_manager.py`) for storing structured notes on topics, and a specialized actuarial data source registry (`Research/actuarial_tables.py`) for validated data table sources. Web research is routed through the Websearch module.
 
-## 3) Backend flow (stage-by-stage)
-1. Intake normalization and intent classification.
-2. Policy and risk gating (including approval-required checks).
-3. Tool/function execution against this feature's mapped API surface.
-4. Persistence to canonical stores (json/jsonl/markdown/log/audit surfaces as applicable).
-5. Post-run verification and optional gatekeeper capture.
+## 2) Personal research projects: `research_manager.py`
 
-## 4) Frontend flow (stage-by-stage)
-1. User prompt enters CLI/VS Code/Copilot interface.
-2. In-progress state presents objective and blocker status.
-3. Completion state includes changed artifacts and validation summary.
-4. Failure state includes deterministic recovery path.
-5. Escalation state routes unresolved requirements to Human_Input/backlog.
+Lightweight project store for ongoing personal research. Each project is a JSON file in `Personal_and_Health/Research_Projects/`.
 
-## 5) Function and tool surface
-- `api_start_research_session`
-- `api_create_research_task`
-- `api_delegate_web_research`
-- `api_validate_deep_research_report`
+### `api_create_research_project(project_title: str, initial_content: str) -> dict`
 
-## 6) Configuration and preconditions
-- Default model/tool routing follows omni-router and model governance when no explicit model is provided.
-- Runtime mutation requires approval when external write, remote push, or credential mutation is involved.
-- Missing prerequisites must fail closed with explicit blocker output.
+Creates a new research project with an initial note.
 
-## 7) Data model, storage, and sorting
-- Inputs are normalized into structured payloads where possible.
-- Outputs are written to stable storage and governance surfaces according to risk class.
-- Sensitive fields are redacted from publish-facing artifacts.
+```python
+from Internal_Memory_Retrieval.research_manager import (
+    api_create_research_project,
+    api_add_research_note,
+)
 
-## 8) Governance, risks, and controls
-- Authority and maintenance-mode controls are mandatory.
-- High-risk actions require explicit human approval.
-- Policy-impacting changes require Gatekeeper review evidence.
+# Create a new project
+result = api_create_research_project(
+    project_title="NDIS Funding Categories",
+    initial_content="Initial research on support categories and eligibility..."
+)
+# {"status": "success", "data": {"message": "Research project 'NDIS Funding Categories' created successfully."}}
+# {"status": "error", "message": "Research project '...' already exists."}
+```
 
-## 9) Testing and verification
-- Use deterministic tests for behavior contracts and safety constraints.
-- Prefer dry-run pathways before irreversible actions.
-- For front-facing outputs, run quality gates and post-publish visual QA.
+**Storage:** `<vault_root>/Personal_and_Health/Research_Projects/<title>.json`
 
-## 10) Dependencies and integrations
-- `Toolkit/research_manager.py`
-- `Toolkit/research_workflow.py`
-- `Toolkit/web_research_agent.py`
-- `Toolkit/research_contracts.py`
+**Project file format:**
+```json
+{
+  "title": "NDIS Funding Categories",
+  "created_at": "2026-05-14T12:00:00",
+  "notes": [
+    {"timestamp": "2026-05-14T12:00:00", "content": "Initial research..."}
+  ]
+}
+```
 
-## 11) Change log and manual maintenance
-- Last reviewed: 2026-05-13
-- Update triggers: function signature changes, routing changes, policy changes, storage contract changes.
-- If this feature changes, queue a manual update entry in `docs/manual/manual_change_log.jsonl`.
+### `api_add_research_note(project_title: str, note_content: str) -> dict`
+
+Appends a timestamped note to an existing project.
+
+```python
+result = api_add_research_note(
+    project_title="NDIS Funding Categories",
+    note_content="Capacity Building supports include therapy, skill development, and support coordination."
+)
+# {"status": "success", "data": {"message": "Note added to research project '...' successfully."}}
+# {"status": "error", "message": "Research project '...' does not exist."}
+```
+
+## 3) Actuarial data registry: `Research/actuarial_tables.py`
+
+A validated registry of approved statistical data sources for financial modelling, life expectancy, and actuarial calculations. Sources must be registered and approved before use.
+
+### `api_list_actuarial_table_sources() -> dict`
+
+```python
+from Research.actuarial_tables import api_list_actuarial_table_sources
+
+result = api_list_actuarial_table_sources()
+# {"status": "success", "data": {"sources": [{"id": str, "name": str, "status": str}, ...]}}
+```
+
+### `api_get_actuarial_tables_status() -> dict`
+
+Returns the current registry state: number of approved sources, pending proposals, last updated.
+
+### `api_query_actuarial_table_stub(source_id: str, ...) -> dict`
+
+Queries a stub data representation for a registered source. Used for testing and dry-run calculations.
+
+```python
+from Research.actuarial_tables import api_query_actuarial_table_stub
+
+result = api_query_actuarial_table_stub(
+    source_id="abs_life_tables_2022",
+    age=35,
+    sex="female",
+)
+# {"status": "success", "data": {"life_expectancy": float, "source": str}}
+```
+
+### `api_list_approved_actuarial_sources() -> dict`
+
+Returns only sources with `"status": "approved"`. Use this before any actuarial calculation to confirm source availability.
+
+### `api_get_actuarial_source(source_id: str) -> dict`
+
+Fetch full metadata for a specific source.
+
+### `api_validate_actuarial_source_registry() -> dict`
+
+Checks registry integrity: all required fields present, no duplicate IDs, no approved sources with missing metadata.
+
+### `api_propose_actuarial_source(source_id: str, ...) -> dict`
+
+Adds a new source to the registry in `"pending_review"` state. Requires human approval in `Human_Input.txt` before it becomes `"approved"`.
+
+### `api_query_actuarial_table_fixture(source_id: str, ...) -> dict`
+
+Queries fixture data (test data) for a source. Used in tests without live API calls.
+
+## 4) Websearch module
+
+Web research is handled by `Websearch/` rather than this module:
+
+```
+Websearch/
+  web_search.py           ← general web search
+  deep_research.py        ← multi-source deep research with synthesis
+  research_validator.py   ← source credibility and claim validation
+```
+
+Websearch APIs follow the same `{"status": "success"|"error", "data": {...}}` shape. All web research calls route through omni_router (R1 rule applies).
+
+## 5) Research storage layout
+
+```
+Personal_and_Health/
+  Research_Projects/      ← personal research project JSON files
+Research/
+  actuarial_tables.py     ← actuarial data registry
+  actuarial_sources.json  ← registered source definitions
+Websearch/
+  web_search.py
+  deep_research.py
+  research_validator.py
+```
+
+## 6) Research governance
+
+- New actuarial sources require `api_propose_actuarial_source` + human approval before use.
+- All web research calls route through omni_router (SR-001 applies).
+- Research outputs written to vault dirs are never committed to git by default (treat as personal data).
+- Source proposals that pass `api_validate_actuarial_source_registry` can be approved via `Human_Input.txt`.
+
+## 7) Testing
+
+```bash
+python -m pytest Copilot_Tests/test_actuarial_tables.py -v
+```
+
+Actuarial tests use fixture data (`api_query_actuarial_table_fixture`) to verify query logic without live data dependencies.
+
+## 8) Dependencies and integrations
+
+- `Internal_Memory_Retrieval/research_manager.py` — personal project store
+- `Research/actuarial_tables.py` — actuarial registry and queries
+- `Websearch/` — web research and synthesis
+- `Toolkit/omni_router.py` — all AI calls for web research synthesis
+- `Human_Input.txt` — source approval gate
+
+## 9) Change log and manual maintenance
+
+- Last reviewed: 2026-05-14
+- Source of truth: `Internal_Memory_Retrieval/research_manager.py`, `Research/actuarial_tables.py`
+- Update triggers: new research source registered/approved, websearch API changed, new research module added.

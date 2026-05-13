@@ -1,108 +1,1500 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>The Vault Developer + Operator Manual</title>
-<style>
-:root{--bg:#0a1222;--panel:#121f36;--line:#2d4468;--text:#ecf2ff;--muted:#adbdd7;--a:#36bbff;--warn:#f0c46b}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(1000px 500px at 8% -12%,#24406f 0,transparent 65%),var(--bg);color:var(--text);font:16px/1.65 "Space Grotesk",Segoe UI,sans-serif}
-.layout{display:grid;grid-template-columns:280px 1fr;min-height:100vh}.nav{position:sticky;top:0;height:100vh;overflow:auto;background:#101b30;border-right:1px solid var(--line);padding:1rem}
-.nav h1{font-size:1rem;margin:0 0 .4rem}.nav a{display:block;color:var(--muted);padding:.36rem .5rem;text-decoration:none;border-left:3px solid transparent}.nav a:hover{color:var(--text);border-left-color:var(--a);background:#182745}
-.main{padding:1.3rem 1.2rem 2.2rem;max-width:1080px}.hero,.sec{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:.95rem}.sec{margin-top:1rem}
-.hero h2{margin:.15rem 0 .4rem}.callout{border-left:4px solid var(--warn);background:#2d250f;padding:.7rem .8rem;margin:.8rem 0;border-radius:7px}
-h3{margin:.2rem 0 .55rem}h4{margin:.1rem 0 .4rem}ul{margin:.25rem 0 .5rem 1rem}li{margin:.2rem 0}.row{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}.chip{display:inline-block;border:1px solid #2c7d6b;border-radius:999px;padding:.15rem .55rem;font-size:.78rem;color:#b8ffe4}
-code{background:#1a2a48;border-radius:5px;padding:.1rem .35rem}pre{white-space:pre-wrap;background:#162746;border:1px solid #2d4468;border-radius:8px;padding:.65rem .75rem}
-a:focus-visible{outline:3px solid var(--warn);outline-offset:2px}@media(max-width:920px){.layout{grid-template-columns:1fr}.nav{position:static;height:auto}}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Developer Quickstart — The Vault</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0a0b;
+      --surface: #111113;
+      --surface-hover: #17171a;
+      --border: #1e1e21;
+      --border-accent: #2e2e35;
+      --text: #ececf1;
+      --text-muted: #8e8ea0;
+      --text-subtle: #55556a;
+      --accent: #10a37f;
+      --accent-hover: #0d8f6f;
+      --accent-blue: #3b82f6;
+      --accent-purple: #a855f7;
+      --code-bg: #161618;
+      --code-border: #27272a;
+      --nav-h: 60px;
+      --sidebar-w: 260px;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Inter", system-ui, -apple-system, sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── TOP NAV ─────────────────────────────────────────────── */
+    .topnav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--nav-h);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.5rem;
+      background: rgba(10, 10, 11, .88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .topnav-left {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+    }
+
+    .logo-mark {
+      width: 28px;
+      height: 28px;
+      background: var(--accent);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .75rem;
+      font-weight: 700;
+      color: #fff;
+      flex-shrink: 0;
+      font-family: "JetBrains Mono", monospace;
+    }
+
+    .logo-text {
+      font-size: .9rem;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: -.01em;
+    }
+
+    .topnav-right {
+      display: flex;
+      align-items: center;
+      gap: .25rem;
+    }
+
+    .topnav-link {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: .82rem;
+      font-weight: 500;
+      padding: .35rem .65rem;
+      border-radius: 6px;
+      transition: color .15s, background .15s;
+    }
+
+    .topnav-link:hover {
+      color: var(--text);
+      background: var(--surface);
+    }
+
+    .topnav-link.active {
+      color: var(--text);
+      background: var(--surface);
+    }
+
+    .btn-github {
+      margin-left: .5rem;
+      padding: .35rem .85rem;
+      background: var(--surface);
+      border: 1px solid var(--border-accent);
+      border-radius: 6px;
+      color: var(--text);
+      font-size: .82rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: border-color .15s, background .15s;
+      white-space: nowrap;
+    }
+
+    .btn-github:hover {
+      border-color: var(--accent);
+      background: var(--surface-hover);
+    }
+
+    .hamburger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: .4rem;
+      color: var(--text-muted);
+    }
+
+    /* ─── LAYOUT ──────────────────────────────────────────────── */
+    .layout {
+      display: flex;
+      padding-top: var(--nav-h);
+      min-height: 100vh;
+    }
+
+    /* ─── SIDEBAR ─────────────────────────────────────────────── */
+    .sidebar {
+      position: fixed;
+      top: var(--nav-h);
+      left: 0;
+      width: var(--sidebar-w);
+      height: calc(100vh - var(--nav-h));
+      overflow-y: auto;
+      padding: 1.5rem 1rem 2rem;
+      border-right: 1px solid var(--border);
+      background: var(--bg);
+      scrollbar-width: thin;
+      scrollbar-color: var(--border) transparent;
+    }
+
+    .sidebar::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .sidebar::-webkit-scrollbar-thumb {
+      background: var(--border-accent);
+      border-radius: 2px;
+    }
+
+    .sidebar-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .sidebar-group-label {
+      font-size: .7rem;
+      font-weight: 600;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      color: var(--text-subtle);
+      margin-bottom: .4rem;
+      padding: 0 .5rem;
+    }
+
+    .sidebar-link {
+      display: block;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: .83rem;
+      padding: .32rem .5rem;
+      border-radius: 5px;
+      transition: color .12s, background .12s;
+      line-height: 1.4;
+    }
+
+    .sidebar-link:hover {
+      color: var(--text);
+      background: var(--surface);
+    }
+
+    .sidebar-link.active {
+      color: var(--text);
+      background: var(--surface);
+      font-weight: 500;
+    }
+
+    /* ─── MAIN CONTENT ────────────────────────────────────────── */
+    .main {
+      margin-left: var(--sidebar-w);
+      flex: 1;
+      padding: 3rem 3.5rem 5rem;
+      max-width: calc(var(--sidebar-w) + 860px);
+    }
+
+    .section {
+      margin-bottom: 4rem;
+    }
+
+    /* ─── HERO ────────────────────────────────────────────────── */
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: .75rem;
+    }
+
+    .hero h1 {
+      font-size: 2.1rem;
+      font-weight: 700;
+      letter-spacing: -.025em;
+      line-height: 1.2;
+      margin-bottom: .75rem;
+    }
+
+    .hero-sub {
+      font-size: 1rem;
+      color: var(--text-muted);
+      max-width: 520px;
+      margin-bottom: 1.5rem;
+      line-height: 1.65;
+    }
+
+    .cta-row {
+      display: flex;
+      gap: .75rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.75rem;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: .35rem;
+      padding: .52rem 1.1rem;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 7px;
+      font-size: .88rem;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background .15s;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-hover);
+    }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: .35rem;
+      padding: .52rem 1.1rem;
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border-accent);
+      border-radius: 7px;
+      font-size: .88rem;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: border-color .15s, background .15s;
+    }
+
+    .btn-outline:hover {
+      border-color: var(--text-muted);
+      background: var(--surface);
+    }
+
+    /* ─── CODE BLOCK ──────────────────────────────────────────── */
+    .code-card {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+
+    .code-tabs {
+      display: flex;
+      align-items: center;
+      padding: 0 .75rem;
+      border-bottom: 1px solid var(--code-border);
+      background: #0e0e10;
+      height: 40px;
+    }
+
+    .code-tab {
+      padding: .3rem .65rem;
+      font-size: .77rem;
+      font-weight: 500;
+      color: var(--text-subtle);
+      cursor: pointer;
+      border-radius: 5px;
+      border: none;
+      background: none;
+      transition: color .12s;
+      font-family: "JetBrains Mono", monospace;
+    }
+
+    .code-tab.active {
+      color: var(--text);
+      background: var(--border);
+    }
+
+    .code-tab:hover:not(.active) {
+      color: var(--text-muted);
+    }
+
+    .code-copy {
+      margin-left: auto;
+      padding: .25rem .6rem;
+      font-size: .72rem;
+      font-weight: 500;
+      color: var(--text-subtle);
+      background: none;
+      border: 1px solid var(--code-border);
+      border-radius: 5px;
+      cursor: pointer;
+      font-family: "Inter", sans-serif;
+      transition: color .12s, border-color .12s;
+    }
+
+    .code-copy:hover {
+      color: var(--text-muted);
+      border-color: var(--border-accent);
+    }
+
+    .code-copy.copied {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .code-panel {
+      display: none;
+    }
+
+    .code-panel.active {
+      display: block;
+    }
+
+    pre.code-pre {
+      margin: 0;
+      padding: 1rem 1.1rem;
+      font-family: "JetBrains Mono", "Fira Code", monospace;
+      font-size: .82rem;
+      line-height: 1.7;
+      color: var(--text);
+      overflow-x: auto;
+      white-space: pre;
+    }
+
+    .code-comment {
+      color: var(--text-subtle);
+    }
+
+    .code-cmd {
+      color: #a5d6ff;
+    }
+
+    .code-string {
+      color: #7ee787;
+    }
+
+    .code-kw {
+      color: #ff7b72;
+    }
+
+    .code-note {
+      font-size: .78rem;
+      color: var(--text-subtle);
+      margin-top: .6rem;
+    }
+
+    .code-note code {
+      font-family: "JetBrains Mono", monospace;
+      font-size: .78rem;
+      background: #1a1a1d;
+      padding: .1rem .35rem;
+      border-radius: 4px;
+    }
+
+    /* Codex promo banner */
+    .promo-banner {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      background: var(--surface);
+      border: 1px solid var(--border-accent);
+      border-radius: 10px;
+      padding: 1rem 1.15rem;
+      margin-top: 1.1rem;
+    }
+
+    .promo-icon {
+      font-size: 1.4rem;
+      flex-shrink: 0;
+      margin-top: .05rem;
+    }
+
+    .promo-body {
+      flex: 1;
+    }
+
+    .promo-title {
+      font-size: .88rem;
+      font-weight: 600;
+      margin-bottom: .25rem;
+    }
+
+    .promo-desc {
+      font-size: .82rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    .promo-desc code {
+      font-family: "JetBrains Mono", monospace;
+      font-size: .78rem;
+    }
+
+    .promo-link {
+      font-size: .82rem;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+      display: inline-block;
+      margin-top: .4rem;
+    }
+
+    .promo-link:hover {
+      text-decoration: underline;
+    }
+
+    /* ─── SECTION HEADINGS ────────────────────────────────────── */
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .section-header h2 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      letter-spacing: -.02em;
+    }
+
+    .section-header-link {
+      font-size: .82rem;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .section-header-link:hover {
+      text-decoration: underline;
+    }
+
+    .section-sub {
+      font-size: .88rem;
+      color: var(--text-muted);
+      margin-bottom: 1.1rem;
+      line-height: 1.55;
+    }
+
+    .section-sub code {
+      font-family: "JetBrains Mono", monospace;
+      font-size: .82rem;
+    }
+
+    /* ─── BUILD PATH CARDS ────────────────────────────────────── */
+    .path-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: .9rem;
+    }
+
+    .path-card {
+      background: var(--surface);
+      border: 1px solid var(--border-accent);
+      border-radius: 10px;
+      padding: 1.25rem 1.25rem 1rem;
+      text-decoration: none;
+      color: var(--text);
+      transition: border-color .15s, box-shadow .15s, background .15s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .path-card:hover {
+      border-color: var(--accent);
+      background: var(--surface-hover);
+      box-shadow: 0 0 0 1px rgba(16, 163, 127, .15), 0 4px 20px rgba(0, 0, 0, .4);
+    }
+
+    .path-card-title {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: .45rem;
+    }
+
+    .path-card-desc {
+      font-size: .85rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+      flex: 1;
+      margin-bottom: .85rem;
+    }
+
+    .path-card-desc code {
+      font-family: "JetBrains Mono", monospace;
+      font-size: .8rem;
+    }
+
+    .path-card-link {
+      font-size: .82rem;
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    /* ─── COMPONENT CARDS ─────────────────────────────────────── */
+    .component-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: .8rem;
+    }
+
+    .component-card {
+      background: var(--surface);
+      border: 1px solid var(--border-accent);
+      border-radius: 10px;
+      padding: 1rem 1.1rem;
+      transition: background .15s;
+    }
+
+    .component-card:hover {
+      background: var(--surface-hover);
+    }
+
+    .component-badge {
+      display: inline-block;
+      font-size: .7rem;
+      font-weight: 600;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      padding: .18rem .52rem;
+      border-radius: 999px;
+      margin-bottom: .6rem;
+    }
+
+    .badge-green {
+      background: rgba(16, 163, 127, .15);
+      color: #34d399;
+      border: 1px solid rgba(16, 163, 127, .25);
+    }
+
+    .badge-blue {
+      background: rgba(59, 130, 246, .15);
+      color: #60a5fa;
+      border: 1px solid rgba(59, 130, 246, .25);
+    }
+
+    .badge-purple {
+      background: rgba(168, 85, 247, .15);
+      color: #c084fc;
+      border: 1px solid rgba(168, 85, 247, .25);
+    }
+
+    .component-name {
+      font-family: "JetBrains Mono", monospace;
+      font-size: .88rem;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: .45rem;
+    }
+
+    .component-desc {
+      font-size: .82rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* ─── START BUILDING GRID ─────────────────────────────────── */
+    .build-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border: 1px solid var(--border-accent);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .build-tile {
+      display: flex;
+      gap: .85rem;
+      align-items: flex-start;
+      padding: 1.05rem 1.2rem;
+      text-decoration: none;
+      color: var(--text);
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      transition: background .15s;
+    }
+
+    .build-tile:nth-child(even) {
+      border-right: none;
+    }
+
+    .build-tile:nth-last-child(-n+2) {
+      border-bottom: none;
+    }
+
+    .build-tile:hover {
+      background: var(--surface);
+    }
+
+    .build-icon {
+      font-size: 1.3rem;
+      flex-shrink: 0;
+      margin-top: .05rem;
+    }
+
+    .build-body {
+      flex: 1;
+    }
+
+    .build-title {
+      font-size: .88rem;
+      font-weight: 600;
+      margin-bottom: .22rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .build-arrow {
+      color: var(--text-subtle);
+      font-size: .8rem;
+    }
+
+    .build-desc {
+      font-size: .8rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .build-desc code {
+      font-family: "JetBrains Mono", monospace;
+      font-size: .76rem;
+    }
+
+    /* ─── RESOURCES ───────────────────────────────────────────── */
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: .8rem;
+    }
+
+    .resource-card {
+      background: var(--surface);
+      border: 1px solid var(--border-accent);
+      border-radius: 10px;
+      padding: 1rem;
+      text-decoration: none;
+      color: var(--text);
+      transition: background .15s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .resource-card:hover {
+      background: var(--surface-hover);
+    }
+
+    .resource-icon {
+      font-size: 1.2rem;
+      margin-bottom: .6rem;
+    }
+
+    .resource-title {
+      font-size: .88rem;
+      font-weight: 600;
+      margin-bottom: .35rem;
+    }
+
+    .resource-desc {
+      font-size: .78rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      flex: 1;
+      margin-bottom: .65rem;
+    }
+
+    .resource-desc code {
+      font-family: "JetBrains Mono", monospace;
+      font-size: .76rem;
+    }
+
+    .resource-link {
+      font-size: .78rem;
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    /* ─── FOOTER ──────────────────────────────────────────────── */
+    footer {
+      margin-left: var(--sidebar-w);
+      border-top: 1px solid var(--border);
+      padding: 1.5rem 3.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--text-subtle);
+      font-size: .78rem;
+      flex-wrap: wrap;
+      gap: .75rem;
+    }
+
+    footer a {
+      color: var(--text-subtle);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      color: var(--text-muted);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.25rem;
+    }
+
+    /* ─── MOBILE OVERLAY ──────────────────────────────────────── */
+    .sidebar-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .6);
+      z-index: 89;
+    }
+
+    /* ─── RESPONSIVE ──────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .hamburger {
+        display: flex;
+      }
+
+      .topnav-right .topnav-link {
+        display: none;
+      }
+
+      .topnav-right .btn-github {
+        display: none;
+      }
+
+      .sidebar {
+        transform: translateX(-100%);
+        transition: transform .2s ease;
+        z-index: 90;
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      .sidebar-overlay.open {
+        display: block;
+      }
+
+      .main {
+        margin-left: 0;
+        padding: 1.75rem 1.25rem 3.5rem;
+      }
+
+      footer {
+        margin-left: 0;
+        padding: 1.25rem;
+      }
+
+      .path-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .component-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .resource-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .build-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .build-tile {
+        border-right: none;
+      }
+
+      .build-tile:nth-last-child(-n+2) {
+        border-bottom: 1px solid var(--border);
+      }
+
+      .build-tile:last-child {
+        border-bottom: none;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .hero h1 {
+        font-size: 1.6rem;
+      }
+
+      .resource-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ─── FOCUS ───────────────────────────────────────────────── */
+    a:focus-visible,
+    button:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    /* ─── FADE-IN ─────────────────────────────────────────────── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity .3s ease, transform .3s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ─── PERSONA GRID ──────────────────────────────────────── */
+    .persona-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: .8rem;
+    }
+
+    .persona-card {
+      background: var(--surface);
+      border: 1px solid var(--border-accent);
+      border-radius: 10px;
+      padding: 1rem 1.1rem;
+      text-decoration: none;
+      color: var(--text);
+      transition: background .15s, border-color .15s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .persona-card:hover {
+      background: var(--surface-hover);
+      border-color: var(--accent);
+    }
+
+    .persona-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: .55rem;
+    }
+
+    .persona-tools {
+      font-size: .72rem;
+      color: var(--text-subtle);
+      font-family: "JetBrains Mono", monospace;
+    }
+
+    .persona-name {
+      font-family: "JetBrains Mono", monospace;
+      font-size: .9rem;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: .4rem;
+    }
+
+    .persona-desc {
+      font-size: .82rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      flex: 1;
+      margin-bottom: .7rem;
+    }
+
+    .persona-desc code {
+      font-family: "JetBrains Mono", monospace;
+      font-size: .78rem;
+    }
+
+    .persona-link {
+      font-size: .78rem;
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .badge-amber {
+      background: rgba(245, 158, 11, .15);
+      color: #fbbf24;
+      border: 1px solid rgba(245, 158, 11, .25);
+    }
+
+    .badge-red {
+      background: rgba(239, 68, 68, .15);
+      color: #f87171;
+      border: 1px solid rgba(239, 68, 68, .25);
+    }
+
+    @media (max-width: 900px) {
+      .persona-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .persona-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    a.component-card {
+      text-decoration: none;
+      color: inherit;
+      cursor: pointer;
+    }
+
+    a.component-card:hover {
+      border-color: var(--accent);
+      background: var(--surface-hover);
+    }
+  </style>
 </head>
+
 <body>
-<div class="layout">
-<nav class="nav" aria-label="Developer manual sections">
-  <h1>Developer Manual v4</h1>
-  <a href="../">Manual Hub</a>
-  <a href="#quick-start">Quick Start</a>
-  <a href="#runtime-ownership">Runtime Ownership</a>
-  <a href="#runtime-churn">Runtime Churn</a>
-  <a href="#manual-publishing">Manual Publishing</a>
-  <a href="#how-to-update">How to Update This Manual</a>
-  <a href="#release-checks">Release Checks</a>
-</nav>
-<main class="main">
-  <section class="hero" id="quick-start">
-    <span class="chip">20 active personas</span>
-    <h2>Developer + Operator Manual (v4)</h2>
-    <p>This manual is task-first and production-safe. It preserves required runtime anchors while improving practical execution flow.</p>
-    <div class="callout"><strong>Quick Start:</strong> install dependencies from <code>requirements.txt</code>, then run <code>pytest</code> manual gates before any publish action.</div>
-  </section>
 
-  <section class="sec" id="runtime-ownership">
-    <h3>1) Runtime Ownership Map</h3>
-    <ul>
-      <li><code>vault_brain.py</code> / Vault_Brain: orchestration and mission-state governance.</li>
-      <li><code>TaskMaster_Brain.py</code> / TaskMaster_Brain: planning, decomposition, and queue execution.</li>
-      <li><code>Consensus_Engine/</code>: decision arbitration and policy enforcement.</li>
-      <li><code>Contextual_Thinking/</code>: context memory synthesis and retrieval.</li>
-      <li><code>Toolkit/omni_router.py</code>: model and tool routing defaults.</li>
-    </ul>
-  </section>
-
-  <section class="sec" id="runtime-churn">
-    <h3>2) Runtime Churn Controls</h3>
-    <div class="row">
-      <div>
-        <h4>What to review</h4>
-        <ul>
-          <li>Routing churn against model governance defaults.</li>
-          <li>Tool registration drift and registry sync outcomes.</li>
-          <li>Human Input System queue pressure and overdue lanes.</li>
-        </ul>
-      </div>
-      <div>
-        <h4>Safety references</h4>
-        <ul>
-          <li>SR-001: authority integrity.</li>
-          <li>SR-002: execution gate discipline.</li>
-          <li>SR-003: publish quality protection.</li>
-        </ul>
-      </div>
+  <!-- TOP NAV -->
+  <header class="topnav">
+    <div class="topnav-left">
+      <div class="logo-mark" aria-hidden="true">V</div>
+      <span class="logo-text">The Vault</span>
     </div>
-  </section>
+    <div class="topnav-right">
+      <a href="#overview" class="topnav-link active">Developer</a>
+      <a href="../" class="topnav-link">Operator</a>
+      <a href="../user/" class="topnav-link">User Guide</a>
+      <a href="../public/" class="topnav-link">Public</a>
+      <a href="https://github.com/FerretFatale/KAOS" class="btn-github" target="_blank" rel="noopener">GitHub →</a>
+      <button class="hamburger" aria-label="Open navigation" onclick="toggleSidebar()">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+          aria-hidden="true">
+          <line x1="3" y1="6" x2="21" y2="6" />
+          <line x1="3" y1="12" x2="21" y2="12" />
+          <line x1="3" y1="18" x2="21" y2="18" />
+        </svg>
+      </button>
+    </div>
+  </header>
 
-  <section class="sec" id="manual-publishing">
-    <h3>3) Manual Publishing</h3>
-    <ul>
-      <li>All source pages must route through tests before publish.</li>
-      <li>Target path includes <code>https://ferretfatale.github.io/the-vault-manual/</code>.</li>
-      <li>Deploy Guard (<code>deploy-guard</code>) and accessibility checks are mandatory.</li>
-    </ul>
-    <pre><code>python -m pytest Copilot_Tests/test_manual_quality_gate.py Copilot_Tests/test_manual_publisher.py Copilot_Tests/test_manual_split.py Copilot_Tests/test_manual_updater.py -q
-python Toolkit/manual_publisher.py --prepare --target web-sandbox-1
-python Toolkit/manual_publisher.py --publish --target web-sandbox-1 --approved
-python Toolkit/manual_publisher.py --verify --target web-sandbox-1</code></pre>
-  </section>
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 
-  <section class="sec" id="how-to-update">
-    <h3>4) How to Update This Manual</h3>
-    <ul>
-      <li>Edit source/manual pages, including feature deep dives.</li>
-      <li>Run gates and resolve structural or content regressions.</li>
-      <li>Append publish evidence to <code>manual_change_log.jsonl</code>.</li>
-      <li>Re-run verification after deploy.</li>
-    </ul>
-  </section>
+  <div class="layout">
 
-  <section class="sec" id="release-checks">
-    <h3>5) Release Checks</h3>
-    <ul>
-      <li>SR-001, SR-002, SR-003 marked <strong>RESOLVED</strong> for the release lane.</li>
-      <li>Runtime references validated, including <code>api_fetch_aldi_specials</code> routing anchor.</li>
-      <li>Security warning enforced: never paste secrets or credentials into repo files; use local <code>.env</code> only.</li>
-      <li>Manual publishing pass complete and public target healthy.</li>
-      <li>Gatekeeper and intelligence captures updated.</li>
-    </ul>
-  </section>
-</main>
-</div>
+    <!-- SIDEBAR -->
+    <nav class="sidebar" id="sidebar" aria-label="Developer documentation sections">
+      <div class="sidebar-group">
+        <div class="sidebar-group-label">Get Started</div>
+        <a href="#overview" class="sidebar-link">Overview</a>
+        <a href="#quickstart" class="sidebar-link">Quickstart</a>
+        <a href="#install" class="sidebar-link">Requirements &amp; Install</a>
+      </div>
+      <div class="sidebar-group">
+        <div class="sidebar-group-label">Architecture</div>
+        <a href="#vault-brain" class="sidebar-link">Vault Brain</a>
+        <a href="#taskmaster" class="sidebar-link">TaskMaster Brain</a>
+        <a href="#consensus-engine" class="sidebar-link">Consensus Engine</a>
+        <a href="#toolkit" class="sidebar-link">Toolkit &amp; Tools</a>
+        <a href="#register-tool" class="sidebar-link">Tool registry</a>
+      </div>
+      <div class="sidebar-group">
+        <div class="sidebar-group-label">Personas</div>
+        <a href="#personas" class="sidebar-link">All 20 personas</a>
+        <a href="#persona-scope" class="sidebar-link">Scope boundaries</a>
+        <a href="#tool-risk" class="sidebar-link">Tool risk classes</a>
+      </div>
+      <div class="sidebar-group">
+        <div class="sidebar-group-label">Build</div>
+        <a href="#register-tool" class="sidebar-link">Register a tool</a>
+        <a href="#write-tests" class="sidebar-link">Write tests</a>
+        <a href="#define-persona" class="sidebar-link">Define a persona</a>
+        <a href="#mission-state" class="sidebar-link">Mission state</a>
+        <a href="#routing-rules" class="sidebar-link">Routing rules</a>
+        <a href="#gatekeeper" class="sidebar-link">Gatekeeper review</a>
+        <a href="#publish-manual" class="sidebar-link">Publish manual update</a>
+      </div>
+      <div class="sidebar-group">
+        <div class="sidebar-group-label">Capabilities</div>
+        <a href="../feature-pages/email_intelligence.md" class="sidebar-link">Email Intelligence</a>
+        <a href="../feature-pages/memory.md" class="sidebar-link">Memory</a>
+        <a href="../feature-pages/research.md" class="sidebar-link">Research</a>
+        <a href="../feature-pages/goals.md" class="sidebar-link">Goals</a>
+        <a href="../feature-pages/routines.md" class="sidebar-link">Routines</a>
+        <a href="../feature-pages/schedule.md" class="sidebar-link">Schedule</a>
+        <a href="../feature-pages/budget.md" class="sidebar-link">Finances &amp; Budget</a>
+        <a href="../feature-pages/business_portal.md" class="sidebar-link">Business Ops</a>
+        <a href="../feature-pages/coding_and_model_routing.md" class="sidebar-link">Coding &amp; Routing</a>
+        <a href="../feature-pages/contextual_thinking.md" class="sidebar-link">Contextual Thinking</a>
+        <a href="../feature-pages/governance.md" class="sidebar-link">Governance</a>
+        <a href="../feature-pages/security.md" class="sidebar-link">Security</a>
+        <a href="../feature-pages/tool_runtime_and_risk.md" class="sidebar-link">Tool Runtime &amp; Risk</a>
+        <a href="../feature-pages/proposal_lifecycle.md" class="sidebar-link">Proposal lifecycle</a>
+        <a href="../feature-pages/maintenance.md" class="sidebar-link">Maintenance</a>
+        <a href="../feature-pages/observability_and_command_center.md" class="sidebar-link">Observability &amp; Command Center</a>
+        <a href="../feature-pages/backup_and_recovery.md" class="sidebar-link">Backup &amp; Recovery</a>
+        <a href="../feature-pages/human_input_and_backlogs.md" class="sidebar-link">Human Input &amp; Backlogs</a>
+        <a href="../feature-pages/data_sorting.md" class="sidebar-link">Data Sorting</a>
+        <a href="../feature-pages/workflow_memory_and_templates.md" class="sidebar-link">Workflow Memory</a>
+        <a href="../feature-pages/new_feature_creation.md" class="sidebar-link">New Feature Creation</a>
+        <a href="../feature-pages/website_workflow_and_deployment.md" class="sidebar-link">Website &amp; Deploy</a>
+        <a href="../feature-pages/eros.md" class="sidebar-link">Eros</a>
+        <a href="../feature-pages/inspiration.md" class="sidebar-link">Inspiration</a>
+      </div>
+      <div class="sidebar-group">
+        <div class="sidebar-group-label">Reference</div>
+        <a href="../../../AGENTS.md" class="sidebar-link">AGENTS.md</a>
+        <a href="../../../KAOS_CONTRACTS.json" class="sidebar-link">Contracts</a>
+        <a href="../../../KAOS_TEST_MATRIX.json" class="sidebar-link">Test Matrix</a>
+        <a href="../feature-pages/security.md" class="sidebar-link">Security gates</a>
+        <a href="../../../Human_Input.txt" class="sidebar-link">Human Input</a>
+        <a href="../manual_change_log.jsonl" class="sidebar-link">Changelog</a>
+      </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="main">
+
+      <!-- SECTION 1: HERO / QUICKSTART -->
+      <section class="section hero fade-in" id="overview">
+        <div class="hero-eyebrow">API Platform</div>
+        <h1>Developer quickstart</h1>
+        <p class="hero-sub">Set up The Vault runtime, run the test suite, and make your first tool call in minutes.</p>
+
+        <div class="cta-row">
+          <a href="#quickstart" class="btn-primary">Get started →</a>
+          <a href="https://github.com/FerretFatale/KAOS" class="btn-outline" target="_blank" rel="noopener">View on
+            GitHub →</a>
+        </div>
+
+        <div class="code-card" id="quickstart">
+          <div class="code-tabs">
+            <button class="code-tab active" onclick="switchTab(this,'tab-bash')" data-target="tab-bash">bash</button>
+            <button class="code-tab" onclick="switchTab(this,'tab-python')" data-target="tab-python">python</button>
+            <button class="code-copy" id="copyBtn" onclick="copyCode()">Copy</button>
+          </div>
+          <div class="code-panel active" id="tab-bash">
+            <pre class="code-pre"><span class="code-comment"># 1. Install dependencies</span>
+<span class="code-cmd">pip install</span> -r requirements.txt
+
+<span class="code-comment"># 2. Run the full test suite</span>
+<span class="code-cmd">python -m pytest</span> Copilot_Tests/ -q
+
+<span class="code-comment"># 3. Boot the vault dashboard</span>
+<span class="code-cmd">python</span> vault_dashboard.py</pre>
+          </div>
+          <div class="code-panel" id="tab-python">
+            <pre
+              class="code-pre"><span class="code-kw">from</span> vault_brain <span class="code-kw">import</span> api_read_mission_state
+<span class="code-kw">from</span> custom_tools_registry <span class="code-kw">import</span> get_all_tools
+
+<span class="code-comment"># Check active mission</span>
+mission = api_read_mission_state()
+<span class="code-cmd">print</span>(mission[<span class="code-string">"title"</span>], mission[<span class="code-string">"status"</span>])
+
+<span class="code-comment"># List all registered tools</span>
+tools = get_all_tools()
+<span class="code-cmd">print</span>(<span class="code-kw">f</span><span class="code-string">"{len(tools)} tools registered"</span>)</pre>
+          </div>
+        </div>
+
+        <p class="code-note" id="install">Requires Python 3.11+ and a local <code>.env</code> file with API keys. See
+          <code>requirements.txt</code> for the full dependency list.
+        </p>
+
+        <div class="promo-banner">
+          <div class="promo-icon">⚡</div>
+          <div class="promo-body">
+            <div class="promo-title">Build in Codex</div>
+            <p class="promo-desc">The Vault is configured for multi-agent Codex workflows. All personas and tools are
+              exposed via <code>custom_tools_registry.py</code>, with safe defaults, dry-run protection, and approval
+              gates built in.</p>
+            <a href="../../../AGENTS.md" class="promo-link">View agent config →</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 2: BUILD PATHS -->
+      <section class="section fade-in" id="vault-brain">
+        <div class="section-header">
+          <h2>Build paths</h2>
+        </div>
+        <div class="path-grid">
+          <a href="../feature-pages/vault_brain.md" class="path-card">
+            <div class="path-card-title">Vault Brain API</div>
+            <p class="path-card-desc">Make direct tool calls through <code>vault_brain.py</code>. Access personas,
+              mission state, routing decisions, and the full tool registry for text, memory, and structured output
+              workflows.</p>
+            <span class="path-card-link">Start with Vault Brain →</span>
+          </a>
+          <a href="../feature-pages/taskmaster_brain.md" class="path-card">
+            <div class="path-card-title">Mission-First Architecture</div>
+            <p class="path-card-desc">Build task-driven agents using the mission-state engine. <code>Vault_Brain</code>
+              + <code>TaskMaster_Brain</code> orchestrate multi-step execution with Gatekeeper governance and checkpoint
+              safety.</p>
+            <span class="path-card-link">Start with Mission State →</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- SECTION: PERSONAS -->
+      <section class="section fade-in" id="personas">
+        <div class="section-header">
+          <h2>Personas</h2>
+          <a href="../source/developer_manual.md" class="section-header-link">View all 20 →</a>
+        </div>
+        <p class="section-sub">The Vault routes work to 20 purpose-built personas via
+          <code>persona_manifest.json</code>. Each persona carries a <code>core_skill</code>, explicit tool grants, and
+          delegation rules. <code>TaskMaster_Brain</code> uses <code>core_skill</code> for routing — a missing or vague
+          value causes the planner to treat all personas as identical.
+        </p>
+        <div class="persona-grid">
+          <a href="../feature-pages/vault_brain.md" class="persona-card">
+            <div class="persona-header">
+              <span class="component-badge badge-green">Orchestration</span>
+              <span class="persona-tools">21 tools</span>
+            </div>
+            <div class="persona-name">Vault_Brain</div>
+            <p class="persona-desc">System coordinator. Mission-state authority, persona routing, Gatekeeper governance,
+              and deploy guard (SR-002). Temperature 0.0. Does not execute domain work.</p>
+            <span class="persona-link">Vault Brain guide →</span>
+          </a>
+          <a href="../feature-pages/taskmaster_brain.md" class="persona-card">
+            <div class="persona-header">
+              <span class="component-badge badge-blue">Planning</span>
+              <span class="persona-tools">entry point</span>
+            </div>
+            <div class="persona-name">TaskMaster_Brain</div>
+            <p class="persona-desc">Mission orchestrator. Decomposes requests into ordered steps, dispatches to
+              personas, enforces preserved-steps discipline across context boundaries.</p>
+            <span class="persona-link">TaskMaster guide →</span>
+          </a>
+          <a href="#consensus-engine" class="persona-card">
+            <div class="persona-header">
+              <span class="component-badge badge-purple">Governance</span>
+              <span class="persona-tools">34 tools</span>
+            </div>
+            <div class="persona-name">Consensus_Engine</div>
+            <p class="persona-desc">Read-only governance auditor. Scores decisions, validates phase transitions,
+              produces PASS / PASS_WITH_NOTES / FAIL verdicts — no mutations, no side effects.</p>
+            <span class="persona-link">Consensus guide →</span>
+          </a>
+          <a href="../feature-pages/observability_and_command_center.md" class="persona-card">
+            <div class="persona-header">
+              <span class="component-badge badge-amber">General</span>
+              <span class="persona-tools">81 tools</span>
+            </div>
+            <div class="persona-name">Admin_Assistant</div>
+            <p class="persona-desc">Broadest tool grant in the system. Manages most domain workflows, coordinates
+              between specialists, handles tasks spanning multiple capability areas.</p>
+            <span class="persona-link">Command center →</span>
+          </a>
+          <a href="../feature-pages/coding_and_model_routing.md" class="persona-card">
+            <div class="persona-header">
+              <span class="component-badge badge-blue">Engineering</span>
+              <span class="persona-tools">15 tools</span>
+            </div>
+            <div class="persona-name">Master_Coder</div>
+            <p class="persona-desc">Write, refactor, debug. Routes all inference through <code>omni_router</code> —
+              never hardcodes model names or API keys. Security audit required before any submission.</p>
+            <span class="persona-link">Coding &amp; routing →</span>
+          </a>
+          <a href="../feature-pages/security.md" class="persona-card">
+            <div class="persona-header">
+              <span class="component-badge badge-red">Security</span>
+              <span class="persona-tools">15 tools</span>
+            </div>
+            <div class="persona-name">Security</div>
+            <p class="persona-desc">Enforces SR-001, SR-002, SR-003. Gate for all deployment and external-write
+              operations. Master_Coder must clear Security before any script submission.</p>
+            <span class="persona-link">Security guide →</span>
+          </a>
+        </div>
+        <p class="section-sub" style="margin-top:.9rem" id="persona-scope">Personas may only delegate via explicit
+          <code>allowed_delegations</code> in the manifest. No persona may grant tools not in
+          <code>custom_tools_registry.py</code>. Deploy tools are <code>system_only</code> — Vault_Brain exclusive.
+          <span id="tool-risk">Tool risk classes</span>: <code>read_only_local</code>, <code>local_write</code>,
+          <code>external_write</code>, <code>deploy</code>, <code>approval_gated</code>, <code>system_only</code> —
+          defined in <a href="../source/developer_manual.md" style="color:var(--accent)">developer_manual.md §G</a>.
+        </p>
+      </section>
+
+      <!-- SECTION 3: CORE COMPONENTS -->
+      <section class="section fade-in" id="taskmaster">
+        <div class="section-header">
+          <h2>Core components</h2>
+          <a href="../../../AGENTS.md" class="section-header-link">View architecture →</a>
+        </div>
+        <p class="section-sub">Start with <code>vault_brain.py</code> for orchestration, or
+          <code>TaskMaster_Brain.py</code> for planning-first workflows. All components are Pylance-validated and have
+          deterministic test coverage.
+        </p>
+        <div class="component-grid" id="consensus-engine">
+          <a href="../feature-pages/vault_brain.md" class="component-card">
+            <span class="component-badge badge-green">Orchestration</span>
+            <div class="component-name">vault_brain.py</div>
+            <p class="component-desc">Mission state authority, persona routing, and Gatekeeper governance. The runtime
+              anchor for all task decisions, approval gates, and tool-call dispatch.</p>
+          </a>
+          <a href="../feature-pages/taskmaster_brain.md" class="component-card">
+            <span class="component-badge badge-blue">Planning</span>
+            <div class="component-name">TaskMaster_Brain.py</div>
+            <p class="component-desc">Decomposes tasks into ordered steps, controls sequencing, manages checkpoint
+              state, and drives the execution loop from first-plan through to verified completion.</p>
+          </a>
+          <a href="../source/developer_manual.md" class="component-card" id="toolkit">
+            <span class="component-badge badge-purple">Consensus</span>
+            <div class="component-name">Consensus_Engine/</div>
+            <p class="component-desc">Multi-model governance scoring. Runs policy checks before any promoted action,
+              publish decision, or external write. Produces structured verdicts: PASS, PASS_WITH_NOTES, or FAIL.</p>
+          </a>
+        </div>
+      </section>
+
+      <!-- SECTION 4: START BUILDING -->
+      <section class="section fade-in" id="register-tool">
+        <div class="section-header">
+          <h2>Start building</h2>
+        </div>
+        <div class="build-grid">
+
+          <a href="../feature-pages/tool_runtime_and_risk.md" class="build-tile">
+            <div class="build-icon">🔧</div>
+            <div class="build-body">
+              <div class="build-title">Register a tool <span class="build-arrow">→</span></div>
+              <p class="build-desc">Add a callable function to <code>custom_tools_registry.py</code> and expose it to
+                all personas via the tool registry.</p>
+            </div>
+          </a>
+
+          <a href="../feature-pages/new_feature_creation.md" class="build-tile" id="write-tests">
+            <div class="build-icon">🧪</div>
+            <div class="build-body">
+              <div class="build-title">Write deterministic tests <span class="build-arrow">→</span></div>
+              <p class="build-desc">Add coverage to <code>Copilot_Tests/</code> using the project's pytest fixtures,
+                contract helpers, and 80+ existing test patterns.</p>
+            </div>
+          </a>
+
+          <a href="../feature-pages/taskmaster_brain.md" class="build-tile" id="define-persona">
+            <div class="build-icon">🎭</div>
+            <div class="build-body">
+              <div class="build-title">Define a persona <span class="build-arrow">→</span></div>
+              <p class="build-desc">Add a persona to <code>persona_manifest.json</code> with tool grants, model
+                assignments, and explicit scope rules.</p>
+            </div>
+          </a>
+
+          <a href="../feature-pages/vault_brain.md" class="build-tile" id="mission-state">
+            <div class="build-icon">🗺️</div>
+            <div class="build-body">
+              <div class="build-title">Work with mission state <span class="build-arrow">→</span></div>
+              <p class="build-desc">Read, write, and checkpoint <code>.kaos_mission.json</code> via
+                <code>state_io_manager.py</code> for context-safe execution across sessions.
+              </p>
+            </div>
+          </a>
+
+          <a href="../feature-pages/coding_and_model_routing.md" class="build-tile" id="routing-rules">
+            <div class="build-icon">🔀</div>
+            <div class="build-body">
+              <div class="build-title">Extend routing rules <span class="build-arrow">→</span></div>
+              <p class="build-desc">Modify <code>Toolkit/omni_router.py</code> to add model/tool routing logic for new
+                capability lanes. Routing changes require test coverage.</p>
+            </div>
+          </a>
+
+          <a href="../manual_change_log.jsonl" class="build-tile" id="publish-manual">
+            <div class="build-icon">📖</div>
+            <div class="build-body">
+              <div class="build-title">Publish a manual update <span class="build-arrow">→</span></div>
+              <p class="build-desc">Edit source pages, run quality gates, and publish to <code>web-sandbox-1</code> via
+                <code>manual_publisher.py</code> with approval gating.
+              </p>
+            </div>
+          </a>
+
+          <a href="../feature-pages/governance.md" class="build-tile" id="gatekeeper">
+            <div class="build-icon">✅</div>
+            <div class="build-body">
+              <div class="build-title">Run Gatekeeper review <span class="build-arrow">→</span></div>
+              <p class="build-desc">Execute governance checks via the Consensus Engine before promoting sandbox work to
+                production. Produces a dated, archived verdict artifact.</p>
+            </div>
+          </a>
+
+          <a href="../feature-pages/proposal_lifecycle.md" class="build-tile">
+            <div class="build-icon">🔌</div>
+            <div class="build-body">
+              <div class="build-title">Wire an integration <span class="build-arrow">→</span></div>
+              <p class="build-desc">Add external integrations to <code>Toolkit/</code> following the approved-first,
+                <code>dry_run=True</code> default pattern.
+              </p>
+            </div>
+          </a>
+
+        </div>
+      </section>
+
+      <!-- SECTION 5: RESOURCES -->
+      <section class="section fade-in" id="agents-md">
+        <div class="section-header">
+          <h2>Resources</h2>
+        </div>
+        <div class="resource-grid">
+
+          <a href="../../../AGENTS.md" class="resource-card">
+            <div class="resource-icon">📋</div>
+            <div class="resource-title">AGENTS.md</div>
+            <p class="resource-desc">Complete operator guide for all agents, personas, governance rules, and
+              safe-execution protocols.</p>
+            <span class="resource-link">Read →</span>
+          </a>
+
+          <a href="../../../Copilot_Tests/" class="resource-card" id="test-matrix">
+            <div class="resource-icon">🧬</div>
+            <div class="resource-title">Test suite</div>
+            <p class="resource-desc"><code>Copilot_Tests/</code> — 80+ deterministic tests covering routing, tools,
+              personas, contracts, and deploy guards.</p>
+            <span class="resource-link">Browse →</span>
+          </a>
+
+          <a href="../../../KAOS OS ACTIVE BACKLOG.txt" class="resource-card">
+            <div class="resource-icon">📝</div>
+            <div class="resource-title">Active Backlog</div>
+            <p class="resource-desc">Current execution queue, approved candidates, and blocked items requiring human
+              input or credentials.</p>
+            <span class="resource-link">View →</span>
+          </a>
+
+          <a href="../feature-pages/security.md" class="resource-card" id="changelog">
+            <div class="resource-icon">🔒</div>
+            <div class="resource-title">Security rules</div>
+            <p class="resource-desc">SR-001 (authority integrity), SR-002 (deploy gate discipline), SR-003 (publish
+              quality protection). Required for every release.</p>
+            <span class="resource-link">View →</span>
+          </a>
+
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>© 2026 The Vault / FerretFatale</span>
+    <nav class="footer-links" aria-label="Footer navigation">
+      <a href="../">Manual Hub</a>
+      <a href="../user/">User Guide</a>
+      <a href="../public/">Public</a>
+      <a href="https://github.com/FerretFatale/KAOS" target="_blank" rel="noopener">GitHub</a>
+    </nav>
+  </footer>
+
+  <script>
+    // ── Tab switching ─────────────────────────────────────────
+    function switchTab(btn, targetId) {
+      const card = btn.closest('.code-card');
+      card.querySelectorAll('.code-tab').forEach(t => t.classList.remove('active'));
+      card.querySelectorAll('.code-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      card.querySelector('#' + targetId).classList.add('active');
+    }
+
+    // ── Copy code ─────────────────────────────────────────────
+    function copyCode() {
+      const card = document.querySelector('.code-card');
+      const active = card.querySelector('.code-panel.active pre');
+      const text = active ? active.innerText : '';
+      const btn = document.getElementById('copyBtn');
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(text).then(() => flashCopy(btn));
+      } else {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.cssText = 'position:fixed;opacity:0';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        flashCopy(btn);
+      }
+    }
+
+    function flashCopy(btn) {
+      btn.textContent = 'Copied!';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1800);
+    }
+
+    // ── Sidebar active link via IntersectionObserver ──────────
+    const allSections = document.querySelectorAll('[id]');
+    const sideLinks = document.querySelectorAll('.sidebar-link');
+
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          sideLinks.forEach(l => {
+            l.classList.toggle('active', l.getAttribute('href') === '#' + e.target.id);
+          });
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+
+    allSections.forEach(s => obs.observe(s));
+
+    // ── Mobile sidebar ────────────────────────────────────────
+    function toggleSidebar() {
+      const sb = document.getElementById('sidebar');
+      const ov = document.getElementById('sidebarOverlay');
+      const open = sb.classList.toggle('open');
+      ov.classList.toggle('open', open);
+      document.body.style.overflow = open ? 'hidden' : '';
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        const sb = document.getElementById('sidebar');
+        if (sb.classList.contains('open')) toggleSidebar();
+      }
+    });
+
+    document.querySelectorAll('.sidebar-link').forEach(l => {
+      l.addEventListener('click', () => {
+        const sb = document.getElementById('sidebar');
+        if (sb.classList.contains('open')) toggleSidebar();
+      });
+    });
+
+    // ── Fade-in on scroll ─────────────────────────────────────
+    const fadeObs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.06 });
+
+    document.querySelectorAll('.fade-in').forEach(el => fadeObs.observe(el));
+  </script>
 </body>
+
 </html>

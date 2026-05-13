@@ -1,64 +1,184 @@
 # Feature: Business Portal
 
 ## 1) Purpose and outcomes
-- Coordinate brands, campaigns, growth planning, and opportunity pipelines.
-- Success requires deterministic execution, explicit blocker reporting, and auditable state transitions.
-- This page is for both operator usage and maintenance governance.
 
-## 2) User-facing workflow
-1. User/operator submits an objective tied to this feature.
-2. Vault_Brain or TaskMaster_Brain routes the request to the mapped capability lane.
-3. Preconditions (authority, approvals, credentials, maintenance gates) are checked before mutation.
-4. Output is returned with status, evidence, and required next actions.
-5. Unmet dependencies are written to human-input/backlog surfaces.
+The Business Portal manages brand identities, account registries, revenue planning, and marketing strategy across Ferret Fatale, Pet Pantheon, Tawney, and future projects. It operates read-only by default with explicit `approved=True` required for any writes. No live social connections. No credentials stored.
 
-## 3) Backend flow (stage-by-stage)
-1. Intake normalization and intent classification.
-2. Policy and risk gating (including approval-required checks).
-3. Tool/function execution against this feature's mapped API surface.
-4. Persistence to canonical stores (json/jsonl/markdown/log/audit surfaces as applicable).
-5. Post-run verification and optional gatekeeper capture.
+## 2) Brand registry: `Business/brand_registry.py`
 
-## 4) Frontend flow (stage-by-stage)
-1. User prompt enters CLI/VS Code/Copilot interface.
-2. In-progress state presents objective and blocker status.
-3. Completion state includes changed artifacts and validation summary.
-4. Failure state includes deterministic recovery path.
-5. Escalation state routes unresolved requirements to Human_Input/backlog.
+Local registry of brands and accounts. Three required brand IDs: `ferret_fatale`, `pet_pantheon`, `tawney_public`, `future_project`.
 
-## 5) Function and tool surface
-- `api_list_brands`
-- `api_get_brand_profile`
-- `api_get_social_calendar`
-- `api_generate_revenue_plan`
-- `api_get_brand_social_performance_summary`
+### `api_list_brands() -> dict`
 
-## 6) Configuration and preconditions
-- Default model/tool routing follows omni-router and model governance when no explicit model is provided.
-- Runtime mutation requires approval when external write, remote push, or credential mutation is involved.
-- Missing prerequisites must fail closed with explicit blocker output.
+Lists all registered brands. Private notes are redacted.
 
-## 7) Data model, storage, and sorting
-- Inputs are normalized into structured payloads where possible.
-- Outputs are written to stable storage and governance surfaces according to risk class.
-- Sensitive fields are redacted from publish-facing artifacts.
+```python
+from Business.brand_registry import api_list_brands
 
-## 8) Governance, risks, and controls
-- Authority and maintenance-mode controls are mandatory.
-- High-risk actions require explicit human approval.
-- Policy-impacting changes require Gatekeeper review evidence.
+result = api_list_brands()
+# {
+#   "status": "ok",
+#   "brands": [
+#     {"id": "ferret_fatale", "name": "Ferret Fatale", "private_notes": "[PRIVATE - redacted]", "accounts": [...]},
+#     ...
+#   ],
+#   "count": 4,
+#   "registry_version": "1.0.0"
+# }
+```
 
-## 9) Testing and verification
-- Use deterministic tests for behavior contracts and safety constraints.
-- Prefer dry-run pathways before irreversible actions.
-- For front-facing outputs, run quality gates and post-publish visual QA.
+### `api_get_brand_profile(brand_id: str) -> dict`
 
-## 10) Dependencies and integrations
-- `Business/brand_registry.py`
-- `Business/social_media_manager.py`
-- `Business/revenue_framework.py`
+Get full profile for a specific brand. Private notes are always redacted in output.
 
-## 11) Change log and manual maintenance
-- Last reviewed: 2026-05-13
-- Update triggers: function signature changes, routing changes, policy changes, storage contract changes.
-- If this feature changes, queue a manual update entry in `docs/manual/manual_change_log.jsonl`.
+```python
+result = api_get_brand_profile("ferret_fatale")
+# {"status": "ok", "brand": {"id": "ferret_fatale", "name": "...", "accounts": [...]}}
+# {"status": "error", "message": "Brand not found: 'unknown_id'"}
+```
+
+### `api_list_brand_accounts(brand_id: str = "") -> dict`
+
+Lists all account entries across brands, or for a specific brand.
+
+```python
+result = api_list_brand_accounts(brand_id="ferret_fatale")
+# {"status": "ok", "accounts": [{"brand_id": str, "brand_name": str, "platform": str, ...}], "count": int}
+```
+
+**Valid platforms:** `youtube`, `tiktok`, `instagram`, `twitter_x`, `patreon`, `twitch`, `linkedin`, `facebook`, `threads`, `bluesky`, `newsletter`, `website`, `discord`, `reddit`, `pinterest`.
+
+### `api_validate_brand_registry() -> dict`
+
+Validates registry: required brands present, schema fields complete, no forbidden credential fields.
+
+```python
+result = api_validate_brand_registry()
+# {"status": "ok", "valid": bool, "errors": [str, ...], "warnings": [str, ...], "registry_version": str}
+```
+
+**Forbidden fields:** `password`, `token`, `api_key`, `secret`, `credential`, `oauth` (raises error if found).
+
+### `api_propose_brand_account(brand_id: str, platform: str, username: str, ...) -> dict`
+
+Proposes a new account entry for human review. Requires human approval before any account is considered active.
+
+```python
+result = api_propose_brand_account(
+    brand_id="ferret_fatale",
+    platform="tiktok",
+    username="@ferretfatale",
+    notes="Main video channel",
+)
+# {"status": "proposed", "proposal_id": str}
+```
+
+### `api_get_brand_social_performance_summary(brand_id: str) -> dict`
+
+Returns a local-only performance summary compiled from stored notes (no live API connections).
+
+## 3) Revenue framework: `Business/revenue_framework.py`
+
+Autonomous revenue and self-iteration framework. Stages A/B/C:
+- **Stage A:** local only — target intake, pathway evaluation, AI plan, iteration logging
+- **Stage B:** real cost tracking integrated with `budget_manager.py`
+- **Stage C:** marketing queue with per-post approval gate (no live posting without `approved=True`)
+
+### `api_set_revenue_target(target_name: str, amount: float, currency: str = "AUD", timeframe_days: int = 90, purpose: str = "", skills_context: str = "") -> dict`
+
+Defines a revenue target.
+
+```python
+from Business.revenue_framework import api_set_revenue_target, api_generate_revenue_plan
+
+result = api_set_revenue_target(
+    target_name="Fund Cursor subscription",
+    amount=80.00,
+    currency="AUD",
+    timeframe_days=30,
+    purpose="Cover monthly AI tooling cost",
+    skills_context="writing, design, AI prompting",
+)
+# {"status": "success", "target_id": str, "target": {...}}
+```
+
+### `api_generate_revenue_plan(target_id: str) -> dict`
+
+Evaluates applicable pathways and generates an AI-assisted revenue plan for the target.
+
+```python
+result = api_generate_revenue_plan(target_id)
+# {
+#   "status": "success",
+#   "plan": {
+#     "recommended_pathways": [{"id": str, "label": str, "score": float}, ...],
+#     "action_steps": [str, ...],
+#     "legal_notes": str
+#   }
+# }
+```
+
+**Known pathways:** `digital_products`, `freelance_services`, `content_creation`, `software_as_a_service`, `affiliate_marketing`.
+
+### `api_log_revenue_iteration(target_id: str, action_taken: str, result: str, amount_earned: float = 0) -> dict`
+
+Logs an iteration (action taken and result) against a target.
+
+### `api_get_revenue_iterations(target_id: str) -> dict`
+
+Returns all logged iterations for a target.
+
+## 4) Social media manager: `Business/social_media_manager.py`
+
+### `api_get_social_calendar(brand_id: str, days_ahead: int = 14) -> dict`
+
+Returns the upcoming social posting calendar for a brand.
+
+### `api_queue_post(brand_id: str, platform: str, content: str, scheduled_for: str, approved: bool = False) -> dict`
+
+Queues a social post. `approved=False` by default — posts are held until explicitly approved.
+
+## 5) Storage layout
+
+```
+Business/
+  brand_registry.py           ← brand/account registry API
+  brand_registry.json         ← canonical brand definitions
+  brand_account_proposals.json  ← pending account proposals
+  revenue_framework.py        ← revenue planning API
+  revenue_targets.json        ← all revenue targets
+  revenue_plans.json          ← generated plans
+  revenue_iterations.json     ← iteration logs
+  social_media_manager.py     ← social calendar and post queue
+  business_ops.py             ← business operations API
+  business_plan_redteam.py    ← red-team critique of business plans
+  website_workflow.py         ← website content workflow
+```
+
+## 6) Security constraints
+
+- `_FORBIDDEN_FIELDS` set: `password`, `token`, `api_key`, `secret`, `credential`, `oauth` — registry validation fails if any brand record contains these keys.
+- No live social API calls without `approved=True` + a configured publisher module.
+- `private_notes` is always redacted to `"[PRIVATE — redacted]"` in all API outputs.
+
+## 7) Testing
+
+```bash
+python -m pytest Copilot_Tests/test_brand_registry.py -v
+python -m pytest Copilot_Tests/test_revenue_framework.py -v
+```
+
+## 8) Dependencies and integrations
+
+- `Business/brand_registry.py`, `brand_registry.json` — brand/account store
+- `Business/revenue_framework.py` — revenue planning and iteration logging
+- `Business/social_media_manager.py` — social calendar and post queue
+- `Finances/budget_manager.py` — Stage B cost tracking integration
+- `Toolkit/omni_router.py` — AI revenue plan generation
+- `Human_Input.txt` — approval gate for account proposals and live posts
+
+## 9) Change log and manual maintenance
+
+- Last reviewed: 2026-05-14
+- Source of truth: `Business/brand_registry.py`, `Business/revenue_framework.py`
+- Update triggers: new brand added, new platform added to valid list, revenue pathway added, Stage C publisher configured.

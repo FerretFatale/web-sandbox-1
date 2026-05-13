@@ -1,63 +1,193 @@
-# Feature: Inspiration
+﻿# Feature: Inspiration
 
 ## 1) Purpose and outcomes
-- Generate motivation artifacts and contextual prompts that support consistent action.
-- Success requires deterministic execution, explicit blocker reporting, and auditable state transitions.
-- This page is for both operator usage and maintenance governance.
 
-## 2) User-facing workflow
-1. User/operator submits an objective tied to this feature.
-2. Vault_Brain or TaskMaster_Brain routes the request to the mapped capability lane.
-3. Preconditions (authority, approvals, credentials, maintenance gates) are checked before mutation.
-4. Output is returned with status, evidence, and required next actions.
-5. Unmet dependencies are written to human-input/backlog surfaces.
+Inspiration is the 17th persona in `persona_manifest.json`. Its role is to receive raw ambitions
+from the operator, clarify them without mutation, and hold them for future routing. It also owns
+the affirmation engine: generating daily affirmation sets from personal context and surfacing
+creative assets for design work. Inspiration explicitly does NOT make goal decisions or plan
+decompositions — those require human boundary approval.
 
-## 3) Backend flow (stage-by-stage)
-1. Intake normalization and intent classification.
-2. Policy and risk gating (including approval-required checks).
-3. Tool/function execution against this feature's mapped API surface.
-4. Persistence to canonical stores (json/jsonl/markdown/log/audit surfaces as applicable).
-5. Post-run verification and optional gatekeeper capture.
+## 2) Persona definition
 
-## 4) Frontend flow (stage-by-stage)
-1. User prompt enters CLI/VS Code/Copilot interface.
-2. In-progress state presents objective and blocker status.
-3. Completion state includes changed artifacts and validation summary.
-4. Failure state includes deterministic recovery path.
-5. Escalation state routes unresolved requirements to Human_Input/backlog.
+```json
+{
+  "persona_id": "Inspiration",
+  "position": 17,
+  "role": "receive raw ambitions, clarify, route",
+  "allowed_tools": [
+    "api_intake_ambition",
+    "api_list_ambitions",
+    "api_generate_daily_affirmations",
+    "api_get_affirmations_cached",
+    "api_generate_morning_affirmations",
+    "api_read_morning_affirmations"
+  ]
+}
+```
 
-## 5) Function and tool surface
-- `api_generate_daily_affirmations`
-- `api_get_affirmations_cached`
-- `api_generate_morning_affirmations`
-- `api_read_morning_affirmations`
+## 3) Ambition intake: `api_intake_ambition`
 
-## 6) Configuration and preconditions
-- Default model/tool routing follows omni-router and model governance when no explicit model is provided.
-- Runtime mutation requires approval when external write, remote push, or credential mutation is involved.
-- Missing prerequisites must fail closed with explicit blocker output.
+Saves a raw ambition to the ambitions queue. Zero AI call. Zero goal mutation.
 
-## 7) Data model, storage, and sorting
-- Inputs are normalized into structured payloads where possible.
-- Outputs are written to stable storage and governance surfaces according to risk class.
-- Sensitive fields are redacted from publish-facing artifacts.
+```python
+result = api_intake_ambition(
+    text="I want to build a ferret rescue sanctuary with on-site vets.",
+    source="morning_voice_note",
+)
+# {"status": "success", "ambition_id": "AMB_abc123", "stored_at": "2026-05-14T08:00:00"}
+```
 
-## 8) Governance, risks, and controls
-- Authority and maintenance-mode controls are mandatory.
-- High-risk actions require explicit human approval.
-- Policy-impacting changes require Gatekeeper review evidence.
+Raw text is stored exactly as entered. No AI processing occurs. No goal objects are created.
 
-## 9) Testing and verification
-- Use deterministic tests for behavior contracts and safety constraints.
-- Prefer dry-run pathways before irreversible actions.
-- For front-facing outputs, run quality gates and post-publish visual QA.
+### `api_list_ambitions() -> dict`
 
-## 10) Dependencies and integrations
-- `Toolkit/affirmation_engine.py`
-- `Schedule/morning_affirmations.py`
-- `Contextual_Thinking/vault_rules.txt`
+Read-only listing of all items in the ambitions queue.
 
-## 11) Change log and manual maintenance
-- Last reviewed: 2026-05-13
-- Update triggers: function signature changes, routing changes, policy changes, storage contract changes.
-- If this feature changes, queue a manual update entry in `docs/manual/manual_change_log.jsonl`.
+```python
+result = api_list_ambitions()
+# {
+#   "status": "success",
+#   "ambitions": [
+#     {"ambition_id": "AMB_abc123", "text": "...", "stored_at": str, "source": str},
+#     ...
+#   ],
+#   "count": 1
+# }
+```
+
+**Tools Inspiration does NOT own** (require human boundary decision via `Human_Input_Proposal_Queue.txt`):
+- `api_generate_ambition_plan` — converts ambition to goal plan
+- `api_review_ambition_plan` — reviews a generated plan
+- `api_respond_to_ambition_plan` — responds to plan review
+- `api_insert_ambition_plan` — inserts plan into Goals system
+
+## 4) Affirmation engine: `Toolkit/affirmation_engine.py`
+
+### `api_generate_daily_affirmations(force: bool = False) -> dict`
+
+Generates today's affirmation set from personal context.
+
+```python
+from Toolkit.affirmation_engine import api_generate_daily_affirmations
+
+result = api_generate_daily_affirmations(force=False)
+# {
+#   "status": "success" | "fallback" | "error",
+#   "date": "2026-05-14",
+#   "base": ["I am capable.", "I build every day."],      <- static from inspiration_feed.json
+#   "generated": ["Your ferret work inspires others."],  <- AI-generated additions
+#   "combined": ["I am capable.", ..., "Your ferret..."], <- base + generated
+#   "source": "gemini" | "cache" | "base_only",
+#   "word_of_the_year": "Expansion"
+# }
+```
+
+**Input files read:**
+- `inspiration_feed.json` — base affirmations and word of the year
+- `life_goals_state.json` — current life goals for personalization
+- `wellness_state.json` — current wellness context
+
+**Cache behavior:**
+- `force=False`: returns cached result if today's cache exists (no AI call)
+- `force=True`: regenerates even if cache exists
+
+**Fallback:** If Gemini call fails, returns `base` affirmations only with `"source": "base_only"`.
+
+### `api_get_affirmations_cached() -> dict`
+
+Returns today's cached affirmations without any regeneration. Safe to call at any time.
+
+```python
+result = api_get_affirmations_cached()
+# {"status": "success", "affirmations": [...], "date": "2026-05-14", "cached": True}
+# or {"status": "not_cached", "message": "No cache for today."} if not yet generated
+```
+
+### `api_clear_affirmations_cache() -> dict`
+
+Clears today's cache so the next call to `api_generate_daily_affirmations` forces regeneration.
+
+## 5) Morning affirmation ritual
+
+```python
+# Generate morning affirmations (same as daily but for morning display)
+api_generate_morning_affirmations()
+
+# Read the morning affirmations (read-only)
+api_read_morning_affirmations()
+```
+
+## 6) Creative and design inspiration
+
+Inspiration also connects to the creative asset toolkit for design and visual inspiration work.
+
+### `Creative/canva_asset_registry.py`
+
+```python
+api_list_canva_assets()          # list all registered Canva assets
+api_get_canva_asset(asset_id)    # get a specific asset
+api_register_canva_asset(...)    # register a new Canva asset
+api_validate_canva_asset_registry()  # validate the asset registry
+```
+
+### `Creative/design_brief_generator.py`
+
+```python
+api_create_design_brief(...)     # generate a design brief for a project
+api_list_design_briefs()         # list all design briefs
+api_review_design_brief(brief_id)  # review an existing brief
+```
+
+### `Creative/canva_brand_kits.py`
+
+```python
+api_list_canva_brand_kits()      # list all brand kits
+api_register_canva_brand_kit(...)  # register a new brand kit
+api_list_canva_templates()       # list available Canva templates
+api_register_canva_template(...) # register a template
+```
+
+## 7) Tests
+
+```bash
+python -m pytest Copilot_Tests/test_inspiration.py -v
+```
+
+Key test cases (from `Skills_Index.json`):
+- `test_load_inspiration_returns_base_affirmations` — base affirmations loaded when cache cold
+- `test_empty_inspiration_returns_error` — empty `inspiration_feed.json` returns error
+- `test_inspiration_persona_exists_and_is_valid` — persona in `persona_manifest.json` with required fields
+- `test_inspiration_owns_ambition_intake_tools` — `api_intake_ambition` and `api_list_ambitions` are allowed
+- `test_b2_inspiration_no_add_new_goal` — `api_add_new_goal` is NOT in Inspiration's allowed_tools
+
+## 8) Storage layout
+
+```
+Toolkit/
+  affirmation_engine.py           <- api_generate_daily_affirmations, api_get_affirmations_cached
+Creative/
+  canva_asset_registry.py         <- Canva asset management
+  design_brief_generator.py       <- design brief generation
+  canva_brand_kits.py             <- brand kit management
+Goals/
+  inspiration_feed.json           <- base affirmations and word of the year
+  life_goals_state.json           <- life goals (read-only by affirmation engine)
+Health/
+  wellness_state.json             <- wellness context (read-only by affirmation engine)
+```
+
+## 9) Dependencies and integrations
+
+- `Toolkit/affirmation_engine.py` — affirmation generation
+- `persona_manifest.json` — Inspiration persona definition (entry 17)
+- `inspiration_feed.json` — base affirmation data
+- `life_goals_state.json` — personalization input
+- `wellness_state.json` — wellness context input
+- `Human_Input_Proposal_Queue.txt` — required for ambition pipeline expansion
+
+## 10) Change log and manual maintenance
+
+- Last reviewed: 2026-05-14
+- Source of truth: `Toolkit/affirmation_engine.py`, `persona_manifest.json` entry 17
+- Update triggers: new affirmation source added, ambition intake schema changed, creative tools added.

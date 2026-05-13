@@ -1,64 +1,153 @@
 # Feature: Routines
 
 ## 1) Purpose and outcomes
-- Run repeatable day/week operating rhythms and maintain routine quality over time.
-- Success requires deterministic execution, explicit blocker reporting, and auditable state transitions.
-- This page is for both operator usage and maintenance governance.
 
-## 2) User-facing workflow
-1. User/operator submits an objective tied to this feature.
-2. Vault_Brain or TaskMaster_Brain routes the request to the mapped capability lane.
-3. Preconditions (authority, approvals, credentials, maintenance gates) are checked before mutation.
-4. Output is returned with status, evidence, and required next actions.
-5. Unmet dependencies are written to human-input/backlog surfaces.
+The Routines system builds and maintains personalized behavior routines using an AI Behavioral Scientist model. Routines are created through a goal-driven draft cycle, saved as structured markdown plans + JSON daily steps, and consumed by the Schedule module. Vault context (wellness state, life goals, existing routines) is injected automatically.
 
-## 3) Backend flow (stage-by-stage)
-1. Intake normalization and intent classification.
-2. Policy and risk gating (including approval-required checks).
-3. Tool/function execution against this feature's mapped API surface.
-4. Persistence to canonical stores (json/jsonl/markdown/log/audit surfaces as applicable).
-5. Post-run verification and optional gatekeeper capture.
+## 2) Core API: `Routines/build_routines.py`
 
-## 4) Frontend flow (stage-by-stage)
-1. User prompt enters CLI/VS Code/Copilot interface.
-2. In-progress state presents objective and blocker status.
-3. Completion state includes changed artifacts and validation summary.
-4. Failure state includes deterministic recovery path.
-5. Escalation state routes unresolved requirements to Human_Input/backlog.
+### `api_draft_routine(routine_goal: str, previous_feedback: Optional[str] = None, base_context: Optional[str] = None) -> dict`
 
-## 5) Function and tool surface
-- `api_get_weekly_planner`
-- `api_generate_schedule`
-- `api_process_end_of_day`
-- `api_run_workflow_acceptance_routine`
-- `api_run_backlog_pass`
+Generates a routine draft based on the goal and full vault context. Uses Gemini 2.5 Pro with a behavioral scientist system prompt.
 
-## 6) Configuration and preconditions
-- Default model/tool routing follows omni-router and model governance when no explicit model is provided.
-- Runtime mutation requires approval when external write, remote push, or credential mutation is involved.
-- Missing prerequisites must fail closed with explicit blocker output.
+```python
+from Routines.build_routines import api_draft_routine
 
-## 7) Data model, storage, and sorting
-- Inputs are normalized into structured payloads where possible.
-- Outputs are written to stable storage and governance surfaces according to risk class.
-- Sensitive fields are redacted from publish-facing artifacts.
+result = api_draft_routine(
+    routine_goal="Morning energy routine that fits within 30 minutes before work",
+    previous_feedback=None,
+)
+# {
+#   "status": "success",
+#   "data": {
+#     "markdown_plan": "# Morning Energy Routine\n...",
+#     "actionable_daily_steps": [
+#       "5 min: Get up immediately, no snooze",
+#       "10 min: Cold shower",
+#       "5 min: Herbal tea + supplements",
+#       "10 min: Brief movement / stretching"
+#     ]
+#   }
+# }
+```
 
-## 8) Governance, risks, and controls
-- Authority and maintenance-mode controls are mandatory.
-- High-risk actions require explicit human approval.
-- Policy-impacting changes require Gatekeeper review evidence.
+**Context injected automatically:**
+- `DATA_VAULT/Routines/routines_state.json` (bridge file, preferred)
+- `DATA_VAULT/Personal_and_Wellness/wellness_state.json` (bridge file)
+- `DATA_VAULT/Life_Goals/life_goals_state.json` (bridge file)
+- Fallback: raw JSON files in `Personal_and_Wellness/`, `Life_Goals/`, `Routines/` directories
 
-## 9) Testing and verification
-- Use deterministic tests for behavior contracts and safety constraints.
-- Prefer dry-run pathways before irreversible actions.
-- For front-facing outputs, run quality gates and post-publish visual QA.
+**Revision cycle:** Pass `previous_feedback` to re-draft with adjustments without losing the original goal context.
 
-## 10) Dependencies and integrations
-- `Schedule/living_schedule.py`
-- `Toolkit/workflow_acceptance_routine.py`
-- `Toolkit/backlog_maintenance.py`
+**Error states:**
+- `{"status": "error", "message": "Empty response from API"}` — Gemini returned null
+- `{"status": "error", "message": str(e)}` — API call failure
 
-## 11) Change log and manual maintenance
-- Last reviewed: 2026-05-13
-- Update triggers: function signature changes, routing changes, policy changes, storage contract changes.
-- If this feature changes, queue a manual update entry in `docs/manual/manual_change_log.jsonl`.
+### `api_save_routine(routine_goal: str, markdown_plan: str, daily_steps_json: str) -> dict`
+
+Saves the finalized routine plan and daily steps.
+
+```python
+from Routines.build_routines import api_save_routine
+import json
+
+result = api_save_routine(
+    routine_goal="Morning energy routine",
+    markdown_plan=result["data"]["markdown_plan"],
+    daily_steps_json=json.dumps(result["data"]["actionable_daily_steps"]),
+)
+# {
+#   "status": "success",
+#   "data": {
+#     "filepath": "Routines/Routine_Plans/Morning_energy_routine_Plan.md",
+#     "steps_added": 4
+#   }
+# }
+```
+
+**Storage writes:**
+- Markdown plan → `Routines/Routine_Plans/<safe_name>_Plan.md`
+- Daily steps (de-duplicated) → appended to `Routines/Current_Routines.json`
+
+**Note:** Only new steps (not already in `Current_Routines.json`) are added. `steps_added: 0` means all steps were already present.
+
+### `api_get_current_routines() -> dict`
+
+Returns the current contents of `Routines/Current_Routines.json` as a list.
+
+```python
+from Routines.build_routines import api_get_current_routines
+
+result = api_get_current_routines()
+# {"status": "success", "data": ["Step 1", "Step 2", ...]}
+```
+
+### `api_list_saved_routines() -> dict`
+
+Lists all saved routine plan files in `Routines/Routine_Plans/`.
+
+```python
+result = api_list_saved_routines()
+# {"status": "success", "data": ["Morning_energy_routine_Plan.md", ...]}
+```
+
+### `api_notify_health_of_routine(...) -> dict`
+
+Sends a cross-module notification to the Health module when a routine has health implications. Used to keep wellness state in sync.
+
+## 3) Draft-refine-save workflow
+
+The recommended workflow for creating a new routine:
+
+```
+1. api_draft_routine(routine_goal) → review the draft
+2. api_draft_routine(routine_goal, previous_feedback="...") → refine if needed
+3. api_save_routine(routine_goal, markdown_plan, daily_steps_json) → commit it
+4. api_get_current_routines() → verify steps were added
+```
+
+## 4) Storage layout
+
+```
+Routines/
+  build_routines.py           ← core API
+  Current_Routines.json       ← active daily steps (flat list, de-duplicated)
+  Routine_Plans/              ← saved markdown routine plans
+    <goal_name>_Plan.md       ← one file per saved routine
+
+DATA_VAULT/Routines/
+  routines_state.json         ← bridge file for context injection (preferred)
+```
+
+## 5) Configuration
+
+| Variable | Purpose |
+|---|---|
+| `API_KEY` | Gemini API key for `api_draft_routine` |
+| `VAULT_ROOT` | Vault root path (from `vault_config.py`) |
+| `DATA_VAULT` | External data vault path for bridge files |
+| `WELLBEING_SCHEDULE_INJECTION` | If `true`, health/wellbeing state is injected at schedule generation time (env var, default false) |
+
+## 6) Testing
+
+```bash
+python -m pytest Copilot_Tests/test_routines.py -v
+```
+
+Tests cover: draft generation (mocked Gemini), save writes correct files, de-duplication of existing steps, `api_get_current_routines` reads correctly, `api_list_saved_routines` lists correctly.
+
+## 7) Dependencies and integrations
+
+- `Routines/build_routines.py` — core routine API
+- `Routines/Current_Routines.json` — active daily steps
+- `Routines/Routine_Plans/` — markdown plan storage
+- `Goals/ambitions.py` — `api_insert_ambition_plan` writes to `Current_Routines.json`
+- `Schedule/living_schedule.py` — consumes routines when generating daily schedule
+- `Health/` — `api_notify_health_of_routine` target
+- `Human_Input_Forms/form_routines_preferences.url` — operator preference form
+
+## 8) Change log and manual maintenance
+
+- Last reviewed: 2026-05-14
+- Source of truth: `Routines/build_routines.py`
+- Update triggers: new routine API, context injection sources changed, model changed from Gemini 2.5 Pro, storage paths changed.

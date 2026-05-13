@@ -1,65 +1,192 @@
 # Feature: Memory
 
 ## 1) Purpose and outcomes
-- Capture, retrieve, and operationalize durable context across missions without leaking sensitive data.
-- Success requires deterministic execution, explicit blocker reporting, and auditable state transitions.
-- This page is for both operator usage and maintenance governance.
 
-## 2) User-facing workflow
-1. User/operator submits an objective tied to this feature.
-2. Vault_Brain or TaskMaster_Brain routes the request to the mapped capability lane.
-3. Preconditions (authority, approvals, credentials, maintenance gates) are checked before mutation.
-4. Output is returned with status, evidence, and required next actions.
-5. Unmet dependencies are written to human-input/backlog surfaces.
+The Vault memory system has two active layers: **semantic memory** (ChromaDB vector search over all vault content) and **note organization** (AI-assisted consolidation and reorganization of Notes.json files across categories). Both layers are read-safe and require explicit write approval for destructive changes.
 
-## 3) Backend flow (stage-by-stage)
-1. Intake normalization and intent classification.
-2. Policy and risk gating (including approval-required checks).
-3. Tool/function execution against this feature's mapped API surface.
-4. Persistence to canonical stores (json/jsonl/markdown/log/audit surfaces as applicable).
-5. Post-run verification and optional gatekeeper capture.
+## 2) Semantic memory: `vault_memory.py`
 
-## 4) Frontend flow (stage-by-stage)
-1. User prompt enters CLI/VS Code/Copilot interface.
-2. In-progress state presents objective and blocker status.
-3. Completion state includes changed artifacts and validation summary.
-4. Failure state includes deterministic recovery path.
-5. Escalation state routes unresolved requirements to Human_Input/backlog.
+Builds a local ChromaDB vector database from every piece of text in the Vault (notes, tasks, markdown strategies). Once built, the database supports natural-language semantic search across all stored content.
 
-## 5) Function and tool surface
-- `api_build_semantic_memory`
-- `api_query_memory`
-- `api_deep_query_memory`
-- `api_get_memory_status`
-- `api_find_matching_workflow`
+### `api_build_semantic_memory() -> dict`
 
-## 6) Configuration and preconditions
-- Default model/tool routing follows omni-router and model governance when no explicit model is provided.
-- Runtime mutation requires approval when external write, remote push, or credential mutation is involved.
-- Missing prerequisites must fail closed with explicit blocker output.
+Crawls the entire Vault (Notes, Tasks, Strategies). Converts every piece of text into a vector embedding and stores it in `.vault_memory_db/`. Resets the collection on each rebuild to prevent duplicates.
 
-## 7) Data model, storage, and sorting
-- Inputs are normalized into structured payloads where possible.
-- Outputs are written to stable storage and governance surfaces according to risk class.
-- Sensitive fields are redacted from publish-facing artifacts.
+```python
+from Internal_Memory_Retrieval.vault_memory import api_build_semantic_memory
 
-## 8) Governance, risks, and controls
-- Authority and maintenance-mode controls are mandatory.
-- High-risk actions require explicit human approval.
-- Policy-impacting changes require Gatekeeper review evidence.
+result = api_build_semantic_memory()
+# {
+#   "status": "success",
+#   "data": {"items_memorized": 847, "database_path": ".vault_memory_db"}
+# }
+```
 
-## 9) Testing and verification
-- Use deterministic tests for behavior contracts and safety constraints.
-- Prefer dry-run pathways before irreversible actions.
-- For front-facing outputs, run quality gates and post-publish visual QA.
+**Requirement:** `pip install chromadb` — returns `{"status": "error"}` if ChromaDB is not installed.
 
-## 10) Dependencies and integrations
-- `Toolkit/vault_memory.py`
-- `Toolkit/memory_source_registry.py`
-- `Toolkit/workflow_memory.py`
-- `vault_brain.py`
+**Ignored directories:** `.git`, `__pycache__`, `Archives`, `Archived_Docs`, `Archived_Images`.
 
-## 11) Change log and manual maintenance
-- Last reviewed: 2026-05-13
-- Update triggers: function signature changes, routing changes, policy changes, storage contract changes.
-- If this feature changes, queue a manual update entry in `docs/manual/manual_change_log.jsonl`.
+**Content sources ingested:**
+- `Notes.json` files — type: `"note"`
+- `Tasks.json` files — type: `"task"`
+- `*.md` files — split by paragraph (2+ newlines), type: `"strategy_document"`
+
+### `api_query_memory(query: str, n_results: int = 5) -> dict`
+
+Searches the local ChromaDB database for the most semantically relevant content. Returns exact text and source file paths.
+
+```python
+from Internal_Memory_Retrieval.vault_memory import api_query_memory
+
+result = api_query_memory("gym routine tracking", n_results=5)
+# {
+#   "status": "success",
+#   "data": {
+#     "query": "gym routine tracking",
+#     "results": [
+#       {"text": "...", "source": "Routines/Notes.json"},
+#       {"text": "...", "source": "Health/gym_plan.md"}
+#     ]
+#   }
+# }
+```
+
+**Error states:**
+- ChromaDB not installed → `{"status": "error", "message": "ChromaDB is not installed..."}`
+- Database not built → `{"status": "error", "message": "Memory database does not exist. Run build_semantic_memory first."}`
+
+## 3) Note organization: `organize_vault_notes.py`
+
+### `api_generate_organization_plan(target_category: str) -> dict`
+
+Reads `Notes.json` in the given category and asks the AI (Gemini Flash) to generate a consolidation plan. **Does NOT apply changes — review only.**
+
+```python
+from Internal_Memory_Retrieval.organize_vault_notes import (
+    api_generate_organization_plan,
+    api_apply_organization_plan,
+)
+
+# Step 1: Generate plan (read-only)
+plan = api_generate_organization_plan("Health")
+# {
+#   "status": "success",
+#   "data": {
+#     "category": "Health",
+#     "consolidated_notes": ["Unified bullet 1", ...],
+#     "extracted_tasks": ["Hidden action item", ...],
+#     "folder_summary": "Brief overview of folder contents."
+#   }
+# }
+
+# Step 2: Apply the plan (writes to Notes.json and Tasks.json)
+result = api_apply_organization_plan("Health", plan_json=json.dumps(plan["data"]))
+```
+
+**Valid categories:** Any top-level folder not in the ignore list (`Archives`, `Archived_Docs`, `To_Sort`, etc.).
+
+### `api_apply_organization_plan(target_category: str, plan_json: str) -> dict`
+
+Applies an organization plan generated by `api_generate_organization_plan`. Overwrites `Notes.json` with consolidated notes and appends extracted tasks to `Tasks.json`.
+
+## 4) Notes audit: `audit_notes.py`
+
+### `api_generate_notes_audit() -> dict`
+
+Sweeps all categories and generates a report of stale, empty, or low-quality notes files.
+
+```python
+from Internal_Memory_Retrieval.audit_notes import api_generate_notes_audit, api_apply_notes_audit
+
+audit = api_generate_notes_audit()
+# {"status": "success", "data": {"issues": [...], "total_categories": int}}
+
+# Apply the proposed relocations
+result = api_apply_notes_audit(relocations=audit["data"]["relocations"])
+```
+
+### `api_apply_notes_audit(relocations: list[dict]) -> dict`
+
+Applies relocation decisions from an audit report. Moves content between categories.
+
+## 5) Research manager: `research_manager.py`
+
+A lightweight personal research project store. Projects are saved as individual JSON files in `Personal_and_Health/Research_Projects/`.
+
+### `api_create_research_project(project_title: str, initial_content: str) -> dict`
+
+```python
+from Internal_Memory_Retrieval.research_manager import api_create_research_project
+
+result = api_create_research_project(
+    project_title="Crohn's Diet Research",
+    initial_content="Initial notes on low-FODMAP approach..."
+)
+# {"status": "success", "data": {"message": "Research project 'Crohn's Diet Research' created successfully."}}
+```
+
+Fails with `{"status": "error"}` if the project already exists.
+
+### `api_add_research_note(project_title: str, note_content: str) -> dict`
+
+Appends a timestamped note to an existing research project.
+
+## 6) Directory tree: `list_files.py`
+
+### `api_generate_directory_tree() -> dict`
+
+Generates a readable directory tree of the entire Vault for context injection.
+
+## 7) Vault overview: `read_vault.py`
+
+### `api_generate_readable_overview() -> dict`
+
+Produces a human-readable summary of the Vault's top-level structure and key file contents.
+
+## 8) Sorting and classification: `advanced_auto_sorter.py`
+
+### `api_advanced_auto_sort() -> dict`
+
+Runs an AI-assisted sort pass across uncategorized notes and files, assigning them to the correct category based on `vault_rules.txt` and `subcategory_rules.txt`.
+
+## 9) Storage layout
+
+```
+.vault_memory_db/         ← ChromaDB persistent store (gitignored)
+Internal_Memory_Retrieval/
+  vault_memory.py         ← semantic memory build/query
+  organize_vault_notes.py ← AI-assisted note consolidation
+  audit_notes.py          ← notes sweep and relocation
+  research_manager.py     ← personal research projects
+  list_files.py           ← directory tree generator
+  read_vault.py           ← vault overview
+  advanced_auto_sorter.py ← auto-sort classifier
+<Category>/
+  Notes.json              ← category notes (ingestible by semantic memory)
+  Tasks.json              ← category tasks
+Personal_and_Health/Research_Projects/  ← research project files
+```
+
+## 10) Configuration
+
+| Variable | Purpose |
+|---|---|
+| `API_KEY` | Gemini API key (used by organization/sorting tools) |
+| ChromaDB dependency | `pip install chromadb` (required for semantic memory) |
+
+## 11) Dependencies and integrations
+
+- `Internal_Memory_Retrieval/vault_memory.py` — semantic search
+- `Internal_Memory_Retrieval/organize_vault_notes.py` — note consolidation
+- `Internal_Memory_Retrieval/audit_notes.py` — notes audit
+- `Internal_Memory_Retrieval/research_manager.py` — research projects
+- `Internal_Memory_Retrieval/list_files.py` — directory tree
+- `Internal_Memory_Retrieval/advanced_auto_sorter.py` — auto-sort
+- `vault_rules.txt`, `subcategory_rules.txt` — sorting policy
+- `.vault_memory_db/` — ChromaDB database (gitignored)
+
+## 12) Change log and manual maintenance
+
+- Last reviewed: 2026-05-14
+- Source of truth: `Internal_Memory_Retrieval/vault_memory.py`, `Internal_Memory_Retrieval/organize_vault_notes.py`
+- Update triggers: new memory API, ChromaDB schema change, new category added to ignore list, research_manager path changed.
