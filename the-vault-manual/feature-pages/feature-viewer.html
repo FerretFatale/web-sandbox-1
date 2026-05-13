@@ -607,6 +607,7 @@
                 <a href="?p=goals" class="sidebar-link" data-p="goals">Goals</a>
                 <a href="?p=routines" class="sidebar-link" data-p="routines">Routines</a>
                 <a href="?p=schedule" class="sidebar-link" data-p="schedule">Schedule</a>
+                <a href="?p=living_schedule" class="sidebar-link" data-p="living_schedule">Living Schedule</a>
                 <a href="?p=budget" class="sidebar-link" data-p="budget">Finances &amp; Budget</a>
                 <a href="?p=business_portal" class="sidebar-link" data-p="business_portal">Business Ops</a>
                 <a href="?p=coding_and_model_routing" class="sidebar-link" data-p="coding_and_model_routing">Coding
@@ -631,6 +632,38 @@
                 <a href="?p=eros" class="sidebar-link" data-p="eros">Eros</a>
                 <a href="?p=inspiration" class="sidebar-link" data-p="inspiration">Inspiration</a>
             </div>
+            <div class="sidebar-group">
+                <div class="sidebar-group-label">Health &amp; Wellness</div>
+                <a href="?p=health_overview" class="sidebar-link" data-p="health_overview">Health Overview</a>
+                <a href="?p=reproductive_health" class="sidebar-link" data-p="reproductive_health">Reproductive
+                    Health</a>
+                <a href="?p=fitness_and_exercise" class="sidebar-link" data-p="fitness_and_exercise">Fitness &amp;
+                    Exercise</a>
+                <a href="?p=nutrition_and_food" class="sidebar-link" data-p="nutrition_and_food">Nutrition &amp;
+                    Food</a>
+                <a href="?p=sleep" class="sidebar-link" data-p="sleep">Sleep</a>
+                <a href="?p=hydration" class="sidebar-link" data-p="hydration">Hydration</a>
+                <a href="?p=prescriptions" class="sidebar-link" data-p="prescriptions">Prescriptions</a>
+                <a href="?p=wellbeing_and_journal" class="sidebar-link" data-p="wellbeing_and_journal">Wellbeing &amp;
+                    Journal</a>
+            </div>
+            <div class="sidebar-group">
+                <div class="sidebar-group-label">Lifestyle</div>
+                <a href="?p=wardrobe" class="sidebar-link" data-p="wardrobe">Wardrobe</a>
+                <a href="?p=shopping_and_kitchen" class="sidebar-link" data-p="shopping_and_kitchen">Shopping &amp;
+                    Kitchen</a>
+                <a href="?p=weather" class="sidebar-link" data-p="weather">Weather</a>
+            </div>
+            <div class="sidebar-group">
+                <div class="sidebar-group-label">Business &amp; Creative</div>
+                <a href="?p=streaming" class="sidebar-link" data-p="streaming">Streaming &amp; Twitch</a>
+                <a href="?p=social_media" class="sidebar-link" data-p="social_media">Social Media</a>
+                <a href="?p=grants_and_business" class="sidebar-link" data-p="grants_and_business">Grants &amp;
+                    Business</a>
+                <a href="?p=design_and_creative" class="sidebar-link" data-p="design_and_creative">Design &amp;
+                    Creative</a>
+                <a href="?p=image_creation" class="sidebar-link" data-p="image_creation">Image Creation</a>
+            </div>
         </nav>
 
         <main class="main" id="main-content" aria-live="polite">
@@ -650,16 +683,19 @@
 
     <script>
         const FEATURES = {
+            // Architecture
             vault_brain: { label: 'Vault Brain', group: 'Architecture' },
             taskmaster_brain: { label: 'TaskMaster Brain', group: 'Architecture' },
             contextual_thinking: { label: 'Contextual Thinking', group: 'Architecture' },
             tool_runtime_and_risk: { label: 'Tool Runtime & Risk', group: 'Architecture' },
+            // Capabilities
             email_intelligence: { label: 'Email Intelligence', group: 'Capabilities' },
             memory: { label: 'Memory', group: 'Capabilities' },
             research: { label: 'Research', group: 'Capabilities' },
             goals: { label: 'Goals', group: 'Capabilities' },
             routines: { label: 'Routines', group: 'Capabilities' },
             schedule: { label: 'Schedule', group: 'Capabilities' },
+            living_schedule: { label: 'Living Schedule', group: 'Capabilities' },
             budget: { label: 'Finances & Budget', group: 'Capabilities' },
             business_portal: { label: 'Business Ops', group: 'Capabilities' },
             coding_and_model_routing: { label: 'Coding & Routing', group: 'Capabilities' },
@@ -676,6 +712,25 @@
             observability_and_command_center: { label: 'Observability', group: 'Capabilities' },
             eros: { label: 'Eros', group: 'Capabilities' },
             inspiration: { label: 'Inspiration', group: 'Capabilities' },
+            // Health & Wellness
+            health_overview: { label: 'Health Overview', group: 'Health & Wellness' },
+            reproductive_health: { label: 'Reproductive Health', group: 'Health & Wellness' },
+            fitness_and_exercise: { label: 'Fitness & Exercise', group: 'Health & Wellness' },
+            nutrition_and_food: { label: 'Nutrition & Food', group: 'Health & Wellness' },
+            sleep: { label: 'Sleep', group: 'Health & Wellness' },
+            hydration: { label: 'Hydration', group: 'Health & Wellness' },
+            prescriptions: { label: 'Prescriptions', group: 'Health & Wellness' },
+            wellbeing_and_journal: { label: 'Wellbeing & Journal', group: 'Health & Wellness' },
+            // Lifestyle
+            wardrobe: { label: 'Wardrobe', group: 'Lifestyle' },
+            shopping_and_kitchen: { label: 'Shopping & Kitchen', group: 'Lifestyle' },
+            weather: { label: 'Weather', group: 'Lifestyle' },
+            // Business & Creative
+            streaming: { label: 'Streaming & Twitch', group: 'Business & Creative' },
+            social_media: { label: 'Social Media', group: 'Business & Creative' },
+            grants_and_business: { label: 'Grants & Business', group: 'Business & Creative' },
+            design_and_creative: { label: 'Design & Creative', group: 'Business & Creative' },
+            image_creation: { label: 'Image Creation', group: 'Business & Creative' },
         };
 
         const main = document.getElementById('main-content');
@@ -713,7 +768,7 @@
             let html = `<div class="landing-header">
         <div class="landing-eyebrow">Reference</div>
         <h1>Feature Pages</h1>
-        <p>Source-grounded documentation for all 26 Vault capabilities. Each page maps to real Python modules, config variables, and test fixtures.</p>
+        <p>Source-grounded documentation for all Vault capabilities — system architecture, health &amp; wellness, lifestyle, scheduling, streaming, business, and creative tools. Each page maps to real Python modules and runtime APIs.</p>
       </div>`;
 
             for (const [group, items] of Object.entries(groups)) {
