@@ -402,14 +402,40 @@
     <div class="content-wrap">
       <section id="hero">
         <p class="hero-eyebrow">Public Showcase</p>
-        <h1>A gallery of how The Vault performs when complexity is real</h1>
-        <p class="hero-sub">This showcase is built for evaluators, collaborators, and technically curious operators. It
-          highlights capabilities that are already implemented, governed, and evidence-backed.</p>
-        <div class="gallery-callout">Marketing, yes. Hype, no. Every card below ties signal to mechanism and points to
-          verifiable implementation surfaces.</div>
+        <h1>A gallery that shows The Vault in action, not just in theory</h1>
+        <p class="hero-sub">This page is the picture wall. It shows a few real parts of the system first, then points to
+          the deeper pages if you want to keep reading.</p>
+        <div class="gallery-callout">If a showcase only sends you somewhere else, it fails the job. A real showcase
+          should display something you can see and understand before you click through.</div>
       </section>
 
       <hr class="section-divider" />
+
+      <section id="display">
+        <h2>What the exhibit looks like at a glance</h2>
+        <div class="feature-block"
+          style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.15rem;display:grid;grid-template-columns:1.2fr .8fr;gap:1rem;align-items:start;">
+          <div>
+            <span class="kicker">Featured scene</span>
+            <h3 style="font-size:1.25rem;margin:.15rem 0 .45rem;color:var(--text);">The Vault keeps the important things
+              visible</h3>
+            <p style="margin-bottom:.65rem;">The exhibit below shows the kinds of things people can inspect: how
+              requests are routed, how health and planning stay connected, and how the system stays careful before it
+              acts.</p>
+            <ul class="proof-list" style="margin-bottom:0;">
+              <li>One request enters.</li>
+              <li>The system sorts it into the right place.</li>
+              <li>Important actions wait for checks.</li>
+            </ul>
+          </div>
+          <div class="proof-block" style="margin-top:0;">
+            <h3 style="margin-bottom:.45rem;">Quick signals</h3>
+            <p style="margin-bottom:.35rem;">Visible proof, not vague promises.</p>
+            <p style="margin-bottom:.35rem;">Plain labels, not mystery links.</p>
+            <p style="margin-bottom:0;">Each card below has a direct read-more path.</p>
+          </div>
+        </div>
+      </section>
 
       <section id="highlights">
         <h2>Showcase Highlights</h2>
@@ -417,47 +443,48 @@
           <a class="gallery-card" href="../../feature-pages/feature-viewer.html?p=vault_brain">
             <span class="kicker">Architecture</span>
             <h3>Vault Brain Orchestration</h3>
-            <p>A single governed command center that routes intent across the entire system without losing traceability.
-            </p>
+            <p>Everything starts here: requests are gathered, sorted, and handed to the right part of the system.</p>
+            <p class="meta">Visible value: clear routing, clear ownership, no mystery steps.</p>
             <span class="meta">Route: Feature Viewer → vault_brain</span>
           </a>
 
           <a class="gallery-card" href="../../feature-pages/feature-viewer.html?p=health_overview">
             <span class="kicker">Health Intelligence</span>
             <h3>Context-aware daily planning</h3>
-            <p>Health signals influence scheduling and routine execution so plans align with real-world energy and
-              constraints.</p>
+            <p>Health and daily rhythm stay connected so the plan fits the person, not the other way around.</p>
+            <p class="meta">Visible value: fewer brittle plans, more realistic days.</p>
             <span class="meta">Route: Feature Viewer → health_overview</span>
           </a>
 
           <a class="gallery-card" href="../../feature-pages/feature-viewer.html?p=business_portal">
             <span class="kicker">Business + Operations</span>
             <h3>Living business system</h3>
-            <p>Business planning, grants, social, and finance operate as connected flows rather than disconnected
-              documents.</p>
+            <p>Business, money, and publishing work together instead of living in separate notebooks.</p>
+            <p class="meta">Visible value: one place to see the moving parts.</p>
             <span class="meta">Route: Feature Viewer → business_portal</span>
           </a>
 
           <a class="gallery-card" href="../../feature-pages/feature-viewer.html?p=email_intelligence">
             <span class="kicker">Comms Infrastructure</span>
             <h3>Email Intelligence under policy</h3>
-            <p>Sorting, triage, and safety controls are explicit, logged, and constrained by non-destructive rules.</p>
+            <p>Email gets sorted with care, with safety rules and logs keeping the process understandable.</p>
+            <p class="meta">Visible value: less inbox panic, more order.</p>
             <span class="meta">Route: Feature Viewer → email_intelligence</span>
           </a>
 
           <a class="gallery-card" href="../../feature-pages/feature-viewer.html?p=research">
             <span class="kicker">Research Pipeline</span>
             <h3>From discovery to action</h3>
-            <p>Research outputs route into goals, schedule, and execution surfaces instead of dying in passive notes.
-            </p>
+            <p>Research notes do not just sit there — they turn into goals and next steps.</p>
+            <p class="meta">Visible value: ideas move forward instead of collecting dust.</p>
             <span class="meta">Route: Feature Viewer → research</span>
           </a>
 
           <a class="gallery-card" href="../../feature-pages/feature-viewer.html?p=governance">
             <span class="kicker">Governance Layer</span>
             <h3>Control without paralysis</h3>
-            <p>Mission-state integrity, test gates, and review artifacts keep execution disciplined while still moving
-              fast.</p>
+            <p>Careful checks keep the system safe without slowing everything to a crawl.</p>
+            <p class="meta">Visible value: trust, traceability, and fewer surprises.</p>
             <span class="meta">Route: Feature Viewer → governance</span>
           </a>
         </div>
@@ -467,11 +494,10 @@
         <h2>Proof Layer</h2>
         <div class="proof-block">
           <ul class="proof-list">
-            <li>All highlight cards route to real feature pages in `docs/manual/feature-pages/` via
-              `feature-viewer.html?p=...`.</li>
+            <li>Each highlight card shows a real capability in plain language before it points to the deeper page.</li>
             <li>Governance references align to repository surfaces: mission state, contracts, test matrix, and
               gatekeeper logs.</li>
-            <li>External writes remain approval-gated; dry-run-first patterns are used where applicable.</li>
+            <li>External writes stay approval-gated, and dry-run-first patterns remain in place.</li>
           </ul>
         </div>
       </section>
@@ -500,6 +526,7 @@
       </section>
 
       <footer>
+        <a href="../../feature-pages/feature-viewer.html">Open Features Pages</a> ·
         <a href="../index.html">Public Guide</a> ·
         <a href="case-studies.html">Case Studies</a> ·
         <a href="../../feature-pages/feature-viewer.html">Feature Pages</a> ·
