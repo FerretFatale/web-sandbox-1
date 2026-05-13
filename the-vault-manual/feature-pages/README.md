@@ -4,8 +4,8 @@ This directory is the authoritative page-per-feature manual source for major Vau
 
 ## Coverage mandate
 - Every major feature must have one dedicated page in this folder.
-- Each page must follow `TEMPLATE_feature_page.md`.
-- No page may be published if template placeholders or incomplete scaffold text remain.
+- Pages must be evidence-backed to real code/docs with explicit function and dependency mapping.
+- Generic scaffold-only content is not publishable.
 
 ## Current feature page map
 - `memory.md`
@@ -28,12 +28,16 @@ This directory is the authoritative page-per-feature manual source for major Vau
 - `human_input_and_backlogs.md`
 - `research.md`
 - `schedule.md`
+- `website_workflow_and_deployment.md`
+- `tool_runtime_and_risk.md`
+- `workflow_memory_and_templates.md`
+- `observability_and_command_center.md`
+- `backup_and_recovery.md`
+- `proposal_lifecycle.md`
 
 ## Authoring workflow
-1. Duplicate the template for new features.
-2. Fill all sections with evidence-backed content.
-3. Register the page in `feature_page_registry.json` with required source files and functions.
-4. Link source-of-truth code/doc paths in section 11.
-5. Run manual tests:
-`python -m pytest Copilot_Tests/test_manual_quality_gate.py Copilot_Tests/test_manual_publisher.py Copilot_Tests/test_manual_split.py Copilot_Tests/test_manual_updater.py -q`
-6. Publish only after quality gates pass.
+1. Start from `TEMPLATE_feature_page.md` or regenerate from the feature registry.
+2. Validate every listed function/path exists and is in active use.
+3. Update `feature_page_registry.json` when adding or retiring features.
+4. Run manual quality tests and split/update tests before publish.
+5. Run post-publish visual QA for front-facing manual surfaces.
