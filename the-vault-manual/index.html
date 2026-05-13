@@ -5,22 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>The Vault — Manual Hub</title>
   <style>
-    :root { --bg: #0d1117; --surface: #161b22; --border: #30363d; --text: #c9d1d9; --muted: #8b949e; --accent: #58a6ff; }
+    :root { --bg: #0b1020; --surface: #141b2f; --border: #2c3650; --text: #e7ebf5; --muted: #aab3c9; --accent: #1fb6ff; --accent-2: #2ee6a6; }
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 16px; line-height: 1.7; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+    body { background: radial-gradient(1200px 500px at 20% -10%, #1b2b52 0, transparent 60%), radial-gradient(900px 400px at 85% 0%, #173a4b 0, transparent 55%), var(--bg); color: var(--text); font-family: "Source Serif 4", "Merriweather", Georgia, serif; font-size: 16px; line-height: 1.7; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
     a { color: var(--accent); text-decoration: none; }
     a:hover { text-decoration: underline; }
     .container { max-width: 980px; padding: 3rem 2rem; text-align: center; }
-    h1 { font-size: 2.5rem; color: #fff; margin-bottom: 0.5rem; font-weight: 800; }
-    .subtitle { color: var(--muted); font-size: 1.1rem; margin-bottom: 2.5rem; }
+    h1 { font-size: 2.6rem; color: #fff; margin-bottom: 0.5rem; font-weight: 800; letter-spacing: 0.01em; }
+    .subtitle { color: var(--muted); font-size: 1.1rem; margin-bottom: 2.5rem; font-family: "Space Grotesk", "Avenir Next", sans-serif; }
     .cards { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.25rem; margin: 2rem 0; }
-    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 2rem 1.5rem; transition: border-color 0.15s; }
-    .card:hover { border-color: var(--accent); }
+    .card { background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0)), var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2rem 1.5rem; transition: border-color 0.15s, transform 0.15s; }
+    .card:hover { border-color: var(--accent); transform: translateY(-2px); }
     .card .icon { font-size: 2rem; margin-bottom: 0.75rem; }
-    .card h2 { font-size: 1.15rem; color: #fff; margin-bottom: 0.5rem; }
+    .card h2 { font-size: 1.2rem; color: #fff; margin-bottom: 0.5rem; font-family: "Space Grotesk", "Avenir Next", sans-serif; }
     .card p { font-size: 0.88rem; color: var(--muted); line-height: 1.5; }
-    .card .link { display: inline-block; margin-top: 1rem; background: var(--accent); color: #fff; padding: 8px 20px; border-radius: 6px; font-size: 0.88rem; font-weight: 600; }
+    .card .link { display: inline-block; margin-top: 1rem; background: linear-gradient(90deg, var(--accent), var(--accent-2)); color: #05101c; padding: 8px 20px; border-radius: 8px; font-size: 0.9rem; font-weight: 700; font-family: "Space Grotesk", "Avenir Next", sans-serif; }
     .card .link:hover { opacity: 0.9; text-decoration: none; }
+    a:focus-visible { outline: 3px solid #f7c65f; outline-offset: 2px; border-radius: 6px; }
     .note { color: var(--muted); font-size: 0.78rem; margin-top: 2rem; }
     @media (max-width: 980px) { .cards { grid-template-columns: 1fr 1fr; } }
     @media (max-width: 600px) { .cards { grid-template-columns: 1fr; } h1 { font-size: 1.8rem; } }

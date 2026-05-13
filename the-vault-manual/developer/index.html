@@ -6,18 +6,18 @@
   <title>The Vault — Developer &amp; Operator Manual</title>
   <style>
     :root {
-      --bg: #0d1117; --surface: #161b22; --border: #30363d;
-      --text: #c9d1d9; --muted: #8b949e; --accent: #58a6ff;
+      --bg: #0b1020; --surface: #131c30; --border: #2b3a5a;
+      --text: #e7edf9; --muted: #a6b3cc; --accent: #35b8ff;
       --green: #3fb950; --orange: #d29922; --red: #f85149;
       --purple: #bc8cff; --yellow: #e3b341;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 15px; line-height: 1.6; }
+    body { background: radial-gradient(1100px 420px at 10% -8%, #1d2f54 0, transparent 58%), var(--bg); color: var(--text); font-family: "Source Serif 4", "Merriweather", Georgia, serif; font-size: 16px; line-height: 1.65; }
     a { color: var(--accent); text-decoration: none; }
     a:hover { text-decoration: underline; }
-    h1 { font-size: 2rem; color: #fff; margin-bottom: 0.5rem; }
-    h2 { font-size: 1.5rem; color: var(--accent); margin: 2rem 0 0.75rem; padding-top: 2rem; border-top: 1px solid var(--border); }
-    h3 { font-size: 1.15rem; color: var(--yellow); margin: 1.25rem 0 0.5rem; }
+    h1 { font-size: 2.1rem; color: #fff; margin-bottom: 0.5rem; font-family: "Space Grotesk", "Avenir Next", sans-serif; }
+    h2 { font-size: 1.52rem; color: var(--accent); margin: 2rem 0 0.75rem; padding-top: 2rem; border-top: 1px solid var(--border); font-family: "Space Grotesk", "Avenir Next", sans-serif; }
+    h3 { font-size: 1.15rem; color: var(--yellow); margin: 1.25rem 0 0.5rem; font-family: "Space Grotesk", "Avenir Next", sans-serif; }
     h4 { font-size: 1rem; color: var(--purple); margin: 1rem 0 0.3rem; }
     p { margin-bottom: 0.75rem; }
     ul, ol { margin: 0.5rem 0 0.75rem 1.5rem; }
@@ -47,6 +47,7 @@
     nav .logo small { color: var(--muted); font-size: 0.75em; }
     nav a { display: block; padding: 5px 1.25rem; color: var(--muted); font-size: 0.875rem; border-left: 3px solid transparent; }
     nav a:hover, nav a.active { color: var(--text); background: #1c2128; border-left-color: var(--accent); text-decoration: none; }
+    a:focus-visible { outline: 3px solid #f4c86c; outline-offset: 2px; border-radius: 4px; }
     nav .nav-group { margin-top: 0.75rem; padding: 0 1.25rem 0.25rem; font-size: 0.7em; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); }
     main { flex: 1; padding: 2rem 3rem; max-width: 1100px; }
     header { padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); margin-bottom: 1rem; }

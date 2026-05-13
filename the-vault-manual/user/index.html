@@ -5,20 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>The Vault — User Manual</title>
   <style>
-    :root { --bg:#0f172a; --surface:#111827; --card:#1f2937; --text:#e5e7eb; --muted:#9ca3af; --accent:#22c55e; --border:#334155; }
+    :root { --bg:#08121f; --surface:#0f1b2d; --card:#16253c; --text:#edf2fa; --muted:#afbdd4; --accent:#22d3a6; --border:#2f4361; }
     * { box-sizing:border-box; }
-    body { margin:0; font-family:"Segoe UI",Tahoma,Arial,sans-serif; background:linear-gradient(160deg,#020617,#0f172a 40%,#111827); color:var(--text); }
+    body { margin:0; font-family:"Source Serif 4","Merriweather",Georgia,serif; background:radial-gradient(1200px 600px at 15% -10%, #193252 0, transparent 60%),linear-gradient(160deg,#020617,#0f172a 40%,#111827); color:var(--text); }
     .wrap { max-width: 980px; margin: 0 auto; padding: 2rem 1.25rem 3rem; }
     h1 { margin: 0; font-size: 2.1rem; }
     p.lead { color: var(--muted); margin: 0.75rem 0 1.5rem; }
-    .back { color: var(--muted); text-decoration:none; font-size:0.92rem; }
+    .back { color: var(--muted); text-decoration:none; font-size:0.92rem; font-family:"Space Grotesk","Avenir Next",sans-serif; }
     .back:hover { color: var(--text); text-decoration:underline; }
     .grid { display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 0.9rem; margin-top: 1.3rem; }
-    .card { background: rgba(31,41,55,0.8); border:1px solid var(--border); border-radius: 10px; padding: 1rem; }
-    .card h2 { margin:0 0 0.4rem; font-size:1rem; }
+    .card { background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0)), rgba(22,37,60,0.85); border:1px solid var(--border); border-radius: 12px; padding: 1rem; }
+    .card h2 { margin:0 0 0.4rem; font-size:1rem; font-family:"Space Grotesk","Avenir Next",sans-serif; }
     .card p { margin:0; color:var(--muted); font-size:0.9rem; line-height:1.45; }
-    .card a { color:#a7f3d0; text-decoration:none; font-weight:600; display:inline-block; margin-top:0.55rem; }
+    .card a { color:#c9ffe6; text-decoration:none; font-weight:700; display:inline-block; margin-top:0.55rem; font-family:"Space Grotesk","Avenir Next",sans-serif; }
     .card a:hover { text-decoration:underline; }
+    a:focus-visible { outline:3px solid #ffd27f; outline-offset:2px; border-radius:6px; }
     .badge { display:inline-block; margin-top:1.2rem; padding:0.25rem 0.55rem; border:1px solid #166534; border-radius:999px; font-size:0.78rem; color:#bbf7d0; }
     @media (max-width:760px) { .grid { grid-template-columns: 1fr; } h1 { font-size:1.75rem; } }
   </style>
@@ -47,6 +48,7 @@
       <div class="card"><h2>14. Approvals and Safety</h2><p>Approval matrix and risk boundaries.</p><a href="14_approvals_boundaries_safety.md">Open section →</a></div>
       <div class="card"><h2>15. Glossary and Quick Ref</h2><p>Commands, terminology, and reusable prompts.</p><a href="15_glossary_and_quick_reference.md">Open section →</a></div>
       <div class="card"><h2>16. External Skills Assimilation</h2><p>How external tools become internal process intelligence.</p><a href="16_external_skills_and_assimilation.md">Open section →</a></div>
+      <div class="card"><h2>Feature Pages (Major Systems)</h2><p>Dedicated deep-dive pages for each major Vault feature, with backend/frontend stages and full operations detail.</p><a href="../feature-pages/README.md">Open feature pages →</a></div>
       <div class="card"><h2>Appendix: Full Tool Catalog</h2><p>Generated persona -> allowed tools list.</p><a href="appendix_persona_tool_catalog.md">Open appendix →</a></div>
       <div class="card"><h2>Source Index</h2><p>Section list in markdown form.</p><a href="README.md">Open index →</a></div>
     </div>

@@ -5,6 +5,17 @@ Generated from `persona_manifest.json` on 2026-05-13.
 Total personas: **20**
 Total tool grants (sum across personas): **519**
 
+## How to use this appendix
+
+- This is the authoritative operator reference for persona-to-tool access boundaries.
+- Use it to choose the right persona before tasking work, especially for high-risk operations.
+- Treat each tool list as an allowlist: if a tool is not listed for a persona, that persona should not be used for that operation.
+
+## Reading notes
+
+- Some tool names contain substrings like `_todo_` as part of legitimate API names (for example, image or task-processing utilities). These are valid tool identifiers, not placeholder text.
+- Runtime authority remains `persona_manifest.json` plus generated runtime registries. This appendix is the human-readable map for daily operations and review.
+
 ## Admin_Assistant
 
 - Description: Chief of Staff. Logistics, scheduling, reminders, backlog flow, and operational coordination.
