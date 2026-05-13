@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title id="page-title">Feature Pages — The Vault</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        :root {
+            --bg: #0a0a0b;
+            --surface: #111113;
+            --surface-hover: #17171a;
+            --border: #1e1e21;
+            --border-accent: #2e2e35;
+            --text: #ececf1;
+            --text-muted: #8e8ea0;
+            --text-subtle: #55556a;
+            --accent: #10a37f;
+            --accent-hover: #0d8f6f;
+            --accent-blue: #3b82f6;
+            --code-bg: #161618;
+            --code-border: #27272a;
+            --nav-h: 60px;
+            --sidebar-w: 260px;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: "Inter", system-ui, -apple-system, sans-serif;
+            font-size: 15px;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ── TOP NAV ─────────────────────────────────── */
+        .topnav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--nav-h);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 1.5rem;
+            background: rgba(10, 10, 11, .88);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .topnav-left {
+            display: flex;
+            align-items: center;
+            gap: .75rem;
+        }
+
+        .logo-mark {
+            width: 28px;
+            height: 28px;
+            background: var(--accent);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: .75rem;
+            font-weight: 700;
+            color: #fff;
+            flex-shrink: 0;
+            font-family: "JetBrains Mono", monospace;
+        }
+
+        .logo-text {
+            font-size: .9rem;
+            font-weight: 600;
+            color: var(--text);
+            letter-spacing: -.01em;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: .4rem;
+            font-size: .82rem;
+            color: var(--text-subtle);
+        }
+
+        .breadcrumb a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color .12s;
+        }
+
+        .breadcrumb a:hover {
+            color: var(--text);
+        }
+
+        .breadcrumb-sep {
+            color: var(--text-subtle);
+        }
+
+        .topnav-right {
+            display: flex;
+            align-items: center;
+            gap: .25rem;
+        }
+
+        .topnav-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: .82rem;
+            font-weight: 500;
+            padding: .35rem .65rem;
+            border-radius: 6px;
+            transition: color .15s, background .15s;
+        }
+
+        .topnav-link:hover {
+            color: var(--text);
+            background: var(--surface);
+        }
+
+        .btn-github {
+            margin-left: .5rem;
+            padding: .35rem .85rem;
+            background: var(--surface);
+            border: 1px solid var(--border-accent);
+            border-radius: 6px;
+            color: var(--text);
+            font-size: .82rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: border-color .15s, background .15s;
+            white-space: nowrap;
+        }
+
+        .btn-github:hover {
+            border-color: var(--accent);
+            background: var(--surface-hover);
+        }
+
+        /* ── LAYOUT ──────────────────────────────────── */
+        .layout {
+            display: flex;
+            padding-top: var(--nav-h);
+            min-height: 100vh;
+        }
+
+        /* ── SIDEBAR ─────────────────────────────────── */
+        .sidebar {
+            position: fixed;
+            top: var(--nav-h);
+            left: 0;
+            width: var(--sidebar-w);
+            height: calc(100vh - var(--nav-h));
+            overflow-y: auto;
+            padding: 1.5rem 1rem 2rem;
+            border-right: 1px solid var(--border);
+            background: var(--bg);
+            scrollbar-width: thin;
+            scrollbar-color: var(--border) transparent;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: var(--border-accent);
+            border-radius: 2px;
+        }
+
+        .sidebar-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .sidebar-group-label {
+            font-size: .7rem;
+            font-weight: 600;
+            letter-spacing: .07em;
+            text-transform: uppercase;
+            color: var(--text-subtle);
+            margin-bottom: .4rem;
+            padding: 0 .5rem;
+        }
+
+        .sidebar-link {
+            display: block;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: .83rem;
+            padding: .32rem .5rem;
+            border-radius: 5px;
+            transition: color .12s, background .12s;
+            line-height: 1.4;
+        }
+
+        .sidebar-link:hover {
+            color: var(--text);
+            background: var(--surface);
+        }
+
+        .sidebar-link.active {
+            color: var(--text);
+            background: var(--surface);
+            font-weight: 500;
+        }
+
+        .sidebar-divider {
+            height: 1px;
+            background: var(--border);
+            margin: .75rem .5rem;
+        }
+
+        /* ── MAIN CONTENT ────────────────────────────── */
+        .main {
+            margin-left: var(--sidebar-w);
+            flex: 1;
+            padding: 3rem 3.5rem 5rem;
+            max-width: calc(var(--sidebar-w) + 820px);
+        }
+
+        /* ── LOADING / ERROR ─────────────────────────── */
+        .state-msg {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 30vh;
+            gap: 1rem;
+            color: var(--text-muted);
+            text-align: center;
+        }
+
+        .state-msg h2 {
+            color: var(--text);
+            font-size: 1.3rem;
+        }
+
+        .spinner {
+            width: 32px;
+            height: 32px;
+            border: 2px solid var(--border-accent);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin .7s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* ── LANDING GRID ────────────────────────────── */
+        .landing-header {
+            margin-bottom: 2rem;
+        }
+
+        .landing-eyebrow {
+            display: inline-block;
+            font-size: .75rem;
+            font-weight: 600;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: .6rem;
+        }
+
+        .landing-header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -.02em;
+        }
+
+        .landing-header p {
+            font-size: .95rem;
+            color: var(--text-muted);
+            margin-top: .5rem;
+            max-width: 520px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+            gap: .75rem;
+        }
+
+        .feature-card {
+            display: block;
+            text-decoration: none;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1rem 1.1rem;
+            transition: border-color .15s, background .15s;
+        }
+
+        .feature-card:hover {
+            border-color: var(--border-accent);
+            background: var(--surface-hover);
+        }
+
+        .feature-card-group {
+            font-size: .68rem;
+            font-weight: 600;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+            color: var(--text-subtle);
+            margin-bottom: .3rem;
+        }
+
+        .feature-card-title {
+            font-size: .9rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .feature-card-arrow {
+            color: var(--accent);
+            font-size: .8rem;
+            margin-left: .3rem;
+        }
+
+        /* ── BREADCRUMB BAR ──────────────────────────── */
+        .content-breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: .4rem;
+            font-size: .8rem;
+            color: var(--text-subtle);
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .content-breadcrumb a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color .12s;
+        }
+
+        .content-breadcrumb a:hover {
+            color: var(--text);
+        }
+
+        /* ── PROSE (markdown output) ─────────────────── */
+        .prose {
+            max-width: 720px;
+        }
+
+        .prose h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            letter-spacing: -.02em;
+            color: var(--text);
+            margin: 0 0 1.25rem;
+            padding-bottom: .75rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .prose h2 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 2.25rem 0 .75rem;
+            padding-top: .25rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .prose h2:first-of-type {
+            border-top: none;
+            margin-top: 1.5rem;
+        }
+
+        .prose h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin: 1.5rem 0 .5rem;
+        }
+
+        .prose h4 {
+            font-size: .9rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin: 1rem 0 .4rem;
+        }
+
+        .prose p {
+            color: var(--text-muted);
+            margin: 0 0 .9rem;
+            line-height: 1.7;
+        }
+
+        .prose strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .prose em {
+            color: var(--text-muted);
+        }
+
+        .prose a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .prose a:hover {
+            text-decoration: underline;
+        }
+
+        .prose ul,
+        .prose ol {
+            color: var(--text-muted);
+            padding-left: 1.4rem;
+            margin: 0 0 .9rem;
+        }
+
+        .prose li {
+            margin: .3rem 0;
+            line-height: 1.65;
+        }
+
+        .prose li strong {
+            color: var(--text);
+        }
+
+        .prose code {
+            font-family: "JetBrains Mono", "Fira Code", monospace;
+            font-size: .8rem;
+            background: var(--code-bg);
+            border: 1px solid var(--code-border);
+            padding: .1rem .35rem;
+            border-radius: 4px;
+            color: #a5d6ff;
+        }
+
+        .prose pre {
+            background: var(--code-bg);
+            border: 1px solid var(--code-border);
+            border-radius: 8px;
+            padding: 1rem 1.1rem;
+            margin: .5rem 0 1.1rem;
+            overflow-x: auto;
+        }
+
+        .prose pre code {
+            background: none;
+            border: none;
+            padding: 0;
+            font-size: .82rem;
+            line-height: 1.7;
+            color: var(--text);
+        }
+
+        .prose blockquote {
+            border-left: 3px solid var(--accent);
+            padding: .6rem 1rem;
+            margin: 1rem 0;
+            background: var(--surface);
+            border-radius: 0 6px 6px 0;
+            color: var(--text-muted);
+        }
+
+        .prose hr {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 2rem 0;
+        }
+
+        .prose table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: .75rem 0 1.1rem;
+            font-size: .85rem;
+        }
+
+        .prose th {
+            background: var(--surface);
+            color: var(--text);
+            font-weight: 600;
+            padding: .5rem .75rem;
+            border: 1px solid var(--border);
+            text-align: left;
+        }
+
+        .prose td {
+            padding: .45rem .75rem;
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+        }
+
+        .prose tr:nth-child(even) td {
+            background: rgba(255, 255, 255, .02);
+        }
+
+        /* ── FOOTER ──────────────────────────────────── */
+        footer {
+            margin-left: var(--sidebar-w);
+            padding: 1.5rem 3.5rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: var(--text-subtle);
+            font-size: .82rem;
+            flex-wrap: wrap;
+            gap: .5rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.25rem;
+        }
+
+        .footer-links a {
+            color: var(--text-subtle);
+            text-decoration: none;
+            transition: color .12s;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-muted);
+        }
+
+        /* ── MOBILE ──────────────────────────────────── */
+        @media (max-width: 860px) {
+            .sidebar {
+                display: none;
+            }
+
+            .main {
+                margin-left: 0;
+                padding: 2rem 1.25rem 4rem;
+            }
+
+            footer {
+                margin-left: 0;
+                padding: 1rem 1.25rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="topnav">
+        <div class="topnav-left">
+            <div class="logo-mark">V</div>
+            <span class="logo-text">The Vault</span>
+            <div class="breadcrumb">
+                <span class="breadcrumb-sep">/</span>
+                <a href="../index.html">Manual Hub</a>
+                <span class="breadcrumb-sep">/</span>
+                <a href="../developer/index.html">Developer</a>
+                <span class="breadcrumb-sep">/</span>
+                <span id="nav-feature-name">Feature Pages</span>
+            </div>
+        </div>
+        <div class="topnav-right">
+            <a href="../developer/index.html" class="topnav-link">← Developer</a>
+            <a href="https://github.com/FerretFatale/KAOS" class="btn-github" target="_blank" rel="noopener">GitHub</a>
+        </div>
+    </header>
+
+    <div class="layout">
+        <nav class="sidebar" aria-label="Feature pages navigation">
+            <div class="sidebar-group">
+                <div class="sidebar-group-label">All Features</div>
+                <a href="feature-viewer.html" class="sidebar-link" id="link-home">Overview</a>
+            </div>
+            <div class="sidebar-group">
+                <div class="sidebar-group-label">Architecture</div>
+                <a href="?p=vault_brain" class="sidebar-link" data-p="vault_brain">Vault Brain</a>
+                <a href="?p=taskmaster_brain" class="sidebar-link" data-p="taskmaster_brain">TaskMaster Brain</a>
+                <a href="?p=contextual_thinking" class="sidebar-link" data-p="contextual_thinking">Contextual
+                    Thinking</a>
+                <a href="?p=tool_runtime_and_risk" class="sidebar-link" data-p="tool_runtime_and_risk">Tool Runtime
+                    &amp; Risk</a>
+            </div>
+            <div class="sidebar-group">
+                <div class="sidebar-group-label">Capabilities</div>
+                <a href="?p=email_intelligence" class="sidebar-link" data-p="email_intelligence">Email Intelligence</a>
+                <a href="?p=memory" class="sidebar-link" data-p="memory">Memory</a>
+                <a href="?p=research" class="sidebar-link" data-p="research">Research</a>
+                <a href="?p=goals" class="sidebar-link" data-p="goals">Goals</a>
+                <a href="?p=routines" class="sidebar-link" data-p="routines">Routines</a>
+                <a href="?p=schedule" class="sidebar-link" data-p="schedule">Schedule</a>
+                <a href="?p=budget" class="sidebar-link" data-p="budget">Finances &amp; Budget</a>
+                <a href="?p=business_portal" class="sidebar-link" data-p="business_portal">Business Ops</a>
+                <a href="?p=coding_and_model_routing" class="sidebar-link" data-p="coding_and_model_routing">Coding
+                    &amp; Routing</a>
+                <a href="?p=governance" class="sidebar-link" data-p="governance">Governance</a>
+                <a href="?p=security" class="sidebar-link" data-p="security">Security</a>
+                <a href="?p=proposal_lifecycle" class="sidebar-link" data-p="proposal_lifecycle">Proposal Lifecycle</a>
+                <a href="?p=maintenance" class="sidebar-link" data-p="maintenance">Maintenance</a>
+                <a href="?p=backup_and_recovery" class="sidebar-link" data-p="backup_and_recovery">Backup &amp;
+                    Recovery</a>
+                <a href="?p=human_input_and_backlogs" class="sidebar-link" data-p="human_input_and_backlogs">Human Input
+                    &amp; Backlogs</a>
+                <a href="?p=data_sorting" class="sidebar-link" data-p="data_sorting">Data Sorting</a>
+                <a href="?p=workflow_memory_and_templates" class="sidebar-link"
+                    data-p="workflow_memory_and_templates">Workflow Memory</a>
+                <a href="?p=new_feature_creation" class="sidebar-link" data-p="new_feature_creation">New Feature
+                    Creation</a>
+                <a href="?p=website_workflow_and_deployment" class="sidebar-link"
+                    data-p="website_workflow_and_deployment">Website &amp; Deploy</a>
+                <a href="?p=observability_and_command_center" class="sidebar-link"
+                    data-p="observability_and_command_center">Observability</a>
+                <a href="?p=eros" class="sidebar-link" data-p="eros">Eros</a>
+                <a href="?p=inspiration" class="sidebar-link" data-p="inspiration">Inspiration</a>
+            </div>
+        </nav>
+
+        <main class="main" id="main-content" aria-live="polite">
+            <!-- Content injected by JS -->
+        </main>
+    </div>
+
+    <footer>
+        <span>© 2026 The Vault / FerretFatale</span>
+        <nav class="footer-links">
+            <a href="../index.html">Manual Hub</a>
+            <a href="../developer/index.html">Developer</a>
+            <a href="../user/index.html">User Guide</a>
+            <a href="../public/index.html">Public</a>
+        </nav>
+    </footer>
+
+    <script>
+        const FEATURES = {
+            vault_brain: { label: 'Vault Brain', group: 'Architecture' },
+            taskmaster_brain: { label: 'TaskMaster Brain', group: 'Architecture' },
+            contextual_thinking: { label: 'Contextual Thinking', group: 'Architecture' },
+            tool_runtime_and_risk: { label: 'Tool Runtime & Risk', group: 'Architecture' },
+            email_intelligence: { label: 'Email Intelligence', group: 'Capabilities' },
+            memory: { label: 'Memory', group: 'Capabilities' },
+            research: { label: 'Research', group: 'Capabilities' },
+            goals: { label: 'Goals', group: 'Capabilities' },
+            routines: { label: 'Routines', group: 'Capabilities' },
+            schedule: { label: 'Schedule', group: 'Capabilities' },
+            budget: { label: 'Finances & Budget', group: 'Capabilities' },
+            business_portal: { label: 'Business Ops', group: 'Capabilities' },
+            coding_and_model_routing: { label: 'Coding & Routing', group: 'Capabilities' },
+            governance: { label: 'Governance', group: 'Capabilities' },
+            security: { label: 'Security', group: 'Capabilities' },
+            proposal_lifecycle: { label: 'Proposal Lifecycle', group: 'Capabilities' },
+            maintenance: { label: 'Maintenance', group: 'Capabilities' },
+            backup_and_recovery: { label: 'Backup & Recovery', group: 'Capabilities' },
+            human_input_and_backlogs: { label: 'Human Input & Backlogs', group: 'Capabilities' },
+            data_sorting: { label: 'Data Sorting', group: 'Capabilities' },
+            workflow_memory_and_templates: { label: 'Workflow Memory', group: 'Capabilities' },
+            new_feature_creation: { label: 'New Feature Creation', group: 'Capabilities' },
+            website_workflow_and_deployment: { label: 'Website & Deploy', group: 'Capabilities' },
+            observability_and_command_center: { label: 'Observability', group: 'Capabilities' },
+            eros: { label: 'Eros', group: 'Capabilities' },
+            inspiration: { label: 'Inspiration', group: 'Capabilities' },
+        };
+
+        const main = document.getElementById('main-content');
+
+        function setActive(p) {
+            document.querySelectorAll('.sidebar-link[data-p]').forEach(l => {
+                l.classList.toggle('active', l.dataset.p === p);
+            });
+            document.getElementById('link-home').classList.remove('active');
+        }
+
+        function showLoading() {
+            main.innerHTML = '<div class="state-msg"><div class="spinner"></div><p>Loading…</p></div>';
+        }
+
+        function showError(p) {
+            main.innerHTML = `<div class="state-msg">
+        <h2>Page not found</h2>
+        <p>Could not load <code>${p}.md</code>. The file may not exist yet.</p>
+        <a href="feature-viewer.html" style="color:var(--accent)">← Back to all features</a>
+      </div>`;
+        }
+
+        function showLanding() {
+            document.getElementById('link-home').classList.add('active');
+            document.getElementById('nav-feature-name').textContent = 'Feature Pages';
+            document.title = 'Feature Pages — The Vault';
+
+            const groups = {};
+            for (const [id, f] of Object.entries(FEATURES)) {
+                if (!groups[f.group]) groups[f.group] = [];
+                groups[f.group].push({ id, ...f });
+            }
+
+            let html = `<div class="landing-header">
+        <div class="landing-eyebrow">Reference</div>
+        <h1>Feature Pages</h1>
+        <p>Source-grounded documentation for all 26 Vault capabilities. Each page maps to real Python modules, config variables, and test fixtures.</p>
+      </div>`;
+
+            for (const [group, items] of Object.entries(groups)) {
+                html += `<h3 style="font-size:.75rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--text-subtle);margin:1.5rem 0 .6rem">${group}</h3>
+        <div class="feature-grid">`;
+                for (const f of items) {
+                    html += `<a href="?p=${f.id}" class="feature-card">
+            <div class="feature-card-title">${f.label}<span class="feature-card-arrow">→</span></div>
+          </a>`;
+                }
+                html += '</div>';
+            }
+
+            main.innerHTML = html;
+        }
+
+        function loadFeature(p) {
+            const feature = FEATURES[p];
+            if (!feature) { showLanding(); return; }
+
+            setActive(p);
+            document.getElementById('nav-feature-name').textContent = feature.label;
+            document.title = feature.label + ' — The Vault';
+            showLoading();
+
+            fetch(p + '.md')
+                .then(r => {
+                    if (!r.ok) throw new Error('not found');
+                    return r.text();
+                })
+                .then(md => {
+                    const html = marked.parse(md);
+                    main.innerHTML = `<div class="content-breadcrumb">
+            <a href="feature-viewer.html">Feature Pages</a>
+            <span class="breadcrumb-sep">/</span>
+            <span>${feature.label}</span>
+          </div>
+          <article class="prose">${html}</article>`;
+                    window.scrollTo(0, 0);
+                })
+                .catch(() => showError(p));
+        }
+
+        // Route on load
+        const params = new URLSearchParams(location.search);
+        const p = params.get('p');
+        if (p && FEATURES[p]) {
+            loadFeature(p);
+        } else {
+            document.getElementById('link-home').classList.add('active');
+            showLanding();
+        }
+    </script>
+</body>
+
+</html>
