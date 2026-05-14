@@ -182,3 +182,14 @@ python -m pytest Copilot_Tests/test_revenue_framework.py -v
 - Last reviewed: 2026-05-14
 - Source of truth: `Business/brand_registry.py`, `Business/revenue_framework.py`
 - Update triggers: new brand added, new platform added to valid list, revenue pathway added, Stage C publisher configured.
+
+## 10) Dependencies and integrations
+
+- `Business/brand_registry.py` and `Business/brand_registry.json`
+- `Business/revenue_framework.py` and revenue state files
+- `Business/social_media_manager.py` queueing path
+- `Finances/budget_manager.py` Stage B integration
+
+## 11) Change log and manual maintenance
+
+Keep this page synchronized with brand schema updates, pathway additions, and publish-gate rules.

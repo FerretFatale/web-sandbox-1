@@ -189,3 +189,7 @@ python -m pytest Copilot_Tests/test_contextual_thinking.py -v
 - Last reviewed: 2026-05-14
 - Source of truth: `Contextual_Thinking/` directory
 - Update triggers: new tracker module added, sentiment categories changed, persona_tracker schema changed.
+
+## 11) Change log and manual maintenance
+
+Update this page when telemetry schemas, tracker outputs, or vault_brain integration points change.

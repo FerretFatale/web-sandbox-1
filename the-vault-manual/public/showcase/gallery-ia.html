@@ -1,1 +1,61 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Gallery Information Architecture</title></head><body><main style="max-width:860px;margin:2rem auto;font-family:Georgia,serif;line-height:1.55;padding:0 1rem;"><a href="index.html">← Showcase Hub</a><h1>Gallery Information Architecture</h1><p>Primary path: <code>manual hub -> public guide -> showcase hub -> gallery pages</code>.</p><h2>Required nav guarantees</h2><ul><li>Every showcase page links back to Showcase Hub.</li><li>Showcase Hub links back to Public Guide.</li><li>Public Guide links back to Manual Hub.</li></ul><h2>Page roles</h2><ul><li><strong>Strategy:</strong> why the gallery exists.</li><li><strong>IA:</strong> structure and user flow.</li><li><strong>Inventory:</strong> content readiness.</li><li><strong>Style:</strong> design system direction.</li><li><strong>Checklist:</strong> launch safety gates.</li><li><strong>Case studies:</strong> proof format.</li></ul></main></body></html>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gallery Information Architecture</title>
+  <style>
+    body { font-family: "Segoe UI", "Trebuchet MS", sans-serif; margin: 0; color: #1f2937; background: #fffaf4; }
+    .w { max-width: 920px; margin: 0 auto; padding: 1.9rem 1rem 2.3rem; }
+    a { color: #b84d18; }
+    h1 { margin: .6rem 0 .3rem; }
+    .muted { color: #586679; }
+    .box { background: #fff; border: 1px solid #ecdccf; border-radius: 10px; padding: .9rem; margin-top: .8rem; }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .7rem; }
+    @media(max-width:760px) { .grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+
+<body>
+  <main class="w"><a href="index.html">&larr; Showcase Hub</a>
+    <h1>Information Architecture</h1>
+    <p class="muted">The showcase IA is designed to let visitors escalate from quick confidence to deep technical trust without confusion.</p>
+
+    <div class="box">
+      <h2>Primary journey</h2>
+      <ol>
+        <li>Public Guide introduces mission and trust posture.</li>
+        <li>Showcase Hub frames the deep-dive method (signal, mechanism, evidence, boundary).</li>
+        <li>Deep-dive pages provide focused proof and concrete process details.</li>
+        <li>Case Studies close the loop by tying decisions to measured outcomes.</li>
+      </ol>
+    </div>
+
+    <div class="box grid">
+      <section>
+        <h2>Hierarchy choices</h2>
+        <ul>
+          <li>High-level narrative first, technical depth second.</li>
+          <li>Repeated visual and textual patterns for fast scanning.</li>
+          <li>Direct path back to Public Guide and Manual Hub from every key page.</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Anti-friction rules</h2>
+        <ul>
+          <li>Stable filenames and deterministic links.</li>
+          <li>No hidden gates for reading core proof material.</li>
+          <li>No sales detours or conversion funnel copy.</li>
+        </ul>
+      </section>
+    </div>
+
+    <div class="box">
+      <h2>Boundary handling in IA</h2>
+      <p>Public pages show outcomes, architecture patterns, and quality behavior. Private runtime data, credentials, and sensitive operator records remain outside this topology by design.</p>
+    </div>
+  </main>
+</body>
+
+</html>

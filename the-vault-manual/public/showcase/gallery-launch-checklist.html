@@ -1,1 +1,60 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Gallery Launch Checklist</title></head><body><main style="max-width:860px;margin:2rem auto;font-family:Georgia,serif;line-height:1.55;padding:0 1rem;"><a href="index.html">← Showcase Hub</a><h1>Gallery Launch Checklist</h1><ol><li>Content pass complete for strategy, IA, inventory, style, and case-study pages.</li><li>All links valid from Manual Hub -> Public Guide -> Showcase Hub -> child pages.</li><li>Mobile rendering verified for 390px and 768px widths.</li><li>Manual tests pass (`test_manual_split`, `test_manual_publisher`, `test_public_guide_framing`).</li><li>Publish preflight passes for <code>web-sandbox-1</code>.</li><li>Dry-run publish pass captured.</li><li>Human-approved publish executed (if requested).</li><li>Hosted verification captured post-publish.</li></ol><p><strong>Gate:</strong> no promotion to final public target without preview verification and approval.</p></main></body></html>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gallery Launch Checklist</title>
+  <style>
+    body { font-family: "Segoe UI", "Trebuchet MS", sans-serif; margin: 0; color: #1f2937; background: #fffaf4; }
+    .w { max-width: 920px; margin: 0 auto; padding: 1.9rem 1rem 2.3rem; }
+    a { color: #b84d18; }
+    h1 { margin: .6rem 0 .3rem; }
+    .muted { color: #586679; }
+    .box { background: #fff; border: 1px solid #ecdccf; border-radius: 10px; padding: .9rem; margin-top: .8rem; }
+    .gate { font-weight: 700; color: #7e3517; }
+  </style>
+</head>
+
+<body>
+  <main class="w"><a href="index.html">&larr; Showcase Hub</a>
+    <h1>Launch Checklist</h1>
+    <p class="muted">Mandatory gates for publishing updates to the Feature Deep Dives / Showcase area.</p>
+
+    <div class="box">
+      <h2>Content gate</h2>
+      <ul>
+        <li><span class="gate">Gate C1:</span> Every page includes signal, mechanism, evidence, and boundary cues.</li>
+        <li><span class="gate">Gate C2:</span> No sales or monetization language appears in hero, body, or closeout copy.</li>
+        <li><span class="gate">Gate C3:</span> Claims are evidence-backed and scoped to demonstrable outcomes.</li>
+      </ul>
+    </div>
+
+    <div class="box">
+      <h2>Experience gate</h2>
+      <ul>
+        <li><span class="gate">Gate E1:</span> Navigation links are stable from Public Guide to Showcase pages.</li>
+        <li><span class="gate">Gate E2:</span> Responsive behavior remains readable on mobile and desktop.</li>
+        <li><span class="gate">Gate E3:</span> Visual hierarchy preserves quick scan and deep-read paths.</li>
+      </ul>
+    </div>
+
+    <div class="box">
+      <h2>Safety gate</h2>
+      <ul>
+        <li><span class="gate">Gate S1:</span> No private credentials, runtime secrets, or sensitive records exposed.</li>
+        <li><span class="gate">Gate S2:</span> Public/private boundary statements are present and clear.</li>
+      </ul>
+    </div>
+
+    <div class="box">
+      <h2>Verification gate</h2>
+      <ul>
+        <li><span class="gate">Gate V1:</span> Run manual split and publisher tests before closure.</li>
+        <li><span class="gate">Gate V2:</span> Record gatekeeper post-review and closure evidence artifacts.</li>
+      </ul>
+    </div>
+  </main>
+</body>
+
+</html>

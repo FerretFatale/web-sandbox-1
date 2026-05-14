@@ -168,3 +168,16 @@ Ambitions tests cover: intake validation, plan generation with fallback, approva
 - Last reviewed: 2026-05-14
 - Source of truth: `Goals/ambitions.py`, `Goals/goals_assessment.py`
 - Update triggers: new ambition status value, approval response options changed, insertion targets changed, plan schema fields added.
+
+## 10) Dependencies and integrations
+
+- `Goals/ambitions.py` for intake/plan/review/insert state flow
+- `Goals/goals_assessment.py` for assessment and knowledge-map generation
+- `Routines/Current_Routines.json` insertion target
+- `Schedule/Weekly_Planner/` insertion target
+- `Toolkit/omni_router.py` cascade planning path
+
+## 11) Change log and manual maintenance
+
+This page is maintained alongside ambition pipeline updates. When ambition state values,
+insert targets, or plan schema fields change, update this feature page in the same lane.

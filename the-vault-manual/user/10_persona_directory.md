@@ -2,6 +2,8 @@
 
 This section summarizes all 20 personas and when to use them.
 
+If you are new: start with your objective, then choose the persona by domain.
+
 ## System-tier personas
 
 1. `Vault_Brain`: runtime steward, routing/governance owner.
@@ -33,5 +35,40 @@ This section summarizes all 20 personas and when to use them.
 1. If risk/authority is high, start with system-tier owners.
 2. If task is domain-specific, start with domain owner and escalate as needed.
 3. For mixed-domain lanes, prefer explicit primary-owner + delegation chain.
+
+## Quick chooser by goal
+
+Use this table-like list when you are unsure where to start:
+
+1. Need calendar/planning/reminders -> `Admin_Assistant`
+2. Need business or website strategy -> `Business_Ops`
+3. Need budgeting/revenue tracking -> `CFO`
+4. Need health logging support -> `Medical`
+5. Need goal roadmap -> `Goals`
+6. Need routines and habit systems -> `Routines`
+7. Need campaign voice/creative direction -> `Inspiration`
+8. Need coding or implementation -> `Master_Coder`
+9. Need security/safety review -> `Security`
+10. Need web evidence retrieval -> `Websearch`
+11. Need image/media generation support -> `Image_Processor`
+12. Need video planning/content assets -> `Videographer`
+13. Need communication drafting -> `Conversationalist`
+14. Need external historical context -> `External_Memory_Retrieval`
+15. Need internal history/context recall -> `Internal_Memory_Retrieval`
+16. Need memory continuity maintenance -> `Living_Memory`
+
+## Capability discoverability by domain
+
+The following major feature domains are represented in the repository and can be operated through persona-led workflows:
+
+1. Scheduling and day-planning
+2. Goals and routines
+3. Health logs and trend summaries
+4. Business planning and brand operations
+5. Finance and revenue frameworks
+6. Social media and communications pipeline
+7. Creative image/video workflow support
+8. Internal and external research retrieval
+9. Governance, approvals, and checkpointed mission execution
 
 Full tool-level mapping: `appendix_persona_tool_catalog.md`.

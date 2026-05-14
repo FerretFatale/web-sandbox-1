@@ -200,3 +200,14 @@ Tests cover: rolling week date mapping, day validation in schedule_task, upcomin
 - Last reviewed: 2026-05-14
 - Source of truth: `Schedule/living_schedule.py`, `Schedule/events_calendar.py`, `Schedule/calendar_views.py`
 - Update triggers: new schedule API, new event type added, horizon list changed, env var behaviour changed, iCal format updated.
+
+## 10) Dependencies and integrations
+
+- `Schedule/living_schedule.py`
+- `Schedule/events_calendar.py`
+- `Schedule/calendar_views.py`
+- `Routines/Current_Routines.json` and `Goals/ambitions.py` insertion coupling
+
+## 11) Change log and manual maintenance
+
+Keep this page synchronized with schedule API changes, event schema updates, and planner-horizon behavior changes.

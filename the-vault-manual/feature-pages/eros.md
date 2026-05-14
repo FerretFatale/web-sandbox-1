@@ -173,3 +173,8 @@ returns `not_found` gracefully, `session_id` defaults to ISO timestamp.
 - Last reviewed: 2026-05-14
 - Source of truth: `Toolkit/eros_hold_buffer.py`, `Toolkit/eros_context.py`
 - Update triggers: new forbidden phrases added, expiry behavior changed, relationship bridge schema changed.
+
+## 11) Change log and manual maintenance
+
+Update this page whenever buffer schema, expiry behavior, or relationship bridge contracts change.
+Preserve privacy guarantees and gitignore boundaries in all revisions.

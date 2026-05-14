@@ -160,3 +160,14 @@ Actuarial tests use fixture data (`api_query_actuarial_table_fixture`) to verify
 - Last reviewed: 2026-05-14
 - Source of truth: `Internal_Memory_Retrieval/research_manager.py`, `Research/actuarial_tables.py`
 - Update triggers: new research source registered/approved, websearch API changed, new research module added.
+
+## 10) Dependencies and integrations
+
+- `Internal_Memory_Retrieval/research_manager.py`
+- `Research/actuarial_tables.py`
+- `Websearch/` module family for external-source research
+- `Toolkit/omni_router.py` synthesis routing path
+
+## 11) Change log and manual maintenance
+
+Update this page when project schema, source-approval flow, or research routing behavior changes.

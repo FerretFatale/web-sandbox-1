@@ -207,3 +207,7 @@ python -m pytest Copilot_Tests/test_brain_layer_boundaries.py -v
 - Last reviewed: 2026-05-14
 - Source of truth: `Toolkit/provider_boundary_policy.py`, `Toolkit/runtime_test_governance.py`
 - Update triggers: new governance rule, new exempt path, filter blocklist changed, new SR rule added, rollback trigger changed.
+
+## 11) Change log and manual maintenance
+
+Maintain this page with every provider-boundary, governance-rule, or escalation-flow update.

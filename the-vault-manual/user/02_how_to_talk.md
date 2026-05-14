@@ -1,36 +1,85 @@
 # How to Talk to The_Vault
 
-## Core prompting pattern
+This chapter teaches you how to give instructions that are clear, safe, and easy to execute.
 
-Use this structure for most requests:
-1. Objective: what outcome you want.
-2. Scope: what files/surfaces are in-bounds.
-3. Constraints: safety, approvals, deadlines.
-4. Success criteria: how you know it is done.
+If you remember one thing: **be explicit about outcome, scope, and boundaries.**
 
-## Quick tasks vs missions
+## The 4-part request pattern (default)
 
-1. Quick task: single output, low ambiguity, limited side effects.
-2. Mission: multi-step, dependency-driven, cross-surface changes.
+Use this for almost every request:
 
-## High-signal prompt examples
+1. **Objective** - what you want done.
+2. **Scope** - what files/surfaces are in-bounds.
+3. **Constraints** - approvals, safety rules, timing limits.
+4. **Success criteria** - how completion will be judged.
 
-1. "Create a checklist and execute only steps 1-2, then stop for review."
-2. "Update docs only, no runtime code changes."
-3. "Run dry-run first, summarize blockers before live action."
-4. "Use proposal-first: give me plan, risks, and acceptance criteria before implementing."
+### Example (strong)
 
-## Avoid ambiguity
+"Objective: improve user manual readability for beginners.
+Scope: `docs/manual/user/*.md` only.
+Constraints: no runtime code changes, no publish action.
+Success: all chapters expanded with examples and plain language."
 
-1. Name target surface explicitly (`docs/manual/public/...`, `Toolkit/...`).
-2. State if external writes are allowed.
-3. State whether commit is expected.
-4. State what should not be touched.
+### Example (weak)
 
-## Revision feedback style
+"Make docs better."
 
-When a result misses, respond with:
-1. what was wrong,
-2. what must change,
-3. what should stay unchanged,
-4. how strict the next pass should be.
+Why weak? No target, no safety limits, no completion signal.
+
+## Quick task vs mission (how to choose)
+
+1. **Quick task**
+	- One clear output
+	- Low ambiguity
+	- Minimal side effects
+	- Example: "Fix typos in chapter 3 only"
+2. **Mission**
+	- Multi-step
+	- Cross-file dependencies
+	- Needs checkpoints and validation
+	- Example: "Overhaul all manual surfaces for different audiences"
+
+## Prompt templates you can reuse
+
+1. **Proposal first**
+	- "Give me a short plan, risks, and acceptance criteria before implementing."
+2. **Safe execution**
+	- "Run dry-run first and list blockers before any live action."
+3. **Scope lock**
+	- "Touch docs only; no runtime code changes."
+4. **Checkpoint flow**
+	- "Execute phase 1, then stop and report before phase 2."
+
+## How to reduce misunderstandings
+
+Before execution, confirm:
+
+1. Target files are named.
+2. Out-of-scope surfaces are named.
+3. Approval status is clear for external actions.
+4. Validation expectations are stated.
+
+## Feedback format when results miss
+
+Use this correction format:
+
+1. What was wrong.
+2. What must change.
+3. What should stay unchanged.
+4. How strict the next pass should be.
+
+### Example correction
+
+"The tone is still too technical for beginners.
+Keep the structure, but add practical examples after each concept.
+Do not change section order.
+Re-run only docs tests after edits."
+
+## Beginner pro-tip
+
+If you feel uncertain, ask for:
+
+1. a one-screen summary,
+2. a step-by-step plan,
+3. a risk list,
+4. and a clear stop point.

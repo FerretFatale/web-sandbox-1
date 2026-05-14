@@ -189,3 +189,14 @@ Tests cover: log expense validation (negative amount rejection), log income, mon
 - Last reviewed: 2026-05-14
 - Source of truth: `Finances/budget_manager.py`
 - Update triggers: new expense category, food budget integration changed, tax export format changed, new financial API added.
+
+## 10) Dependencies and integrations
+
+- `Finances/budget_manager.py` primary runtime surface
+- `Health/food_plan.json` monthly food budget target input
+- `Toolkit/omni_router.py` research routing path
+- `DATA_VAULT/Admin_and_Cashflow/*` profile, goals, and ledger files
+
+## 11) Change log and manual maintenance
+
+Keep this page updated when budget API fields, allocator behavior, or tax export formats change.

@@ -191,3 +191,8 @@ Health/
 - Last reviewed: 2026-05-14
 - Source of truth: `Toolkit/affirmation_engine.py`, `persona_manifest.json` entry 17
 - Update triggers: new affirmation source added, ambition intake schema changed, creative tools added.
+
+## 11) Change log and manual maintenance
+
+Keep this page synchronized with Inspiration persona scope and affirmation engine updates.
+When allowed tools or forbidden boundaries change, update this document and re-run publish checks.

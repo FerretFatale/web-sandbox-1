@@ -35,3 +35,43 @@
 2. Execute minimal successful path.
 3. Classify assimilation outcome: Adopt/Scaffold/Defer.
 4. Enshrine governance update.
+
+## Playbook 6: Scheduling and Planning Run
+
+1. Gather commitments, deadlines, and constraints.
+2. Build daily or weekly plan output.
+3. Add reminder/checkpoint strategy.
+4. Validate timezone/date assumptions.
+5. Publish plan to your working surface.
+
+## Playbook 7: Health Continuity Run (non-diagnostic)
+
+1. Capture current logs (symptoms, mood, activity, food).
+2. Normalize timeframe and categories.
+3. Produce trend-oriented summary.
+4. Highlight follow-up actions and questions for human review.
+5. Archive record safely.
+
+## Playbook 8: Finance and Business Review
+
+1. Collect current period inputs.
+2. Build budget/revenue/expense summary.
+3. Compare against target or prior period.
+4. Propose next actions with risk and confidence.
+5. Save snapshot with date/version context.
+
+## Playbook 9: Social and Content Pipeline
+
+1. Define campaign objective and audience.
+2. Draft content variants.
+3. Apply voice/style constraints.
+4. Route through approval gate.
+5. Execute publish only after explicit approval.
+
+## Playbook 10: Research to Decision Pipeline
+
+1. Ask focused question.
+2. Retrieve evidence from internal and/or external sources.
+3. Separate facts from assumptions.
+4. Summarize options and tradeoffs.
+5. Record decision and next mission lane.

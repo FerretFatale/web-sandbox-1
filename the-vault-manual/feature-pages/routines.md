@@ -151,3 +151,19 @@ Tests cover: draft generation (mocked Gemini), save writes correct files, de-dup
 - Last reviewed: 2026-05-14
 - Source of truth: `Routines/build_routines.py`
 - Update triggers: new routine API, context injection sources changed, model changed from Gemini 2.5 Pro, storage paths changed.
+
+## 9) Testing and verification
+
+Primary deterministic checks live in `Copilot_Tests/test_routines.py` and verify draft generation,
+save behavior, and de-duplication. Re-run those tests after any API shape or storage-path change.
+
+## 10) Dependencies and integrations
+
+- `Routines/build_routines.py`
+- `Goals/ambitions.py` insertion path
+- `Schedule/living_schedule.py` routine consumption path
+- `Health/` notification targets for health-aware routines
+
+## 11) Change log and manual maintenance
+
+Update this page when routine generation prompts, insertion targets, or planner coupling behavior changes.
