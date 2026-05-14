@@ -1,18 +1,372 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Style Direction — The Vault</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <style>
-    :root{--bg:#120800;--surface:#1d1206;--surface-2:#281707;--surface-hover:#38210a;--border:#5e3712;--text:#fff7ea;--muted:#f0d6b0;--subtle:#c89b5f;--accent:#ffd24a;--accent-2:#ff79c9;--nav-h:60px;--sidebar-w:280px}*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}body{background:radial-gradient(1200px 650px at 110% -10%,rgba(255,121,201,.24),transparent 62%),radial-gradient(1000px 600px at -12% -6%,rgba(255,210,74,.18),transparent 62%),var(--bg);color:var(--text);font-family:"Inter",system-ui,-apple-system,sans-serif;font-size:15px;line-height:1.65}.topnav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;background:rgba(18,8,0,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}.topnav-left{display:flex;align-items:center;gap:.65rem}.logo-mark{width:28px;height:28px;background:linear-gradient(135deg,var(--accent),var(--accent-2));border-radius:6px;display:flex;align-items:center;justify-content:center;color:#05101f;font-size:.75rem;font-weight:700;font-family:"JetBrains Mono",monospace}.logo-text{font-size:.9rem;font-weight:600}.nav-divider{width:1px;height:20px;background:var(--border);margin:0 .25rem}.topnav-link{color:var(--muted);text-decoration:none;font-size:.85rem;padding:.3rem .5rem;border-radius:6px}.topnav-link:hover{color:var(--text);background:rgba(255,210,74,.08)}.topnav-link.active{color:var(--accent);font-weight:600}.github-btn{background:var(--surface);border:1px solid var(--border);color:var(--muted);text-decoration:none;font-size:.82rem;padding:.35rem .75rem;border-radius:8px}.github-btn:hover{color:var(--text);border-color:var(--accent)}.sidebar{position:fixed;top:var(--nav-h);left:0;bottom:0;width:var(--sidebar-w);overflow-y:auto;background:var(--surface);border-right:1px solid var(--border);padding:1.4rem 0}.sidebar-group{margin-bottom:1.4rem}.sidebar-group-label{display:block;padding:.25rem 1.25rem;font-size:.72rem;font-weight:600;color:var(--subtle);text-transform:uppercase;letter-spacing:.06em}.sidebar-link{display:block;padding:.42rem 1.25rem;color:var(--muted);text-decoration:none;font-size:.87rem}.sidebar-link:hover{color:var(--text);background:var(--surface-hover)}.sidebar-link.active{color:var(--accent);font-weight:600;border-right:2px solid var(--accent)}.main-content{margin-left:var(--sidebar-w);margin-top:var(--nav-h);padding:2rem 2.5rem 4rem}.content-wrap{max-width:980px}.hero-eyebrow{font-size:.78rem;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.75rem}h1{font-size:2.2rem;line-height:1.14;margin-bottom:.8rem}.hero-sub{font-size:1.05rem;color:var(--muted);max-width:780px}.section-divider{border:none;border-top:1px solid var(--border);margin:2.4rem 0}h2{font-size:1.34rem;margin:0 0 .7rem}p{color:var(--muted);margin-bottom:.85rem}.box{background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:1rem 1.1rem}.swatches{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem}.swatch-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1rem 1.05rem}.swatch{display:inline-block;width:1rem;height:1rem;border-radius:3px;margin-right:.35rem;vertical-align:middle;border:1px solid #d5d5d5}.bullets{padding-left:1.15rem;color:var(--muted)}.bullets li{margin:.35rem 0}footer{margin-top:3rem;border-top:1px solid var(--border);padding-top:1.4rem;color:var(--subtle);font-size:.85rem}footer a{color:var(--muted);text-decoration:none}footer a:hover{text-decoration:underline}@media(max-width:980px){.sidebar{display:none}.main-content{margin-left:0;padding:1.4rem 1.2rem 3rem}.swatches{grid-template-columns:1fr}}
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Style Direction — The Vault</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet" />
+    <style>
+        :root {
+            --bg: #120800;
+            --surface: #1d1206;
+            --surface-2: #281707;
+            --surface-hover: #38210a;
+            --border: #5e3712;
+            --text: #fff7ea;
+            --muted: #f0d6b0;
+            --subtle: #c89b5f;
+            --accent: #ffd24a;
+            --accent-2: #ff79c9;
+            --nav-h: 60px;
+            --sidebar-w: 280px
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        body {
+            background: radial-gradient(1200px 650px at 110% -10%, rgba(255, 121, 201, .24), transparent 62%), radial-gradient(1000px 600px at -12% -6%, rgba(255, 210, 74, .18), transparent 62%), var(--bg);
+            color: var(--text);
+            font-family: "Inter", system-ui, -apple-system, sans-serif;
+            font-size: 15px;
+            line-height: 1.65
+        }
+
+        .topnav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--nav-h);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 1.5rem;
+            background: rgba(18, 8, 0, .92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border)
+        }
+
+        .topnav-left {
+            display: flex;
+            align-items: center;
+            gap: .65rem
+        }
+
+        .logo-mark {
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #05101f;
+            font-size: .75rem;
+            font-weight: 700;
+            font-family: "JetBrains Mono", monospace
+        }
+
+        .logo-text {
+            font-size: .9rem;
+            font-weight: 600
+        }
+
+        .nav-divider {
+            width: 1px;
+            height: 20px;
+            background: var(--border);
+            margin: 0 .25rem
+        }
+
+        .topnav-link {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: .85rem;
+            padding: .3rem .5rem;
+            border-radius: 6px
+        }
+
+        .topnav-link:hover {
+            color: var(--text);
+            background: rgba(255, 210, 74, .08)
+        }
+
+        .topnav-link.active {
+            color: var(--accent);
+            font-weight: 600
+        }
+
+        .github-btn {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--muted);
+            text-decoration: none;
+            font-size: .82rem;
+            padding: .35rem .75rem;
+            border-radius: 8px
+        }
+
+        .github-btn:hover {
+            color: var(--text);
+            border-color: var(--accent)
+        }
+
+        .sidebar {
+            position: fixed;
+            top: var(--nav-h);
+            left: 0;
+            bottom: 0;
+            width: var(--sidebar-w);
+            overflow-y: auto;
+            background: var(--surface);
+            border-right: 1px solid var(--border);
+            padding: 1.4rem 0
+        }
+
+        .sidebar-group {
+            margin-bottom: 1.4rem
+        }
+
+        .sidebar-group-label {
+            display: block;
+            padding: .25rem 1.25rem;
+            font-size: .72rem;
+            font-weight: 600;
+            color: var(--subtle);
+            text-transform: uppercase;
+            letter-spacing: .06em
+        }
+
+        .sidebar-link {
+            display: block;
+            padding: .42rem 1.25rem;
+            color: var(--muted);
+            text-decoration: none;
+            font-size: .87rem
+        }
+
+        .sidebar-link:hover {
+            color: var(--text);
+            background: var(--surface-hover)
+        }
+
+        .sidebar-link.active {
+            color: var(--accent);
+            font-weight: 600;
+            border-right: 2px solid var(--accent)
+        }
+
+        .main-content {
+            margin-left: var(--sidebar-w);
+            margin-top: var(--nav-h);
+            padding: 2rem 2.5rem 4rem
+        }
+
+        .content-wrap {
+            max-width: 980px
+        }
+
+        .hero-eyebrow {
+            font-size: .78rem;
+            font-weight: 600;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: .1em;
+            margin-bottom: .75rem
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            line-height: 1.14;
+            margin-bottom: .8rem
+        }
+
+        .hero-sub {
+            font-size: 1.05rem;
+            color: var(--muted);
+            max-width: 780px
+        }
+
+        .section-divider {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 2.4rem 0
+        }
+
+        h2 {
+            font-size: 1.34rem;
+            margin: 0 0 .7rem
+        }
+
+        p {
+            color: var(--muted);
+            margin-bottom: .85rem
+        }
+
+        .box {
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem 1.1rem
+        }
+
+        .swatches {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: .8rem
+        }
+
+        .swatch-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem 1.05rem
+        }
+
+        .swatch {
+            display: inline-block;
+            width: 1rem;
+            height: 1rem;
+            border-radius: 3px;
+            margin-right: .35rem;
+            vertical-align: middle;
+            border: 1px solid #d5d5d5
+        }
+
+        .bullets {
+            padding-left: 1.15rem;
+            color: var(--muted)
+        }
+
+        .bullets li {
+            margin: .35rem 0
+        }
+
+        footer {
+            margin-top: 3rem;
+            border-top: 1px solid var(--border);
+            padding-top: 1.4rem;
+            color: var(--subtle);
+            font-size: .85rem
+        }
+
+        footer a {
+            color: var(--muted);
+            text-decoration: none
+        }
+
+        footer a:hover {
+            text-decoration: underline
+        }
+
+        @media(max-width:980px) {
+            .sidebar {
+                display: none
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 1.4rem 1.2rem 3rem
+            }
+
+            .swatches {
+                grid-template-columns: 1fr
+            }
+        }
+    </style>
 </head>
+
 <body>
-  <nav class="topnav" aria-label="Manual navigation"><div class="topnav-left"><div class="logo-mark">V</div><span class="logo-text">The Vault</span><div class="nav-divider"></div><a href="../../index.html" class="topnav-link">Manual Home</a><a href="../../developer/index.html" class="topnav-link">Developer</a><a href="../../user/index.html" class="topnav-link">User Guide</a><a href="../index.html" class="topnav-link">Public</a><a href="../../feature-pages/feature-viewer.html" class="topnav-link">Features</a></div><a href="https://github.com/FerretFatale/KAOS" class="github-btn" target="_blank" rel="noopener noreferrer">GitHub →</a></nav>
-  <aside class="sidebar" aria-label="Showcase navigation"><div class="sidebar-group"><div class="sidebar-group-label">Showcase Hub</div><a href="index.html" class="sidebar-link">Intro</a><a href="index.html#highlights" class="sidebar-link">Highlights</a><a href="case-studies.html" class="sidebar-link">Case Studies</a><a href="gallery-style-direction.html" class="sidebar-link active">Style Direction</a></div><div class="sidebar-group"><div class="sidebar-group-label">Gallery Pages</div><a href="gallery-strategy.html" class="sidebar-link">Strategy</a><a href="gallery-ia.html" class="sidebar-link">Information Architecture</a><a href="gallery-content-inventory.html" class="sidebar-link">Content Inventory</a><a href="gallery-launch-checklist.html" class="sidebar-link">Launch Checklist</a></div></aside>
-  <main class="main-content"><div class="content-wrap"><section><p class="hero-eyebrow">Public Showcase · Style Direction</p><h1>Style direction that feels premium without losing readability</h1><p class="hero-sub">The showcase should feel warm, polished, and confident. It should never drift into system-font scraps or a washed-out planning page. This direction keeps the public area visually cohesive while preserving the darker portal authority.</p></section><hr class="section-divider" /><section><h2>Visual personality</h2><div class="swatches"><article class="swatch-card"><h3><span class="swatch" style="background:#120800"></span>Background</h3><p>Deep amber-black base to keep the page grounded and readable.</p></article><article class="swatch-card"><h3><span class="swatch" style="background:#1d1206"></span>Surface</h3><p>Warm panels with enough contrast to separate sections clearly.</p></article><article class="swatch-card"><h3><span class="swatch" style="background:#ffd24a"></span>Accent</h3><p>Gold accent for links, labels, and proof highlights.</p></article></div></section><section><h2>Copy style guardrails</h2><div class="box"><ul class="bullets"><li>Show the work, do not oversell it.</li><li>Keep the tone confident, not salesy.</li><li>Use plain labels and concrete evidence references.</li><li>Never bury navigation inside body copy when the topnav can carry it.</li></ul></div></section><section><h2>Accessibility baseline</h2><div class="box"><ul class="bullets"><li>Readable line length and generous spacing.</li><li>Consistent heading hierarchy.</li><li>Responsive cards and obvious link affordance.</li><li>Dark-theme contrast preserved for public readability.</li></ul></div></section><footer><a href="index.html">Showcase Hub</a> · <a href="gallery-strategy.html">Gallery Strategy</a> · <a href="gallery-launch-checklist.html">Launch Checklist</a> · <a href="../index.html">Public Guide</a></footer></div></main>
+    <nav class="topnav" aria-label="Manual navigation">
+        <div class="topnav-left">
+            <div class="logo-mark">V</div><span class="logo-text">The Vault</span>
+            <div class="nav-divider"></div><a href="../../index.html" class="topnav-link">Manual Home</a><a
+                href="../../developer/index.html" class="topnav-link">Developer</a><a href="../../user/index.html"
+                class="topnav-link">User Guide</a><a href="../index.html" class="topnav-link">Public</a><a
+                href="../../feature-pages/feature-viewer.html" class="topnav-link">Features</a>
+        </div><a href="https://github.com/FerretFatale/KAOS" class="github-btn" target="_blank"
+            rel="noopener noreferrer">GitHub →</a>
+    </nav>
+    <aside class="sidebar" aria-label="Showcase navigation">
+        <div class="sidebar-group">
+            <div class="sidebar-group-label">Showcase Hub</div><a href="index.html" class="sidebar-link">Intro</a><a
+                href="index.html#highlights" class="sidebar-link">Highlights</a><a href="case-studies.html"
+                class="sidebar-link">Case Studies</a><a href="gallery-style-direction.html"
+                class="sidebar-link active">Style Direction</a>
+        </div>
+        <div class="sidebar-group">
+            <div class="sidebar-group-label">Gallery Pages</div><a href="gallery-strategy.html"
+                class="sidebar-link">Strategy</a><a href="gallery-ia.html" class="sidebar-link">Information
+                Architecture</a><a href="gallery-content-inventory.html" class="sidebar-link">Content Inventory</a><a
+                href="gallery-launch-checklist.html" class="sidebar-link">Launch Checklist</a>
+        </div>
+    </aside>
+    <main class="main-content">
+        <div class="content-wrap">
+            <section>
+                <p class="hero-eyebrow">Public Showcase · Style Direction</p>
+                <h1>Style direction that feels premium without losing readability</h1>
+                <p class="hero-sub">The showcase should feel warm, polished, and confident. It should never drift into
+                    system-font scraps or a washed-out planning page. This direction keeps the public area visually
+                    cohesive while preserving the darker portal authority.</p>
+            </section>
+            <hr class="section-divider" />
+            <section>
+                <h2>Visual personality</h2>
+                <div class="swatches">
+                    <article class="swatch-card">
+                        <h3><span class="swatch" style="background:#120800"></span>Background</h3>
+                        <p>Deep amber-black base to keep the page grounded and readable.</p>
+                    </article>
+                    <article class="swatch-card">
+                        <h3><span class="swatch" style="background:#1d1206"></span>Surface</h3>
+                        <p>Warm panels with enough contrast to separate sections clearly.</p>
+                    </article>
+                    <article class="swatch-card">
+                        <h3><span class="swatch" style="background:#ffd24a"></span>Accent</h3>
+                        <p>Gold accent for links, labels, and proof highlights.</p>
+                    </article>
+                </div>
+            </section>
+            <section>
+                <h2>Copy style guardrails</h2>
+                <div class="box">
+                    <ul class="bullets">
+                        <li>Show the work, do not oversell it.</li>
+                        <li>Keep the tone confident, not salesy.</li>
+                        <li>Use plain labels and concrete evidence references.</li>
+                        <li>Never bury navigation inside body copy when the topnav can carry it.</li>
+                    </ul>
+                </div>
+            </section>
+            <section>
+                <h2>Accessibility baseline</h2>
+                <div class="box">
+                    <ul class="bullets">
+                        <li>Readable line length and generous spacing.</li>
+                        <li>Consistent heading hierarchy.</li>
+                        <li>Responsive cards and obvious link affordance.</li>
+                        <li>Dark-theme contrast preserved for public readability.</li>
+                    </ul>
+                </div>
+            </section>
+            <footer><a href="index.html">Showcase Hub</a> · <a href="gallery-strategy.html">Gallery Strategy</a> · <a
+                    href="gallery-launch-checklist.html">Launch Checklist</a> · <a href="../index.html">Public Guide</a>
+            </footer>
+        </div>
+    </main>
 </body>
+
 </html>

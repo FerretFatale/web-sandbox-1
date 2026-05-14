@@ -317,10 +317,14 @@
         display: none;
       }
     }
+  
+    .skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;}
+    .skip-link:focus{left:12px;top:12px;width:auto;height:auto;padding:.45rem .7rem;background:#fff;color:#000;z-index:1000;border-radius:6px;}
   </style>
 </head>
 
 <body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
   <header class="topnav">
     <div class="topnav-left">
       <div class="logo-mark">V</div>
@@ -358,7 +362,7 @@
       </div>
     </aside>
 
-    <main class="main-content">
+    <main id="main-content" class="main-content">
       <section id="overview">
         <p class="eyebrow">Manual Suite</p>
         <h1>The Vault Manual Home</h1>

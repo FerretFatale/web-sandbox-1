@@ -1,18 +1,397 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Information Architecture — The Vault</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <style>
-    :root{--bg:#120800;--surface:#1d1206;--surface-2:#281707;--surface-hover:#38210a;--border:#5e3712;--text:#fff7ea;--muted:#f0d6b0;--subtle:#c89b5f;--accent:#ffd24a;--accent-2:#ff79c9;--nav-h:60px;--sidebar-w:280px}*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{background:radial-gradient(1200px 650px at 110% -10%,rgba(255,121,201,.24),transparent 62%),radial-gradient(1000px 600px at -12% -6%,rgba(255,210,74,.18),transparent 62%),var(--bg);color:var(--text);font-family:"Inter",system-ui,-apple-system,sans-serif;font-size:15px;line-height:1.65}.topnav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;background:rgba(18,8,0,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}.topnav-left{display:flex;align-items:center;gap:.65rem}.logo-mark{width:28px;height:28px;background:linear-gradient(135deg,var(--accent),var(--accent-2));border-radius:6px;display:flex;align-items:center;justify-content:center;color:#05101f;font-size:.75rem;font-weight:700;font-family:"JetBrains Mono",monospace}.logo-text{font-size:.9rem;font-weight:600}.nav-divider{width:1px;height:20px;background:var(--border);margin:0 .25rem}.topnav-link{color:var(--muted);text-decoration:none;font-size:.85rem;padding:.3rem .5rem;border-radius:6px}.topnav-link:hover{color:var(--text);background:rgba(255,210,74,.08)}.topnav-link.active{color:var(--accent);font-weight:600}.github-btn{background:var(--surface);border:1px solid var(--border);color:var(--muted);text-decoration:none;font-size:.82rem;padding:.35rem .75rem;border-radius:8px}.github-btn:hover{color:var(--text);border-color:var(--accent)}.sidebar{position:fixed;top:var(--nav-h);left:0;bottom:0;width:var(--sidebar-w);overflow-y:auto;background:var(--surface);border-right:1px solid var(--border);padding:1.4rem 0}.sidebar-group{margin-bottom:1.4rem}.sidebar-group-label{display:block;padding:.25rem 1.25rem;font-size:.72rem;font-weight:600;color:var(--subtle);text-transform:uppercase;letter-spacing:.06em}.sidebar-link{display:block;padding:.42rem 1.25rem;color:var(--muted);text-decoration:none;font-size:.87rem}.sidebar-link:hover{color:var(--text);background:var(--surface-hover)}.sidebar-link.active{color:var(--accent);font-weight:600;border-right:2px solid var(--accent)}.main-content{margin-left:var(--sidebar-w);margin-top:var(--nav-h);padding:2rem 2.5rem 4rem}.content-wrap{max-width:980px}.hero-eyebrow{font-size:.78rem;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.75rem}h1{font-size:2.2rem;line-height:1.14;margin-bottom:.8rem}.hero-sub{font-size:1.05rem;color:var(--muted);max-width:780px}.section-divider{border:none;border-top:1px solid var(--border);margin:2.4rem 0}h2{font-size:1.34rem;margin:0 0 .7rem}p{color:var(--muted);margin-bottom:.85rem}.box{background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:1rem 1.1rem}.grid{display:grid;grid-template-columns:1fr 1fr;gap:.85rem}.step{display:flex;gap:.8rem;align-items:flex-start;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1rem 1.05rem}.num{width:30px;height:30px;border-radius:50%;background:rgba(255,210,74,.12);border:1px solid var(--accent);display:flex;align-items:center;justify-content:center;color:var(--accent);font-weight:700;flex-shrink:0}.muted{color:var(--muted)}.proof-list{padding-left:1.2rem;color:var(--muted)}.proof-list li{margin:.35rem 0}footer{margin-top:3rem;border-top:1px solid var(--border);padding-top:1.4rem;color:var(--subtle);font-size:.85rem}footer a{color:var(--muted);text-decoration:none}footer a:hover{text-decoration:underline}@media(max-width:980px){.sidebar{display:none}.main-content{margin-left:0;padding:1.4rem 1.2rem 3rem}.grid{grid-template-columns:1fr}}
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Information Architecture — The Vault</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet" />
+    <style>
+        :root {
+            --bg: #120800;
+            --surface: #1d1206;
+            --surface-2: #281707;
+            --surface-hover: #38210a;
+            --border: #5e3712;
+            --text: #fff7ea;
+            --muted: #f0d6b0;
+            --subtle: #c89b5f;
+            --accent: #ffd24a;
+            --accent-2: #ff79c9;
+            --nav-h: 60px;
+            --sidebar-w: 280px
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            background: radial-gradient(1200px 650px at 110% -10%, rgba(255, 121, 201, .24), transparent 62%), radial-gradient(1000px 600px at -12% -6%, rgba(255, 210, 74, .18), transparent 62%), var(--bg);
+            color: var(--text);
+            font-family: "Inter", system-ui, -apple-system, sans-serif;
+            font-size: 15px;
+            line-height: 1.65
+        }
+
+        .topnav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--nav-h);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 1.5rem;
+            background: rgba(18, 8, 0, .92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border)
+        }
+
+        .topnav-left {
+            display: flex;
+            align-items: center;
+            gap: .65rem
+        }
+
+        .logo-mark {
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #05101f;
+            font-size: .75rem;
+            font-weight: 700;
+            font-family: "JetBrains Mono", monospace
+        }
+
+        .logo-text {
+            font-size: .9rem;
+            font-weight: 600
+        }
+
+        .nav-divider {
+            width: 1px;
+            height: 20px;
+            background: var(--border);
+            margin: 0 .25rem
+        }
+
+        .topnav-link {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: .85rem;
+            padding: .3rem .5rem;
+            border-radius: 6px
+        }
+
+        .topnav-link:hover {
+            color: var(--text);
+            background: rgba(255, 210, 74, .08)
+        }
+
+        .topnav-link.active {
+            color: var(--accent);
+            font-weight: 600
+        }
+
+        .github-btn {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--muted);
+            text-decoration: none;
+            font-size: .82rem;
+            padding: .35rem .75rem;
+            border-radius: 8px
+        }
+
+        .github-btn:hover {
+            color: var(--text);
+            border-color: var(--accent)
+        }
+
+        .sidebar {
+            position: fixed;
+            top: var(--nav-h);
+            left: 0;
+            bottom: 0;
+            width: var(--sidebar-w);
+            overflow-y: auto;
+            background: var(--surface);
+            border-right: 1px solid var(--border);
+            padding: 1.4rem 0
+        }
+
+        .sidebar-group {
+            margin-bottom: 1.4rem
+        }
+
+        .sidebar-group-label {
+            display: block;
+            padding: .25rem 1.25rem;
+            font-size: .72rem;
+            font-weight: 600;
+            color: var(--subtle);
+            text-transform: uppercase;
+            letter-spacing: .06em
+        }
+
+        .sidebar-link {
+            display: block;
+            padding: .42rem 1.25rem;
+            color: var(--muted);
+            text-decoration: none;
+            font-size: .87rem
+        }
+
+        .sidebar-link:hover {
+            color: var(--text);
+            background: var(--surface-hover)
+        }
+
+        .sidebar-link.active {
+            color: var(--accent);
+            font-weight: 600;
+            border-right: 2px solid var(--accent)
+        }
+
+        .main-content {
+            margin-left: var(--sidebar-w);
+            margin-top: var(--nav-h);
+            padding: 2rem 2.5rem 4rem
+        }
+
+        .content-wrap {
+            max-width: 980px
+        }
+
+        .hero-eyebrow {
+            font-size: .78rem;
+            font-weight: 600;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: .1em;
+            margin-bottom: .75rem
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            line-height: 1.14;
+            margin-bottom: .8rem
+        }
+
+        .hero-sub {
+            font-size: 1.05rem;
+            color: var(--muted);
+            max-width: 780px
+        }
+
+        .section-divider {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 2.4rem 0
+        }
+
+        h2 {
+            font-size: 1.34rem;
+            margin: 0 0 .7rem
+        }
+
+        p {
+            color: var(--muted);
+            margin-bottom: .85rem
+        }
+
+        .box {
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem 1.1rem
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: .85rem
+        }
+
+        .step {
+            display: flex;
+            gap: .8rem;
+            align-items: flex-start;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem 1.05rem
+        }
+
+        .num {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: rgba(255, 210, 74, .12);
+            border: 1px solid var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            font-weight: 700;
+            flex-shrink: 0
+        }
+
+        .muted {
+            color: var(--muted)
+        }
+
+        .proof-list {
+            padding-left: 1.2rem;
+            color: var(--muted)
+        }
+
+        .proof-list li {
+            margin: .35rem 0
+        }
+
+        footer {
+            margin-top: 3rem;
+            border-top: 1px solid var(--border);
+            padding-top: 1.4rem;
+            color: var(--subtle);
+            font-size: .85rem
+        }
+
+        footer a {
+            color: var(--muted);
+            text-decoration: none
+        }
+
+        footer a:hover {
+            text-decoration: underline
+        }
+
+        @media(max-width:980px) {
+            .sidebar {
+                display: none
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 1.4rem 1.2rem 3rem
+            }
+
+            .grid {
+                grid-template-columns: 1fr
+            }
+        }
+    </style>
 </head>
+
 <body>
-  <nav class="topnav" aria-label="Manual navigation"><div class="topnav-left"><div class="logo-mark">V</div><span class="logo-text">The Vault</span><div class="nav-divider"></div><a href="../../index.html" class="topnav-link">Manual Home</a><a href="../../developer/index.html" class="topnav-link">Developer</a><a href="../../user/index.html" class="topnav-link">User Guide</a><a href="../index.html" class="topnav-link">Public</a><a href="../../feature-pages/feature-viewer.html" class="topnav-link">Features</a></div><a href="https://github.com/FerretFatale/KAOS" class="github-btn" target="_blank" rel="noopener noreferrer">GitHub →</a></nav>
-  <aside class="sidebar" aria-label="Showcase navigation"><div class="sidebar-group"><div class="sidebar-group-label">Showcase Hub</div><a href="index.html" class="sidebar-link">Intro</a><a href="index.html#highlights" class="sidebar-link">Highlights</a><a href="case-studies.html" class="sidebar-link">Case Studies</a><a href="gallery-ia.html" class="sidebar-link active">Information Architecture</a></div><div class="sidebar-group"><div class="sidebar-group-label">Gallery Pages</div><a href="gallery-strategy.html" class="sidebar-link">Strategy</a><a href="gallery-content-inventory.html" class="sidebar-link">Content Inventory</a><a href="gallery-style-direction.html" class="sidebar-link">Style Direction</a><a href="gallery-launch-checklist.html" class="sidebar-link">Launch Checklist</a></div></aside>
-  <main class="main-content"><div class="content-wrap"><section><p class="hero-eyebrow">Public Showcase · IA</p><h1>Information architecture that makes the next click obvious</h1><p class="hero-sub">The showcase should never trap a visitor in a dead end. Its job is to guide a quick skim toward evidence, while always preserving an easy return path to the Public Guide and the showcase hub.</p></section><hr class="section-divider" /><section><h2>Primary journey</h2><div class="grid"><div class="step"><div class="num">1</div><div><strong>Public Guide</strong><p class="muted">Introduces the system in plain language and sets expectations.</p></div></div><div class="step"><div class="num">2</div><div><strong>Showcase Hub</strong><p class="muted">Presents the proof cards and the navigation map.</p></div></div><div class="step"><div class="num">3</div><div><strong>Gallery Pages</strong><p class="muted">Explain narrative, structure, and presentation choices.</p></div></div><div class="step"><div class="num">4</div><div><strong>Case Studies</strong><p class="muted">Tie the story back to concrete outcomes and evidence.</p></div></div></div></section><section><h2>IA rules</h2><div class="box"><ul class="proof-list"><li>Every page must have a clear way back to the hub and the Public Guide.</li><li>The showcase should group exhibit pages by purpose, not by implementation accident.</li><li>There are no hidden pages or placeholder paths in the public narrative.</li></ul></div></section><section><h2>Current map</h2><div class="grid"><div class="box"><strong>Story pages</strong><p>Gallery Strategy, Information Architecture, Style Direction.</p></div><div class="box"><strong>Proof pages</strong><p>Content Inventory, Launch Checklist, Case Studies.</p></div></div></section><footer><a href="index.html">Showcase Hub</a> · <a href="gallery-strategy.html">Gallery Strategy</a> · <a href="case-studies.html">Case Studies</a> · <a href="../index.html">Public Guide</a></footer></div></main>
+    <nav class="topnav" aria-label="Manual navigation">
+        <div class="topnav-left">
+            <div class="logo-mark">V</div><span class="logo-text">The Vault</span>
+            <div class="nav-divider"></div><a href="../../index.html" class="topnav-link">Manual Home</a><a
+                href="../../developer/index.html" class="topnav-link">Developer</a><a href="../../user/index.html"
+                class="topnav-link">User Guide</a><a href="../index.html" class="topnav-link">Public</a><a
+                href="../../feature-pages/feature-viewer.html" class="topnav-link">Features</a>
+        </div><a href="https://github.com/FerretFatale/KAOS" class="github-btn" target="_blank"
+            rel="noopener noreferrer">GitHub →</a>
+    </nav>
+    <aside class="sidebar" aria-label="Showcase navigation">
+        <div class="sidebar-group">
+            <div class="sidebar-group-label">Showcase Hub</div><a href="index.html" class="sidebar-link">Intro</a><a
+                href="index.html#highlights" class="sidebar-link">Highlights</a><a href="case-studies.html"
+                class="sidebar-link">Case Studies</a><a href="gallery-ia.html" class="sidebar-link active">Information
+                Architecture</a>
+        </div>
+        <div class="sidebar-group">
+            <div class="sidebar-group-label">Gallery Pages</div><a href="gallery-strategy.html"
+                class="sidebar-link">Strategy</a><a href="gallery-content-inventory.html" class="sidebar-link">Content
+                Inventory</a><a href="gallery-style-direction.html" class="sidebar-link">Style Direction</a><a
+                href="gallery-launch-checklist.html" class="sidebar-link">Launch Checklist</a>
+        </div>
+    </aside>
+    <main class="main-content">
+        <div class="content-wrap">
+            <section>
+                <p class="hero-eyebrow">Public Showcase · IA</p>
+                <h1>Information architecture that makes the next click obvious</h1>
+                <p class="hero-sub">The showcase should never trap a visitor in a dead end. Its job is to guide a quick
+                    skim toward evidence, while always preserving an easy return path to the Public Guide and the
+                    showcase hub.</p>
+            </section>
+            <hr class="section-divider" />
+            <section>
+                <h2>Primary journey</h2>
+                <div class="grid">
+                    <div class="step">
+                        <div class="num">1</div>
+                        <div><strong>Public Guide</strong>
+                            <p class="muted">Introduces the system in plain language and sets expectations.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="num">2</div>
+                        <div><strong>Showcase Hub</strong>
+                            <p class="muted">Presents the proof cards and the navigation map.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="num">3</div>
+                        <div><strong>Gallery Pages</strong>
+                            <p class="muted">Explain narrative, structure, and presentation choices.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="num">4</div>
+                        <div><strong>Case Studies</strong>
+                            <p class="muted">Tie the story back to concrete outcomes and evidence.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <h2>IA rules</h2>
+                <div class="box">
+                    <ul class="proof-list">
+                        <li>Every page must have a clear way back to the hub and the Public Guide.</li>
+                        <li>The showcase should group exhibit pages by purpose, not by implementation accident.</li>
+                        <li>There are no hidden pages or placeholder paths in the public narrative.</li>
+                    </ul>
+                </div>
+            </section>
+            <section>
+                <h2>Current map</h2>
+                <div class="grid">
+                    <div class="box"><strong>Story pages</strong>
+                        <p>Gallery Strategy, Information Architecture, Style Direction.</p>
+                    </div>
+                    <div class="box"><strong>Proof pages</strong>
+                        <p>Content Inventory, Launch Checklist, Case Studies.</p>
+                    </div>
+                </div>
+            </section>
+            <footer><a href="index.html">Showcase Hub</a> · <a href="gallery-strategy.html">Gallery Strategy</a> · <a
+                    href="case-studies.html">Case Studies</a> · <a href="../index.html">Public Guide</a></footer>
+        </div>
+    </main>
 </body>
+
 </html>

@@ -363,10 +363,32 @@
         grid-template-columns: 1fr
       }
     }
+    .diagram-container {
+      background: rgba(255, 210, 74, .06);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: .9rem 1.1rem;
+      margin-top: .85rem;
+      font-size: .9rem;
+      color: var(--muted)
+    }
+
+    .diagram-container .diagram-label {
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: .4rem;
+      font-size: .85rem;
+      text-transform: uppercase;
+      letter-spacing: .05em
+    }
+  
+    .skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;}
+    .skip-link:focus{left:12px;top:12px;width:auto;height:auto;padding:.45rem .7rem;background:#fff;color:#000;z-index:1000;border-radius:6px;}
   </style>
 </head>
 
 <body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
   <nav class="topnav" aria-label="Manual navigation">
     <div class="topnav-left">
       <div class="logo-mark">V</div>
@@ -387,6 +409,9 @@
       <div class="sidebar-group-label">Public Story</div>
       <a href="#overview" class="sidebar-link active">Overview</a>
       <a href="#architecture" class="sidebar-link">Architecture</a>
+      <a href="#working-reliably" class="sidebar-link">Working reliably</a>
+      <a href="#inbox-router" class="sidebar-link">Inbox Router</a>
+      <a href="#missing-feature" class="sidebar-link">Missing features</a>
       <a href="#capabilities" class="sidebar-link">Capabilities</a>
       <a href="#governance" class="sidebar-link">Governance</a>
       <a href="#proof" class="sidebar-link">Proof & Signals</a>
@@ -399,7 +424,7 @@
     </div>
   </aside>
 
-  <main class="main-content">
+  <main id="main-content" class="main-content">
     <div class="content-wrap">
       <section id="overview">
         <p class="hero-eyebrow">Public Guide</p>
@@ -465,6 +490,57 @@
           <p class="diagram-caption">Simple on the outside, careful on the inside: one request enters, the system sorts
             it,
             and important actions stay gated.</p>
+        </div>
+      </section>
+
+      <hr class="section-divider" />
+
+      <section id="working-reliably">
+        <h2>Working reliably, every day</h2>
+        <p>The aspiration behind The Vault is simple: inspiration should not stay stuck in a notebook or a reminder app you
+          open once and forget. Whether the spark is a creative project, a fitness goal, or finally clearing a messy
+          inbox, The Vault gives you a route from the first idea to a real action.</p>
+        <p>Private details — personal notes, finances, and health data — stay completely separate from anything shown
+          publicly. The Vault draws a clear line between what is yours alone and what can be seen outside. That
+          private-versus-public boundary is enforced at every step, not just at the point of sharing.</p>
+        <div class="diagram-container">
+          <div class="diagram-label">Daily rhythm</div>
+          Morning routines → health check-in → tasks → evening review. Each day follows the same dependable loop,
+          and nothing slips through without a record.
+        </div>
+      </section>
+
+      <hr class="section-divider" />
+
+      <section id="inbox-router">
+        <h2>Inbox Router: email that sorts itself safely</h2>
+        <p>The Inbox Router watches incoming email and notifications, applies safe sorting rules, and moves items where
+          they belong — without losing anything important. Receipts stay reachable. Marketing goes to the right bucket.
+          Genuine messages from real contacts are never touched without a human confirmation.</p>
+        <div class="diagram-container">
+          <div class="diagram-label">Sort path</div>
+          Incoming message → classify by sender and subject → route to folder → update sender history → report
+          result.
+        </div>
+        <div class="diagram-container">
+          <div class="diagram-label">Safety rule</div>
+          Anything flagged as financial, personal, or account-related stays protected regardless of folder. Approval
+          is required before any permanent action.
+        </div>
+      </section>
+
+      <hr class="section-divider" />
+
+      <section id="missing-feature">
+        <h2>What happens when a feature is missing</h2>
+        <p>Sometimes you need something The Vault does not yet do. For example, if you want to track product listings
+          from a platform like <strong>Redbubble</strong> — orders, payouts, or inventory — but that integration does
+          not exist yet, The Vault notes the missing feature and queues a proposal rather than failing silently. You do
+          not lose the idea, and nothing happens without your approval.</p>
+        <div class="diagram-container">
+          <div class="diagram-label">Gap flow</div>
+          Missing feature detected → proposal queued for review → awaits approval → development begins only when
+          confirmed.
         </div>
       </section>
 

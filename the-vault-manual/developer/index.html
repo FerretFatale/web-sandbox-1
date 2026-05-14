@@ -970,10 +970,14 @@
       border-color: var(--accent);
       background: var(--surface-hover);
     }
+  
+    .skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;}
+    .skip-link:focus{left:12px;top:12px;width:auto;height:auto;padding:.45rem .7rem;background:#fff;color:#000;z-index:1000;border-radius:6px;}
   </style>
 </head>
 
 <body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
 
   <!-- TOP NAV -->
   <header class="topnav">
@@ -1120,7 +1124,7 @@
     </nav>
 
     <!-- MAIN CONTENT -->
-    <main class="main-content">
+    <main id="main-content" class="main-content">
 
       <!-- SECTION 1: HERO / QUICKSTART -->
       <section class="section hero fade-in" id="overview">
@@ -1181,6 +1185,31 @@ tools = get_all_tools()
             <a href="https://github.com/FerretFatale/KAOS/blob/main/AGENTS.md" class="promo-link" target="_blank"
               rel="noopener">View agent config →</a>
           </div>
+        </div>
+      </section>
+
+      <!-- SECTION: AUTHORITY & GOVERNANCE -->
+      <section class="section fade-in" id="authority">
+        <div class="section-header">
+          <h2>Authority &amp; Governance</h2>
+        </div>
+        <p class="section-sub">The Vault follows a strict authority model. <strong>The_Vault</strong> is the
+          production-authoritative source; KAOS is the sandbox and integration mirror. All production changes go
+          through mission state, Gatekeeper review, and deterministic test coverage before promotion.</p>
+        <div class="path-grid">
+          <a href="../feature-pages/feature-viewer.html?p=vault_brain" class="path-card">
+            <div class="path-card-title">Mission State</div>
+            <p class="path-card-desc">Every task is tracked in <code>.kaos_mission.json</code> via
+              <code>state_io_manager.py</code>. Context compaction cannot erase an active mission — the file is the
+              source of truth.</p>
+            <span class="path-card-link">Read the mission protocol →</span>
+          </a>
+          <a href="../feature-pages/feature-viewer.html?p=governance" class="path-card">
+            <div class="path-card-title">Gatekeeper Reviews</div>
+            <p class="path-card-desc">Formal governance checkpoints with workflow codification and intelligence log
+              entries are required before any sandbox-to-production promotion.</p>
+            <span class="path-card-link">Read governance rules →</span>
+          </a>
         </div>
       </section>
 
@@ -1461,6 +1490,164 @@ tools = get_all_tools()
 
         </div>
         <p class="section-sub">Compatibility reference token: <code>api_fetch_aldi_specials</code>.</p>
+      </section>
+
+      <!-- STUB SECTIONS — operator reference anchors -->
+      <section class="section fade-in" id="contextual">
+        <div class="section-header"><h2>Contextual thinking</h2></div>
+        <p class="section-sub">Behaviour policies, taste profiles, and routing rules live in
+          <code>Contextual_Thinking/</code>. Edit <code>.kaos_taste_profile.json</code> and
+          <code>vault_rules.txt</code> to shape persona decision-making without touching Python.</p>
+      </section>
+
+      <section class="section fade-in" id="tool-registry">
+        <div class="section-header"><h2>Tool registry</h2></div>
+        <p class="section-sub">All callable tools are declared in <code>custom_tools_registry.py</code>.
+          Each entry carries a risk class (<code>read_only_local</code>, <code>local_write</code>,
+          <code>external_read</code>, <code>external_write</code>) and an <code>approved_personas</code>
+          list. Run <code>python Toolkit/registry_sync.py</code> after any change.</p>
+      </section>
+
+      <section class="section fade-in" id="human-input">
+        <div class="section-header"><h2>Human input</h2></div>
+        <p class="section-sub">Blocked or approval-gated tasks are written to
+          <code>Human_Input.txt</code>. Completed entries move to
+          <code>Human_Input_Completed_Log.txt</code>. The runtime never silently drops a blocker —
+          every deferred action has a traceable entry.</p>
+      </section>
+
+      <section class="section fade-in" id="backlog">
+        <div class="section-header"><h2>Backlog</h2></div>
+        <p class="section-sub">Active work lives in <code>KAOS OS ACTIVE BACKLOG.txt</code>.
+          Completed lanes move to the archive. Audit-specific items go to
+          <code>AUDITS_BACKLOG.txt</code>. Use <code>[ ]</code>, <code>[~]</code>,
+          <code>[x]</code> markers — do not force <code>[x]</code> on partial work.</p>
+      </section>
+
+      <section class="section fade-in" id="security-gates">
+        <div class="section-header"><h2>Security gates</h2></div>
+        <p class="section-sub">Three standing security rules apply to every release:
+          SR-001 (authority integrity — The_Vault over KAOS), SR-002 (deploy gate discipline —
+          no live external writes without <code>approved=True</code>),
+          SR-003 (publish quality — front-facing content must pass the quality scorecard).
+          See <code>docs/copilot-output/reference/00-authority/</code> for full rule text.</p>
+      </section>
+
+      <section class="section fade-in" id="deploy-guard">
+        <div class="section-header"><h2>Deploy guard</h2></div>
+        <p class="section-sub">Before any external write (<code>approved=True</code>), the deploy
+          guard requires: dry-run pass, Gatekeeper PASS verdict, and explicit human approval logged
+          in <code>Human_Input_Completed_Log.txt</code>. Git push, email send, social post, and
+          document publish are all gated operations.</p>
+      </section>
+
+      <section class="section fade-in" id="memory">
+        <div class="section-header"><h2>Memory</h2></div>
+        <p class="section-sub">Structured memories live in <code>My_Memories/</code> and
+          <code>memories/</code>. Session-scoped working notes go to
+          <code>memories/session/</code>. The <code>scribe_memory_builder.py</code> utility
+          extracts durable facts from completed task outputs.</p>
+      </section>
+
+      <section class="section fade-in" id="health">
+        <div class="section-header"><h2>Health</h2></div>
+        <p class="section-sub">Health data, routines, and tracking live in <code>Health/</code>.
+          The runtime does not write health data to external services without explicit
+          <code>approved=True</code>. All health tool calls are classified
+          <code>local_write</code> minimum.</p>
+      </section>
+
+      <section class="section fade-in" id="finances">
+        <div class="section-header"><h2>Finances</h2></div>
+        <p class="section-sub">Finance data lives in <code>Finances/</code>. Transaction imports,
+          budgets, and spending analysis are handled by finance-scoped tools. No external financial
+          API write is permitted without human approval. Receipts and invoices are preserved
+          permanently — never archived to Trash.</p>
+      </section>
+
+      <section class="section fade-in" id="shopping">
+        <div class="section-header"><h2>Shopping</h2></div>
+        <p class="section-sub">Product research, wishlists, and purchase history are stored locally.
+          Shopping tools use <code>external_read</code> risk class for searches and
+          <code>external_write</code> for any checkout or order action. Receipts are
+          always preserved.</p>
+      </section>
+
+      <section class="section fade-in" id="social">
+        <div class="section-header"><h2>Social</h2></div>
+        <p class="section-sub">Social publishing lives in <code>social_module/</code>.
+          All posts default to <code>approved=False</code> dry-run mode. Publishing to any
+          live platform requires explicit human approval. Streaming, creator-platform, and
+          community notifications are handled by Conversationalist persona.</p>
+      </section>
+
+      <section class="section fade-in" id="maton">
+        <div class="section-header"><h2>MATON / deployment</h2></div>
+        <p class="section-sub">MATON (Meta API, Gmail, and other network operations) tools are
+          scoped to the Conversationalist persona. Gmail send, Meta webhook poll, and similar
+          external-write tools require <code>approved=True</code> and must pass SR-002 before
+          execution.</p>
+      </section>
+
+      <section class="section fade-in" id="email">
+        <div class="section-header"><h2>Email intelligence</h2></div>
+        <p class="section-sub">Email handling is split across
+          <code>Toolkit/email_intelligence.py</code> (Gmail/Hotmail) and
+          <code>Toolkit/proton_bridge.py</code> (Proton Mail via IMAP Bridge).
+          Sorting, labelling, and trash operations all default to dry-run.
+          Never permanently delete — always Trash first with a 30-day recovery window.</p>
+      </section>
+
+      <section class="section fade-in" id="kaos-integration">
+        <div class="section-header"><h2>KAOS integration</h2></div>
+        <p class="section-sub">KAOS (<code>C:\Users\LittleChickpea\OneDrive\Documents\KAOS</code>)
+          is the sandbox mirror. Promotion from KAOS to The_Vault requires
+          <code>integration_auditor.py</code> review and <code>KAOS_CONTRACTS.json</code>
+          contract alignment. Never promote sandbox code without a passing test run in
+          The_Vault context.</p>
+      </section>
+
+      <section class="section fade-in" id="testing">
+        <div class="section-header"><h2>Testing</h2></div>
+        <p class="section-sub">Run <code>python -m pytest Copilot_Tests/ -q</code> for the full
+          suite. Target individual test files for faster iteration. All architecture-file changes
+          require deterministic test coverage before merge. Lint with Pylance; the project uses
+          strict type-checking mode.</p>
+      </section>
+
+      <section class="section fade-in" id="governance">
+        <div class="section-header"><h2>Governance</h2></div>
+        <p class="section-sub">Governance rules live in
+          <code>docs/copilot-output/reference/00-authority/</code>. The
+          <code>gatekeeper_review_operating_protocol.md</code> defines the multi-model
+          consensus scoring process. New command aliases and workflow triggers must be
+          enshrined via the Gatekeeper codification lane before use.</p>
+      </section>
+
+      <section class="section fade-in" id="troubleshooting">
+        <div class="section-header"><h2>Troubleshooting</h2></div>
+        <p class="section-sub">Common issues: IMAP stall (check Proton Bridge local socket;
+          kill stale sessions), Gemini quota (rotate key or switch model tier),
+          test failures after merge (run <code>git status --short</code> and check for
+          trailing-newline drift). Blockers always go to <code>Human_Input.txt</code>.</p>
+      </section>
+
+      <section class="section fade-in" id="setup">
+        <div class="section-header"><h2>Setup / quick-start</h2></div>
+        <p class="section-sub">Clone the repo, copy <code>.env.example</code> to <code>.env</code>,
+          fill in API keys, then run <code>pip install -r requirements.txt</code>.
+          Verify with <code>python boot_kaos.py --dry-run</code>. See
+          <code>docs/copilot-output/reference/00-authority/</code> for full onboarding
+          protocol.</p>
+      </section>
+
+      <section class="section fade-in" id="manual-maintenance">
+        <div class="section-header"><h2>Manual maintenance</h2></div>
+        <p class="section-sub">Edit files in <code>docs/manual/</code>, run
+          <code>python -m pytest Copilot_Tests/test_manual_split.py -q</code> to validate,
+          then publish with <code>python Toolkit/manual_publisher.py</code>. Follow the
+          tri-daily overhaul policy: morning, afternoon, and evening publish windows.
+          Log every change in <code>docs/manual/manual_change_log.jsonl</code>.</p>
       </section>
 
     </main>
